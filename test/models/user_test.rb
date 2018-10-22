@@ -30,7 +30,8 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
   
-   test "email validation should accept valid addresses" do
+  #有効なメールアドレスが通ることを確認
+  test "email validation should accept valid addresses" do
     valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
                          first.last@foo.jp alice+bob@baz.cn]
     valid_addresses.each do |valid_address|
@@ -39,12 +40,30 @@ class UserTest < ActiveSupport::TestCase
     end
   end
   
-   test "email validation should reject invalid addresses" do
+  # ‘@’ がないといった無効なメールアドレスを使って 「無効性 (Invalidity)」についてテストしていきます。
+  test "email validation should reject invalid addresses" do
     invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
                            foo@bar_baz.com foo@bar+baz.com foo@bar..com]
     invalid_addresses.each do |invalid_address|
       @user.email = invalid_address
       assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
     end
+  end
+  
+  #@userと同じメールアドレスのユーザーは作成できないことを、@user.dupを使ってテストしています。
+  #dupは、同じ属性を持つデータを複製するためのメソッドです。
+  test "email addresses should be unique" do
+    duplicate_user = @user.dup
+    duplicate_user.email = @user.email.upcase       #大文字小文字を区別しない、一意性のテスト
+    @user.save
+    assert_not duplicate_user.valid?
+  end
+  
+  #メールアドレスの小文字化に対するテスト
+  test "email addresses should be saved as lower-case" do
+    mixed_case_email = "Foo@ExAMPle.CoM"
+    @user.email = mixed_case_email
+    @user.save
+    assert_equal mixed_case_email.downcase, @user.reload.email
   end
 end
