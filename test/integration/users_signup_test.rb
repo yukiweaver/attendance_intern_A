@@ -24,6 +24,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
-    assert_not flash.empty?
+    assert is_logged_in?
+    #assert_not flash.empty? 8.2.5リスト8.27で消滅
   end
 end
