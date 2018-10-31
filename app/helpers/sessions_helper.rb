@@ -12,7 +12,7 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
   
-  # 記憶トークンcookieに対応するユーザーを返す
+  # 記憶トークンcookieに対応するユーザーを返す リスト 9.9: 永続的セッションのcurrent_userを更新
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
@@ -37,7 +37,7 @@ module SessionsHelper
     !current_user.nil?
   end
   
-  # 永続的セッションを破棄する
+  # 永続的セッションを破棄する リスト 9.12: 永続セッションからログアウト
   def forget(user)
     user.forget
     cookies.delete(:user_id)
@@ -46,7 +46,7 @@ module SessionsHelper
   
   # 現在のユーザーをログアウトする
   def log_out
-    forget(current_user)
+    forget(current_user)       #リスト 9.12: 永続セッションからログアウト
     session.delete(:user_id)
     @current_user = nil
   end
