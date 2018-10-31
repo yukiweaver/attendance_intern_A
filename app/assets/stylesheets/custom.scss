@@ -177,6 +177,20 @@ input {
     color: $state-danger-text;
   }
 }
+
+.checkbox {              /* リスト 9.22: [remember me] チェックボックスのCSS */
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {      /* リスト 9.22: [remember me] チェックボックスのCSS */
+  width: auto;
+  margin-left: 0;
+}
 /* 5.1.2演習 
 img {
   display: none;
