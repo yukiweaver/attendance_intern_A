@@ -7,7 +7,7 @@ class User < ApplicationRecord
                   format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }      #uniqueness: でemailの一意性を検証する
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true    #リスト 10.13: パスワードが空のままでも更新できる処理
     
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
