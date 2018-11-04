@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]   #リスト 10.15
+  before_action :correct_user,   only: [:edit, :update]   #リスト 10.25
+  
   def show
     @user = User.find(params[:id])
   end
@@ -51,5 +53,11 @@ class UsersController < ApplicationController
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
+    end
+    
+    # リスト 10.25 正しいユーザーかどうか確認→リスト 10.28: 最終的なcorrect_userの実装
+    def correct_user
+      @user = User.find(params[:id])
+       redirect_to(root_url) unless current_user?(@user)
     end
 end
