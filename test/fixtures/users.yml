@@ -2,6 +2,7 @@ michael:
   name: Michael Example
   email: michael@example.com
   password_digest: <%= User.digest('password') %>
+  admin: true   #リスト 10.60: fixture内の最初のユーザーを管理者にする
 
 #リスト 10.23 
 archer:
