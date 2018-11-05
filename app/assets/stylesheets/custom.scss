@@ -191,6 +191,18 @@ input {
   width: auto;
   margin-left: 0;
 }
+
+/* Users index */
+
+.users {    /* リスト 10.39: ユーザーのindexページ用 */
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
 /* 5.1.2演習 
 img {
   display: none;
