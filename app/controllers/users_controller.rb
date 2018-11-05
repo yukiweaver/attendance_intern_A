@@ -2,9 +2,9 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update]   #リスト 10.15 リスト 10.35
   before_action :correct_user,   only: [:edit, :update]   #リスト 10.25
   
-  #リスト 10.35 リスト 10.36
+  #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
   
   def show
