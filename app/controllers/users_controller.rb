@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update]   #リスト 10.15 リスト 10.35
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]   #リスト 10.15 リスト 10.35 リスト 10.58
   before_action :correct_user,   only: [:edit, :update]   #リスト 10.25
+  before_action :admin_user,     only: :destroy   #リスト 10.59: destroyアクションを管理者だけに限定
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
@@ -42,6 +43,13 @@ class UsersController < ApplicationController
     end
   end
   
+  #リスト 10.58: 実際に動作するdestroyアクションを追加
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+  
   private
 
     def user_params
@@ -65,5 +73,10 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
        redirect_to(root_url) unless current_user?(@user)
+    end
+    
+    # リスト 10.59:管理者かどうか確認
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
     end
 end
