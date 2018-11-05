@@ -4,13 +4,9 @@
 
 <%= will_paginate %>    <%# リスト 10.45: indexページでpaginationを使う %>
 
+<%# リスト 10.52: indexページの完全なリファクタリング %>
 <ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= gravatar_for user, size: 50 %>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
+  <%= render @users %>
 </ul>
 
 <%= will_paginate %>    <%# リスト 10.45: indexページでpaginationを使う %>
