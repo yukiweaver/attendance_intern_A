@@ -23,8 +23,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                          password_confirmation: "password" } }
     end
     follow_redirect!
-    assert_template 'users/show'
-    assert is_logged_in?
+    #assert_template 'users/show'    #リスト 11.24: 失敗するテストを一時的にコメントアウト
+    #assert is_logged_in?   #リスト 11.24: 失敗するテストを一時的にコメントアウト
     #assert_not flash.empty? 8.2.5リスト8.27で消滅
   end
 end
