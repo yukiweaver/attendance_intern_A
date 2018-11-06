@@ -2,19 +2,26 @@ require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
 
-  test "invalid signup information" do      #無効なユーザー登録に対するテスト
+  def setup
+    ActionMailer::Base.deliveries.clear
+  end
+  #無効なユーザー登録に対するテスト
+  test "invalid signup information" do
     get signup_path
     assert_no_difference 'User.count' do
-      post users_path, params: { user: { name:  "",              
+      post users_path, params: { user: { name:  "",
                                          email: "user@invalid",
                                          password:              "foo",
                                          password_confirmation: "bar" } }
     end
     assert_template 'users/new'
-    
+    assert_select 'div#error_explanation'
+    assert_select 'div.field_with_errors'
   end
   
-  test "valid signup information" do        #有効なユーザー登録に対するテスト
+  #有効なユーザー登録に対するテスト
+  #リスト 11.33: ユーザー登録のテストにアカウント有効化を追加
+  test "valid signup information with account activation" do
     get signup_path
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { name:  "Example User",
@@ -22,9 +29,23 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                          password:              "password",
                                          password_confirmation: "password" } }
     end
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    user = assigns(:user)
+    assert_not user.activated?
+    # 有効化していない状態でログインしてみる
+    log_in_as(user)
+    assert_not is_logged_in?
+    # 有効化トークンが不正な場合
+    get edit_account_activation_path("invalid token", email: user.email)
+    assert_not is_logged_in?
+    # トークンは正しいがメールアドレスが無効な場合
+    get edit_account_activation_path(user.activation_token, email: 'wrong')
+    assert_not is_logged_in?
+    # 有効化トークンが正しい場合
+    get edit_account_activation_path(user.activation_token, email: user.email)
+    assert user.reload.activated?
     follow_redirect!
-    #assert_template 'users/show'    #リスト 11.24: 失敗するテストを一時的にコメントアウト
-    #assert is_logged_in?   #リスト 11.24: 失敗するテストを一時的にコメントアウト
-    #assert_not flash.empty? 8.2.5リスト8.27で消滅
+    assert_template 'users/show'
+    assert is_logged_in?
   end
 end
