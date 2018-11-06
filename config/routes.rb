@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   resources :users
+  resources :account_activations, only: [:edit]   #リスト 11.1: アカウント有効化に使うリソース (edit) を追加
 end
