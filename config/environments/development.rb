@@ -27,10 +27,10 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.perform_caching = false
-
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :test
+  host = '9d60c56dbede4e71b7f2a4d1da97ab9a.vfs.cloud9.us-east-2.amazonaws.com' # クラウドIDE
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
