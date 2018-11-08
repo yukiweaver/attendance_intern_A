@@ -9,6 +9,7 @@
       <%= f.email_field :email, class: 'form-control' %>
 
       <%= f.label :password %>
+      <%= link_to "(forgot password)", new_password_reset_path %>    <%# リスト 12.2: パスワード再設定画面へのリンクを追加 %>
       <%= f.password_field :password, class: 'form-control' %>
       
       <%# リスト 9.21: [remember me] チェックボックスをログインフォームに追加する %>
