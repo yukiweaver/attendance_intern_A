@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts    #リスト 13.11
   attr_accessor :remember_token, :activation_token, :reset_token    #リスト 11.3 リスト 12.6
   before_save   :downcase_email   #リスト 11.3:コード変更 データベースに保存する前にemail属性を強制的に小文字に変換
   before_create :create_activation_digest   #リスト 11.3

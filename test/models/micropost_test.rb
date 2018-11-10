@@ -4,8 +4,8 @@ class MicropostTest < ActiveSupport::TestCase
 
   def setup
     @user = users(:michael)
-    # このコードは慣習的に正しくない
-    @micropost = Micropost.new(content: "Lorem ipsum", user_id: @user.id)
+    #リスト 13.12: 慣習的に正しくマイクロポストを作成
+    @micropost = @user.microposts.build(content: "Lorem ipsum")
   end
   
   #リスト 13.4: 新しいMicropostの有効性に対するテスト
