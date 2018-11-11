@@ -60,15 +60,6 @@ class UsersController < ApplicationController
     
     #リスト 10.15: beforeフィルターにlogged_in_userを追加
     # beforeアクション
-
-    # ログイン済みユーザーかどうか確認
-    def logged_in_user
-      unless logged_in?
-        store_location    #リスト 10.31
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
     
     # リスト 10.25 正しいユーザーかどうか確認→リスト 10.28: 最終的なcorrect_userの実装
     def correct_user
