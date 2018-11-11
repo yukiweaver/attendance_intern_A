@@ -1,11 +1,12 @@
 <%# フォーム送信時にエラーメッセージを表示するためのパーシャル %>
-<% if @user.errors.any? %>
+<%# リスト 13.41: Userオブジェクト以外でも動作するようにerror_messagesパーシャルを更新する %>
+<% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      The form contains <%= pluralize(@user.errors.count, "error") %>.
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
     <ul>
-    <% @user.errors.full_messages.each do |msg| %>
+    <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
