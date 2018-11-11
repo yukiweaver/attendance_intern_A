@@ -5,4 +5,8 @@
     <%= f.text_area :content, placeholder: "Compose new micropost..." %>
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
+  <%# リスト 13.60: マイクロポスト投稿フォームに画像アップローダーを追加 %>
+  <span class="picture">
+    <%= f.file_field :picture %>
+  </span>
 <% end %>

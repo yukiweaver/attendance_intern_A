@@ -2,7 +2,11 @@
 <li id="micropost-<%= micropost.id %>">
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-  <span class="content"><%= micropost.content %></span>
+  <span class="content">
+    <%= micropost.content %>
+    <%# リスト 13.62: マイクロポストの画像表示を追加 %>
+    <%= image_tag micropost.picture.url if micropost.picture? %>
+  </span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     <%# リスト 13.51: マイクロポストのパーシャルに削除リンクを追加 %>

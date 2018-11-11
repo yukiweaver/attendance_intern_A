@@ -26,7 +26,7 @@ class MicropostsController < ApplicationController
   private
 
     def micropost_params
-      params.require(:micropost).permit(:content)
+      params.require(:micropost).permit(:content, :picture)   #リスト 13.61: pictureを許可された属性のリストに追加
     end
     
     #リスト 13.52

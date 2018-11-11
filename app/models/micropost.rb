@@ -2,6 +2,7 @@
 class Micropost < ApplicationRecord
   belongs_to :user
   default_scope -> { order(created_at: :desc) }   #リスト 13.17: マイクロポストを順序付ける
+  mount_uploader :picture, PictureUploader    #リスト 13.59: Micropostモデルに画像を追加
   validates :user_id, presence: true    #リスト 13.5
   validates :content, presence: true, length: { maximum: 140 }    #リスト 13.8
 end
