@@ -69,6 +69,13 @@ class User < ApplicationRecord
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+  
+  # 試作feedの定義
+  # 完全な実装は次章の「ユーザーをフォローする」を参照
+  #リスト 13.46: マイクロポストのステータスフィードを実装するための準備
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
 
   
   private

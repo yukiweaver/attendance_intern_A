@@ -9,6 +9,11 @@
         <%= render 'shared/micropost_form' %>
       </section>
     </aside>
+    <%# リスト 13.49: Homeページにステータスフィードを追加 %>
+    <div class="col-md-8">
+      <h3>Micropost Feed</h3>
+      <%= render 'shared/feed' %>
+    </div>
   </div>
 <% else %>
   <div class="center jumbotron">

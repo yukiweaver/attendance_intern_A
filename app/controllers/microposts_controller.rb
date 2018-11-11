@@ -9,6 +9,8 @@ class MicropostsController < ApplicationController
       flash[:success] = "Micropost created!"
       redirect_to root_url
     else
+      #リスト 13.50: 空の@feed_itemsインスタンス変数を追加
+      @feed_items = []
       render 'static_pages/home'
     end
   end
