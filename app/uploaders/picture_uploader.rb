@@ -1,5 +1,9 @@
 #リスト 13.64: 画像フォーマットのバリデーション
 class PictureUploader < CarrierWave::Uploader::Base
+  #リスト 13.67: 画像をリサイズするために画像アップローダーを修正する
+  include CarrierWave::MiniMagick
+  process resize_to_limit: [400, 400]
+  
   storage :file
 
   # アップロードファイルの保存先ディレクトリは上書き可能
