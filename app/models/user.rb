@@ -4,8 +4,14 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
+  #リスト 14.12: 受動的関係を使ってuser.followersを実装する
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
   #リスト 14.8: Userモデルにfollowingの関連付けを追加する
   has_many :following, through: :active_relationships, source: :followed
+  #リスト 14.12: 受動的関係を使ってuser.followersを実装する
+  has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token    #リスト 11.3 リスト 12.6
   before_save   :downcase_email   #リスト 11.3:コード変更 データベースに保存する前にemail属性を強制的に小文字に変換
   before_create :create_activation_digest   #リスト 11.3
