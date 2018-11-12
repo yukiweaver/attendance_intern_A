@@ -11,8 +11,15 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  resources :users
+  
+  #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :account_activations, only: [:edit]   #リスト 11.1: アカウント有効化に使うリソース (edit) を追加
   resources :password_resets,     only: [:new, :create, :edit, :update]   #リスト 12.1: パスワード再設定用リソースを追加
   resources :microposts,          only: [:create, :destroy]   #リスト 13.30: マイクロポストリソースのルーティング
+  resources :relationships,       only: [:create, :destroy]   #リスト 14.20: Relationshipリソース用のルーティング
 end
