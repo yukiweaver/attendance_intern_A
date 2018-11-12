@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
+  #リスト 14.8: Userモデルにfollowingの関連付けを追加する
+  has_many :following, through: :active_relationships, source: :followed
   attr_accessor :remember_token, :activation_token, :reset_token    #リスト 11.3 リスト 12.6
   before_save   :downcase_email   #リスト 11.3:コード変更 データベースに保存する前にemail属性を強制的に小文字に変換
   before_create :create_activation_digest   #リスト 11.3
@@ -79,6 +81,21 @@ class User < ApplicationRecord
   #リスト 13.46: マイクロポストのステータスフィードを実装するための準備
   def feed
     Micropost.where("user_id = ?", id)
+  end
+  
+  # リスト 14.10:ユーザーをフォローする
+  def follow(other_user)
+    following << other_user
+  end
+
+  # リスト 14.10:ユーザーをフォロー解除する
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # リスト 14.10:現在のユーザーがフォローしてたらtrueを返す
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   
