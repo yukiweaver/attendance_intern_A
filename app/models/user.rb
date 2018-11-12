@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy    #リスト 13.11 リスト 13.19
+  #リスト 14.2: 能動的関係に対して1対多 (has_many) の関連付けを実装する
+  has_many :active_relationships, class_name:  "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
   attr_accessor :remember_token, :activation_token, :reset_token    #リスト 11.3 リスト 12.6
   before_save   :downcase_email   #リスト 11.3:コード変更 データベースに保存する前にemail属性を強制的に小文字に変換
   before_create :create_activation_digest   #リスト 11.3
