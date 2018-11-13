@@ -82,11 +82,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
   
-  # 試作feedの定義
-  # 完全な実装は次章の「ユーザーをフォローする」を参照
-  #リスト 13.46: マイクロポストのステータスフィードを実装するための準備
+  # リスト 14.44: とりあえず動くフィードの実装 ユーザーのステータスフィードを返す
   def feed
-    Micropost.where("user_id = ?", id)
+    Micropost.where("user_id IN (?) OR user_id = ?", following_ids, id)
   end
   
   # リスト 14.10:ユーザーをフォローする
