@@ -83,8 +83,13 @@ class User < ApplicationRecord
   end
   
   # リスト 14.44: とりあえず動くフィードの実装 ユーザーのステータスフィードを返す
+  # リスト 14.46: whereメソッド内の変数に、キーと値のペアを使う
+  # リスト 14.47: フィードの最終的な実装
   def feed
-    Micropost.where("user_id IN (?) OR user_id = ?", following_ids, id)
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})
+                     OR user_id = :user_id", user_id: id)
   end
   
   # リスト 14.10:ユーザーをフォローする
