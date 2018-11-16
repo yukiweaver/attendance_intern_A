@@ -15,8 +15,13 @@ $gray-medium-light: #eaeaea;
 
 body {
   padding-top: 60px;
+  /* 背景画像の挿入 */
+  background-image: url(https://storage.tenki.jp/storage/static-images/suppl/article/image/1/14/149/14911/1/large.jpg);
+  /* 画像を繰り返さない */
+  background-repeat: no-repeat;
+  /* 全画面表示 */
+  background-size: cover;
 }
-
 section {
   overflow: auto;
 }
@@ -173,7 +178,7 @@ aside {
   }
 }
 
-.user_avatars {        /* リスト 14.18: Homeページのサイドバー用のSCSS */
+.user_avatars {        /* リスト 14.18: Homeページのサイ���バー用のSCSS */
   overflow: auto;
   margin-top: 10px;
   .gravatar {
