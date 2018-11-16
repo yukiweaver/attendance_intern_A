@@ -21,8 +21,10 @@ body {
   background-repeat: no-repeat;
   /* 全画面表示 */
   background-size: cover;
+  /* 画像を中央に配置 */
   background-position: center center;
-  
+  /* 別ページでも動かないように固定 */
+  background-attachment: fixed;
 }
 section {
   overflow: auto;
@@ -53,12 +55,12 @@ h1 {
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 1.6em;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $gray-light;
+  color: black;
 }
 
 p {
@@ -73,16 +75,21 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: white;
+  color: black;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   &:hover {
-    color: white;
+    color: black;
     text-decoration: none;
   }
 }
+
+.navbar {
+  background-color: #33CCFF;
+}
+
 
 /* footer */
 
