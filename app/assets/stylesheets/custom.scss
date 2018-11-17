@@ -86,13 +86,30 @@ p {
   }
 }
 
+/* ヘッダー色変更 */
 .navbar {
   background-color: #33CCFF;
 }
 
+/* 透過 */
 .jumbotron {
-  background-color:rgba(255,165,0,0);
+  background-color:rgba(0,0,0,0);
 }
+
+/* ヘッダーリンク部分の文字色変更 */
+ul.nav.navbar-nav.navbar-right >li > a {
+  color: black;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* ログイン後のアカウントバー背景変更 */
+ul.dropdown-menu {
+  background-color: #33CCFF;
+}
+
 /* footer */
 
 footer {
