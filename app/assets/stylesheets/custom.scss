@@ -26,6 +26,7 @@ body {
   /* 別ページでも動かないように固定 */
   background-attachment: fixed;
 }
+
 /* ホーム画面バランス調整 */
 div.center.jumbotron {
   padding-top: 80px;
@@ -322,6 +323,21 @@ span.picture {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+
+/* 管理人紹介ページ編集（元aboutページ） */
+div.container {
+  h1 {
+    font-weight: bold;
+  }
+  h2 {
+    
+  }
+  p {
+  font-size: 1.5em;
+  font-weight: normal;
+  padding-top: 20px;
   }
 }
 /* 5.1.2演習 
