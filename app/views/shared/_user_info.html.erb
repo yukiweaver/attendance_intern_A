@@ -1,5 +1,6 @@
 <%# リスト 13.38: サイドバーで表示するユーザー情報のパーシャル %>
 <%= link_to gravatar_for(current_user, size: 50), current_user %>
 <h1><%= current_user.name %></h1>
-<span><%= link_to "view my profile", current_user %></span>
-<span><%= pluralize(current_user.microposts.count, "micropost") %></span>
+<span><%= link_to "プロフィールページ", current_user %></span>
+<span><%= pluralize(current_user.microposts.count, "回の投稿") %></span>
+<%# "回の投稿"のところ元は"microposts" 表示がおかしい%>
