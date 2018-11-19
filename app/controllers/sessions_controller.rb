@@ -11,13 +11,13 @@ class SessionsController < ApplicationController
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)  #リスト 9.23: [remember me] チェックボックスの送信結果を処理
         redirect_back_or user   #リスト 10.32: フレンドリーフォワーディングを備える
       else
-        message  = "Account not activated. "
-        message += "Check your email for the activation link."
+        message  = "アカウントが有効化されていません。 "
+        message += "メールのリンクを確認してください。"
         flash[:warning] = message
         redirect_to root_url
       end
     else
-      flash.now[:danger] = 'Invalid email/password combination'
+      flash.now[:danger] = 'メールアドレス、パスワードが正しくありません。'
       render 'new'
     end
   end

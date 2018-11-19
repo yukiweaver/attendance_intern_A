@@ -7,7 +7,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = "投稿しました。"
       redirect_to root_url
     else
       #リスト 13.50: 空の@feed_itemsインスタンス変数を追加
@@ -19,7 +19,7 @@ class MicropostsController < ApplicationController
   #リスト 13.52: Micropostsコントローラのdestroyアクション
   def destroy
     @micropost.destroy
-    flash[:success] = "Micropost deleted"
+    flash[:success] = "投稿を削除しました。"
     redirect_to request.referrer || root_url
   end
 
