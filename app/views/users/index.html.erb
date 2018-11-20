@@ -2,11 +2,13 @@
 <% provide(:title, 'ユーザー一覧') %>
 <h1>ユーザー一覧</h1>
 
-<%= will_paginate %>    <%# リスト 10.45: indexページでpaginationを使う %>
+<%# ページネートの日本語化 %>
+<%= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>    <%# リスト 10.45: indexページでpaginationを使う %>
 
 <%# リスト 10.52: indexページの完全なリファクタリング %>
 <ul class="users">
   <%= render @users %>
 </ul>
 
-<%= will_paginate %>    <%# リスト 10.45: indexページでpaginationを使う %>
+<%# ページネートの日本語化 %>
+<%= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>    <%# リスト 10.45: indexページでpaginationを使う %>

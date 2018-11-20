@@ -25,7 +25,8 @@
       <ul class="users follow">
         <%= render @users %>
       </ul>
-      <%= will_paginate %>
+      <%# ページネート日本語化 %>
+      <%= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>
     <% end %>
   </div>
 </div>
