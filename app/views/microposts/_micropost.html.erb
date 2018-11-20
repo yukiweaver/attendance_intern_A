@@ -9,7 +9,7 @@
   </span>
   <span class="timestamp">
      <%= time_ago_in_words(micropost.created_at) %>前に投稿
-    <%# リスト 13.51: マイクロポストのパーシャルに削除リンクを追加 %>
+    <%# リスト 13.51: マイクロポストのパーシャルに削除リンクを追加. %>
     <% if current_user?(micropost.user) %>
       <%= link_to "削除する", micropost, method: :delete,
                                        data: { confirm: "本当に削除しますか？" } %>
