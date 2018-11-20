@@ -3,4 +3,3 @@
 <h1><%= current_user.name %></h1>
 <span><%= link_to "プロフィールページ", current_user %></span>
 <span><%= pluralize(current_user.microposts.count, "回の投稿") %></span>
-<%# "回の投稿"のところ元は"microposts" 表示がおかしい%>
