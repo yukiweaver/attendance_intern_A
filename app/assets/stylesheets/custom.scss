@@ -16,7 +16,7 @@ $gray-medium-light: #eaeaea;
 body {
   padding-top: 60px;
   /* 背景画像の挿入 */
-  background-image: url(https://i0.wp.com/okinawa-iju.info/wp-content/uploads/2015/07/2015071902.jpg?ssl=1);
+  background-image: url(http://livedoor.3.blogimg.jp/mamesoku/imgs/d/7/d7cd58be.jpg);
   /* 画像を繰り返さない */
   background-repeat: no-repeat;
   /* 全画面表示 */
@@ -30,6 +30,13 @@ body {
 /* ホーム画面バランス調整 */
 div.center.jumbotron {
   padding-top: 80px;
+  h1 {
+    font-family: Times New Roman;
+    color: #CCCCCC;
+  }
+  h2 {
+    color: #BBBBBB;
+  }
 }
 section {
   overflow: auto;
