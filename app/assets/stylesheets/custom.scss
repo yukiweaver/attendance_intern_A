@@ -32,7 +32,7 @@ div.center.jumbotron {
   padding-top: 80px;
   h1 {
     font-family: Times New Roman;
-    color: #CCCCCC;
+    color: #FFFFEE;
   }
   h2 {
     color: #BBBBBB;
@@ -129,7 +129,7 @@ footer {
   border-bottom: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
-    color: black;
+    color: #EEEEEE;
     &:hover {
       color: $gray-darker;
     }
@@ -345,23 +345,35 @@ div.container {
   font-size: 1.5em;
   font-weight: normal;
   padding-top: 20px;
+  color: #FFFFEE;
   }
 }
 
 /* ログインページ */
-div.container > h1 {
-  padding-top: 50px;
-}
 div.col-md-6.col-md-offset-3 > form > a {
-  color: maroon;
+  color: #CC0000;
 }
 div.col-md-6.col-md-offset-3 > p > a {
-  color: maroon;
+  color: #CC0000;
+}
+div.col-md-6.col-md-offset-3 {
+  color: #FFFFEE;
+  background-color: rgba(0,0,0,0.5);
+  padding: 30px;
 }
 
-/* パスワード再設定画面 */
+/* 新規登録、ログインなど表記 */
 div.container > h1 {
+  padding-top: 20px;
   margin-top: 50px;
+  color: #FFFFEE;
+}
+form#new_user.new_user > label {
+  color: #FFFFEE;
+}
+form#new_user.new_user {
+  
+  padding: 30px;
 }
 
 /* みんなの投稿ページ　プロフィールページの表記 */
