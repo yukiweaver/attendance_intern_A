@@ -1,6 +1,6 @@
 <%# リスト 11.13: アカウント有効化のテキストビュー %>
-Hi <%= @user.name %>,
-
-Welcome to the Sample App! Click on the link below to activate your account:
-
+<%#Hi <%= @user.name %>
+ <%= @user.name %>様
+<%# Welcome to the Sample App! Click on the link below to activate your account: %>
+ようこそWEAVER.COMへ！ 下記のリンクをクリックしてアカウントを有効化してください。
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

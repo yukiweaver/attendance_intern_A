@@ -6,10 +6,10 @@ class AccountActivationsController < ApplicationController
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
       user.activate   #リスト 11.37: ユーザーモデルオブジェクト経由でアカウントを有効化
       log_in user
-      flash[:success] = "Account activated!"
+      flash[:success] = "アカウントが有効になりました。"
       redirect_to user
     else
-      flash[:danger] = "Invalid activation link"
+      flash[:danger] = "アカウント有効化に失敗しました。"
       redirect_to root_url
     end
   end

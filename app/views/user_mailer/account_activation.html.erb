@@ -1,11 +1,12 @@
 <%# リスト 11.14: アカウント有効化のHTMLビュー %>
-<h1>Sample App</h1>
+<h1>WEAVER.COM</h1>
 
-<p>Hi <%= @user.name %>,</p>
+<p><%= @user.name %>様</p>
 
 <p>
-Welcome to the Sample App! Click on the link below to activate your account:
+ようこそWEAVER.COMへ！<br>
+下記のリンクをクリックしてアカウントを有効化してください。
 </p>
 
-<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+<%= link_to "アカウント有効化", edit_account_activation_url(@user.activation_token,
                                                     email: @user.email) %>
