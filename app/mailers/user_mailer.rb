@@ -10,6 +10,6 @@ class UserMailer < ApplicationMailer
   #リスト 12.7: パスワード再設定のリンクをメール送信する
   def password_reset(user)
     @user = user
-    mail to: user.email, subject: "メールを確認してパスワードを再設定してください。"
+    mail to: user.email, subject: "パスワード再設定"
   end
 end
