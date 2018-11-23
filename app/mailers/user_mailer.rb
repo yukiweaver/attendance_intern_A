@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   #リスト 11.12: アカウント有効化リンクをメール送信
   def account_activation(user)
     @user = user
-    mail to: user.email, subject: "メールを確認してアカウントを有効にしてください。"
+    mail to: user.email, subject: "アカウント有効化"
   end
   
   #リスト 12.7: パスワード再設定のリンクをメール送信する
