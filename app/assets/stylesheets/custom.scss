@@ -34,11 +34,24 @@ div.center.jumbotron {
     padding-top: 50px;
     font-family: Times New Roman;
     color: #FFFFEE;
+    font-size: 70px;
   }
   h2 {
-    color: #BBBBBB;
+    color: #FFFFEE;
   }
 }
+
+/* ホーム画面 新規登録ボタン */
+.btn.btn-lg.btn-primary {
+  background-color: #222222;
+  border: 0.5px solid white;
+  color: white;
+  &:hover {
+      text-decoration: none;
+      background-color: #333333;
+    }
+}
+
 section {
   overflow: auto;
 }
@@ -130,9 +143,9 @@ footer {
   border-bottom: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
-    color: #EEEEEE;
+    color: #FFFFEE;
     &:hover {
-      color: $gray-darker;
+      color: #FFFFEE;
     }
   }
   small {
@@ -347,6 +360,9 @@ div.container {
   font-weight: normal;
   padding-top: 20px;
   color: #FFFFEE;
+  background-color: rgba(0,0,0,0.5);
+  padding: 30px;
+  text-align: center;
   }
 }
 
@@ -383,8 +399,8 @@ section.user_info > span > a {
 
 /* 投稿、ログインなどボタン変更 */
 input.btn.btn-primary {
-  background-color: black;
-  border: 1px solid white;
+  background-color: #222222;
+  border: 0.5px solid white;
   color: white;
   &:hover {
       text-decoration: none;
