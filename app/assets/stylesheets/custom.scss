@@ -373,13 +373,50 @@ form#new_user.new_user > label {
   color: #FFFFEE;
 }
 form#new_user.new_user {
-  
   padding: 30px;
 }
 
 /* みんなの投稿ページ　プロフィールページの表記 */
 section.user_info > span > a {
   color: #FFCCFF;
+}
+
+input.btn.btn-primary {
+  
+}
+
+/* 投稿ページ　ユーザー名、投稿回数　文字色 */
+section.user_info {
+  h1 {
+    color: #FFFFEE;
+  }
+  span {
+    color: #FFFFEE;
+  }
+}
+
+/* 投稿ページ　フォローフォロワー　文字色 */
+.stats > a {
+  color: #FFFFEE;
+}
+
+/* 投稿一覧　背景指定、透過 */
+ol.microposts {
+  background-color: rgba(0,0,0,0.5);
+  color: #FFFFEE;
+  span.user > a {
+    color: #FFFFEE;
+  }
+}
+
+/* 投稿画面タイトル　みんなの投稿など */
+.col-md-8 > h3 {
+  color: white;
+}
+
+/* 投稿　削除する　文字色 */
+span.timestamp > a {
+  color: #DD0000;
 }
 /* 5.1.2演習 
 img {
