@@ -364,6 +364,12 @@ div.container {
   padding: 30px;
   text-align: center;
   }
+  img {
+    background-color: rgba(0,0,0,0.5);
+    text-align: center;
+    width: auto;
+    max-height: 400px;
+  }
 }
 
 /* ログインページ */
