@@ -378,17 +378,45 @@ form#new_user.new_user {
 
 /* みんなの投稿ページ　プロフィールページの表記 */
 section.user_info > span > a {
-  color: #FFCCFF;
+  color: #FFFFEE;
 }
 
+/* 投稿、ログインなどボタン変更 */
 input.btn.btn-primary {
-  
+  background-color: black;
+  border: 1px solid white;
+  color: white;
+  &:hover {
+      text-decoration: none;
+      background-color: #333333;
+    }
+}
+/* ユーザー一覧 */
+.users {
+  background-color: rgba(0,0,0,0.5);
+  li {
+    color: #FFFFEE;
+  }
+  a {
+    color: #FFFFEE;
+  }
+}
+
+/* 画像選択の文字色 */
+input#micropost_picture {
+  color: #FFFFEE;
+}
+
+/* プロフィールを更新　アイコン変更 */
+.gravatar_edit > a {
+  color: #FFFFEE;
 }
 
 /* 投稿ページ　ユーザー名、投稿回数　文字色 */
 section.user_info {
   h1 {
     color: #FFFFEE;
+    font-size: 28px;
   }
   span {
     color: #FFFFEE;

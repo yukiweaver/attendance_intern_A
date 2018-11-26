@@ -4,7 +4,7 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "新しい投稿文を作成..." %>
   </div>
-  <%= f.submit "投稿する", class: "btn btn-primary" %>
+  <%= f.submit "投稿する", class: "btn outline btn-primary" %>
   <%# リスト 13.60: マイクロポスト投稿フォームに画像アップローダーを追加→リスト 13.66 %>
   <span class="picture">
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
