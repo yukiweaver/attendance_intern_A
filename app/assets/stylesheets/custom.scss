@@ -370,7 +370,6 @@ div.container {
     }
   }
   img {
-    background-color: rgba(0,0,0,0.5);
     text-align: center;
     width: auto;
     max-height: 400px;
@@ -429,6 +428,17 @@ input.btn.btn-primary {
   }
 }
 
+/* 検索機能 */
+.user_search {
+  text-align: center;
+  background-color: rgba(0,0,0,0.5);
+  padding: 30px;
+  b {
+    color: #FFFFEE;
+    font-size: 20px;
+  }
+}
+
 /* 画像選択の文字色 */
 input#micropost_picture {
   color: #FFFFEE;
@@ -457,6 +467,7 @@ section.user_info {
 
 /* 投稿一覧　背景指定、透過 */
 ol.microposts {
+  padding: 10px;
   background-color: rgba(0,0,0,0.5);
   color: #FFFFEE;
   span.user > a {

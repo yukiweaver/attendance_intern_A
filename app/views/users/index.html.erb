@@ -5,6 +5,15 @@
 <%# ページネートの日本語化 %>
 <%= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>    <%# リスト 10.45: indexページでpaginationを使う %>
 
+<!--  pf:検索拡張機能  -->
+<div class="user_search">
+<b>ユーザーを検索</b>
+<%= form_tag(users_path, :method => 'get' ) do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag '検索', :name => nil, class: "btn btn-primary" %>
+<% end %>
+</div>
+
 <%# リスト 10.52: indexページの完全なリファクタリング %>
 <ul class="users">
   <%= render @users %>

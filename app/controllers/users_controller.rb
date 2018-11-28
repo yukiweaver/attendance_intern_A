@@ -6,7 +6,9 @@ class UsersController < ApplicationController
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
-    @users = User.paginate(page: params[:page])
+    #@users = User.paginate(page: params[:page])
+    # pf: 検索機能追加でコード変更
+    @users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
   end
   
   def show
