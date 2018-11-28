@@ -100,12 +100,13 @@ p {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
+  font-size: 1.8em;
   color: black;
   text-transform: none;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  font-family: Times New Roman;
   &:hover {
     color: black;
     text-decoration: none;
@@ -114,7 +115,7 @@ p {
 
 /* ヘッダー色変更 */
 .navbar {
-  background-color: #33CCFF;
+  background-color: #BAD3FF;
 }
 
 /* 透過 */
@@ -348,6 +349,7 @@ span.picture {
 }
 
 /* 管理人紹介ページ編集（元aboutページ） */
+/* WEAVER紹介ページ（元helpページ） */
 div.container {
   h1 {
     font-weight: bold;
@@ -363,6 +365,9 @@ div.container {
   background-color: rgba(0,0,0,0.5);
   padding: 30px;
   text-align: center;
+    a {
+      color: #005FFF;
+    }
   }
   img {
     background-color: rgba(0,0,0,0.5);
