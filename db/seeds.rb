@@ -21,11 +21,11 @@ User.create!(name:  "Example User",
 end
 
 #リスト 13.25: サンプルデータにマイクロポストを追加する
-users = User.order(:created_at).take(6)
-50.times do
-  content = Faker::Lorem.sentence(5)
-  users.each { |user| user.microposts.create!(content: content) }
-end
+#users = User.order(:created_at).take(6)
+#50.times do
+  #content = Faker::Lorem.sentence(5)
+  #users.each { |user| user.microposts.create!(content: content) }
+#end
 
 # リスト 14.14: サンプルデータにfollowing/followerの関係性を追加する
 users = User.all
