@@ -135,6 +135,9 @@ ul.nav.navbar-nav.navbar-right >li > a {
 ul.dropdown-menu {
   background-color: #BAD3FF;
 }
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: #BAD3FF;
+}
 
 /* footer */
 
