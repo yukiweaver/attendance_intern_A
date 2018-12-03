@@ -1,4 +1,4 @@
-#リスト 13.70: CarrierWaveを通してS3を使うように修正する 
+#リスト 13.70: CarrierWaveを通してS3を使うように修正する  
 if Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_credentials = {
