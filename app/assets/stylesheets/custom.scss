@@ -12,25 +12,25 @@ $gray-medium-light: #eaeaea;
 }
 
 /* universal */
-
+/* pf */
 body {
   padding-top: 60px;
   /* 背景画像の挿入 */
-  background-image: url(http://livedoor.3.blogimg.jp/mamesoku/imgs/d/7/d7cd58be.jpg);
+  /* pf background-image: url(http://livedoor.3.blogimg.jp/mamesoku/imgs/d/7/d7cd58be.jpg);
   /* 画像を繰り返さない */
-  background-repeat: no-repeat;
+  /* pf background-repeat: no-repeat;
   /* 全画面表示 */
-  background-size: cover;
+  /* pf background-size: cover;
   /* 画像を中央に配置 */
-  background-position: center center;
+  /* pf background-position: center center;
   /* 別ページでも動かないように固定 */
-  background-attachment: fixed;
-}
+  /* pf background-attachment: fixed; */
+} 
 
 /* ホーム画面バランス調整 */
 div.center.jumbotron {
   padding-top: 80px;
-  h1 {
+  /*h1 {
     padding-top: 50px;
     font-family: Times New Roman;
     color: #FFFFEE;
@@ -38,8 +38,8 @@ div.center.jumbotron {
   }
   h2 {
     color: #FFFFEE;
-  }
-}
+  } */
+} 
 
 /* ホーム画面 新規登録ボタン */
 .btn.btn-lg.btn-primary {
@@ -101,42 +101,42 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.8em;
-  color: black;
+  color: white;
   text-transform: none;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
-  font-family: Times New Roman;
+  /* pf font-family: Times New Roman; */
   &:hover {
-    color: black;
+    color: white;
     text-decoration: none;
   }
 }
 
 /* ヘッダー色変更 */
 .navbar {
-  background-color: #BAD3FF;
+  /* pf background-color: #BAD3FF; */
 }
 
 /* 透過 */
 .jumbotron {
-  background-color:rgba(0,0,0,0);
+  /* pf background-color:rgba(0,0,0,0); */
 }
 
 /* ヘッダーリンク部分の文字色変更 */
 ul.nav.navbar-nav.navbar-right >li > a {
-  color: black;
+  color: white;
   &:hover {
-    color: white;
+    color: gray;
     text-decoration: none;
   }
 }
 /* ログイン後のアカウントバー背景変更 */
 ul.dropdown-menu {
-  background-color: #BAD3FF;
+  /*background-color: #BAD3FF;*/
 }
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #BAD3FF;
+  /*background-color: #BAD3FF;*/
 }
 
 /* footer */
@@ -147,9 +147,9 @@ footer {
   border-bottom: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
-    color: #FFFFEE;
+    color: black;
     &:hover {
-      color: #FFFFEE;
+      color: black;
     }
   }
   small {
@@ -366,12 +366,12 @@ div.container {
   font-size: 1.3em;
   font-weight: normal;
   padding-top: 20px;
-  color: #FFFFEE;
+  color: black;
   background-color: rgba(0,0,0,0.5);
   padding: 30px;
   text-align: center;
     a {
-      color: #005FFF;
+      color: black;
     }
   }
   img {
@@ -383,18 +383,18 @@ div.container {
 
 /* ログインページ  */
 div.col-md-6.col-md-offset-3 > form > a {
-  color: #CC0000;
+  color: black;
 }
 div.col-md-6.col-md-offset-3 {
-  color: #FFFFEE;
-  background-color: rgba(0,0,0,0.5);
+  color: black;
+  /*background-color: rgba(0,0,0,0.5);*/
   padding: 30px;
 }
 div.col-md-6.col-md-offset-3 > form {
   padding-bottom: 20px;
 }
 div.col-md-6.col-md-offset-3 > a {
-  color: #CC0000;
+  color: black;
   font-size: 20px;
   margin-top: 10px;
 }
@@ -403,10 +403,10 @@ div.col-md-6.col-md-offset-3 > a {
 div.container > h1 {
   padding-top: 20px;
   margin-top: 50px;
-  color: #FFFFEE;
+  color: black;
 }
 form#new_user.new_user > label {
-  color: #FFFFEE;
+  color: black;
 }
 form#new_user.new_user {
   padding: 30px;
@@ -414,85 +414,85 @@ form#new_user.new_user {
 
 /* みんなの投稿ページ　プロフィールページの表記 */
 section.user_info > span > a {
-  color: #FFFFEE;
+  color: black;
 }
 
 /* 投稿、ログインなどボタン変更 */
 input.btn.btn-primary {
-  background-color: #222222;
-  border: 0.5px solid white;
+  /*background-color: #222222;*/
+  /*border: 0.5px solid white;*/
   color: white;
   &:hover {
       text-decoration: none;
-      background-color: #333333;
+      /*background-color: #333333;*/
     }
 }
 /* ユーザー一覧 */
 .users {
-  background-color: rgba(0,0,0,0.5);
+  /*background-color: rgba(0,0,0,0.5);*/
   li {
-    color: #FFFFEE;
+    color: black;
   }
   a {
-    color: #FFFFEE;
+    color: black;
   }
 }
 
 /* 検索機能 */
 .user_search {
   text-align: center;
-  background-color: rgba(0,0,0,0.5);
+  /*background-color: rgba(0,0,0,0.5);*/
   padding: 30px;
   b {
-    color: #FFFFEE;
+    color: black;
     font-size: 20px;
   }
 }
 
 /* 画像選択の文字色 */
 input#micropost_picture {
-  color: #FFFFEE;
+  color: black;
 }
 
 /* プロフィールを更新　アイコン変更 */
 .gravatar_edit > a {
-  color: #FFFFEE;
+  color: black;
 }
 
 /* 投稿ページ　ユーザー名、投稿回数　文字色 */
 section.user_info {
   h1 {
-    color: #FFFFEE;
+    color: black;
     font-size: 28px;
   }
   span {
-    color: #FFFFEE;
+    color: black;
   }
 }
 
 /* 投稿ページ　フォローフォロワー　文字色 */
 .stats > a {
-  color: #FFFFEE;
+  color: black;
 }
 
 /* 投稿一覧　背景指定、透過 */
 ol.microposts {
   padding: 10px;
-  background-color: rgba(0,0,0,0.5);
-  color: #FFFFEE;
+  /*background-color: rgba(0,0,0,0.5);*/
+  color: black;
   span.user > a {
-    color: #FFFFEE;
+    color: black;
   }
 }
 
 /* 投稿画面タイトル　みんなの投稿など */
 .col-md-8 > h3 {
-  color: white;
+  color: black;
 }
 
 /* 投稿　削除する　文字色 */
 span.timestamp > a {
-  color: #DD0000;
+  color: black;
 }
 /* 5.1.2演習 
 img {
