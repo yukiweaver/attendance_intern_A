@@ -20,12 +20,13 @@
     </div>
   </div>
 <% else %>
+  <%# 勤怠で変更　%>
   <div class="center jumbotron">
     <h1>勤怠システム</h1>
 
     <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
     <h2>
-      アカウント作成はこちらから
+      アカウント作成は<a><%= link_to "こちら", signup_path %></a>から
     </h2>
   </div>
 
