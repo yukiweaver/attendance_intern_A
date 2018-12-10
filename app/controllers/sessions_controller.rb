@@ -2,20 +2,21 @@ class SessionsController < ApplicationController
 
   def new
   end
-
+  
+  #勤怠：二段階認証無効へ
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-      if user.activated?    #リスト 11.32: 有効でないユーザーがログインすることのないようにする
+      #if user.activated?    #リスト 11.32: 有効でないユーザーがログインすることのないようにする
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)  #リスト 9.23: [remember me] チェックボックスの送信結果を処理
         redirect_back_or user   #リスト 10.32: フレンドリーフォワーディングを備える
-      else
-        message  = "アカウントが有効化されていません。 "
-        message += "メールのリンクを確認してください。"
-        flash[:warning] = message
-        redirect_to root_url
-      end
+      #else
+        #message  = "アカウントが有効化されていません。 "
+        #message += "メールのリンクを確認してください。"
+        #flash[:warning] = message
+        #redirect_to root_url
+      #end
     else
       flash.now[:danger] = 'メールアドレス、またはパスワードが正しくありません。'
       render 'new'

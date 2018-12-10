@@ -1,11 +1,11 @@
 #リスト 10.43: データベース上にサンプルユーザーを生成するRailsタスク
 #リスト 11.4: サンプルユーザーを最初から有効にしておく
-User.create!(name:  "Example User",
+User.create!(name:  "植野 裕樹",
              email: "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
              admin:     true,
-             activated: true,
+             #activated: true,
              activated_at: Time.zone.now)
 
 99.times do |n|
@@ -16,7 +16,7 @@ User.create!(name:  "Example User",
               email: email,
               password:              password,
               password_confirmation: password,
-              activated: true,
+              #activated: true,
               activated_at: Time.zone.now)
 end
 

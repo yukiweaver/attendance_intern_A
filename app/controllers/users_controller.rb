@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
-    #@users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
     # pf: 検索機能追加でコード変更
-    @users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
+    #@users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
   end
   
   def show
@@ -20,12 +20,15 @@ class UsersController < ApplicationController
      @user = User.new
   end
   
+  #勤怠：二段階認証無効へ
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email    #リスト 11.23: ユーザー登録にアカウント有効化を追加→リスト 11.36で変更
-      flash[:info] = "メールを確認してアカウントを有効にしてください。"
-      redirect_to root_url   
+      #@user.send_activation_email    #リスト 11.23: ユーザー登録にアカウント有効化を追加→リスト 11.36で変更
+      #flash[:info] = "メールを確認してアカウントを有効にしてください。"
+      flash[:info] = "新規登録しました。"
+      #redirect_to root_url
+      redirect_to @user
     else
       render 'new'
     end
