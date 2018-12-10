@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = "プロフィールを更新しました。"   #リスト 10.12: ユーザーのupdateアクション
+      flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
       redirect_to @user
     else
       render 'edit'
