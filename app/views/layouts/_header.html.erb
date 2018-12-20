@@ -5,7 +5,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%#= link_to "ホーム", root_path %></li>
         <li><%= link_to "トップへ", root_path %></li>
-        <li><%#= link_to "WEAVER", help_path %></li>    <%# 勤怠でいらない %>
+        <li><%#= link_to "WEAVER", help_path %></li>    <%# 勤怠でいらない %> 
         <% if logged_in? %>
           <li><%= link_to "ユーザー一覧", users_path %></li>
           <li class="dropdown">
