@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       #@user.send_activation_email    #リスト 11.23: ユーザー登録にアカウント有効化を追加→リスト 11.36で変更
       #flash[:info] = "メールを確認してアカウントを有効にしてください。"
       flash[:info] = "新規登録しました。"
