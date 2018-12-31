@@ -20,7 +20,8 @@ class UsersController < ApplicationController
      @user = User.new
   end
   
-  #勤怠：二段階認証無効へ
+  # リスト 7.19: createアクションでStrong Parametersを使う
+  # 勤怠：二段階認証無効へ
   def create
     @user = User.new(user_params)
     if @user.save
@@ -75,9 +76,11 @@ class UsersController < ApplicationController
   end
   
   private
-
+  
+    # リスト 7.19: createアクションでStrong Parametersを使う
+    # 勤怠：Strong Parametersにbelong追加
     def user_params
-      params.require(:user).permit(:name, :email, :password,
+      params.require(:user).permit(:name, :email, :belong, :password,
                                    :password_confirmation)
     end
     

@@ -8,7 +8,7 @@
         <li><%#= link_to "WEAVER", help_path %></li> 
         <% if logged_in? %>
           <li><%= link_to "トップへ", root_path %></li>
-          <% if current_user.admin? %> <%# admin_userのみユーザー一覧表示 %>
+          <% if current_user.admin? %> <%# 勤怠：admin_userのみユーザー一覧表示 %>
             <li><%= link_to "ユーザー一覧", users_path %></li>
           <% end %>
           <li class="dropdown">
