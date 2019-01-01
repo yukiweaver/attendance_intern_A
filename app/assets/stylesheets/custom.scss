@@ -494,6 +494,12 @@ ol.microposts {
 span.timestamp > a {
   color: black;
 }
+
+/* ログイン画面の「こちら」 */
+div.col-md-6.col-md-offset-3 a {
+  font-size: 15px;
+  color: #337ab7;
+}
 /* 5.1.2演習 
 img {
   display: none;

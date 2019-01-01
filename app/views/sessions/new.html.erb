@@ -15,12 +15,12 @@
       <%# リスト 9.21: [remember me] チェックボックスをログインフォームに追加する  %>
       <%= f.label :remember_me, class: "checkbox inline" do %>
         <%= f.check_box :remember_me %>
-        <span>ログイン状態を保持します</span>
+        <span>ログイン情報を記憶する</span>
       <% end %>
 
       <%= f.submit "ログイン", class: "btn btn-primary" %>
     <% end %>
-
-    <a><%= link_to "新規登録はこちら!", signup_path %></a> <%# pf: pタグからaタグに変更 %>
+    
+    アカウント作成は<a href="/signup">こちら</a>から
   </div>
 </div>

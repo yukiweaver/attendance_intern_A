@@ -1,28 +1,47 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-    <%# リスト 14.23: フォロワーの統計情報を追加する %>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
+  <!-- 勤怠表示画面　一番上のテーブル -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>勤怠年月</th>
+        <th>指定勤務時間</th>
+        <th>基本時間</th>
+        <th>初日</th>
+      </tr>
+      
+      <tr>
+        <th>所属</th>
+        <th>氏名</th>
+        <th>コード</th>
+        <th></th>
+        <th>出勤日数</th>
+        <th>締め</th>
+      </tr>
+    </thead>
+  </table>
+  <br>
+  <!-- 勤怠表示画面　勤怠編集ボタン -->
+  <%= link_to "勤怠を編集", "#", class: "btn btn-primary" %>
   
-  <%# リスト 13.24: マイクロポストをユーザーのshowページ (プロフィール画面) に追加する %>
-  <div class="col-md-8">
-    <%# リスト 14.23: プロフィールページにフォロー用フォームを追加する %>
-    <%= render 'follow_form' if logged_in? %>
-    <% if @user.microposts.any? %>
-      <h3>投稿 (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
-    <% end %>
-  </div>
+  <!-- 勤怠表示画面　下のメインのテーブル -->
+  <table class="table table-bordered">
+    <tr>
+      <th>日付</th>
+      <th>曜日</th>
+      <th>出社</th>
+      <th>退社</th>
+      <th>在社時間</th>
+      <th>備考</th>
+    </tr>
+    
+    <tr>
+      <th>時</th>
+      <th>分</th>
+      <th></th>
+      <th>時</th>
+      <th>分</th>
+      <th></th>
+    </tr>
+  </table>
 </div>
