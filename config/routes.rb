@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   
+  get    '/basic_info/:id',  to: "users#basic_info"
+  
   #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
   resources :users do
     member do

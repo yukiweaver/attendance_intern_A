@@ -75,6 +75,11 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
   
+  #勤怠：基本情報の更新ページ
+  def basic_info
+    
+  end
+  
   private
   
     # リスト 7.19: createアクションでStrong Parametersを使う
