@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   
-  get    '/basic_info/:id',  to: "users#basic_info"
+  get    '/basic_info/:id',  to: "users#basic_info",  as: "basic_info"  #勤怠B：基本情報の修正ページへ遷移
   
   #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
   resources :users do

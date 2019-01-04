@@ -75,9 +75,9 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
   
-  #勤怠：基本情報の更新ページ
+  #勤怠B：基本情報の更新ページ
   def basic_info
-    
+    @user = User.find(params[:id])
   end
   
   private
