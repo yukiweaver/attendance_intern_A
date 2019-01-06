@@ -6,10 +6,10 @@
      <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>  <%# リスト 13.43 %>
     
-      <%= f.label :名前 %>
+      <%= f.label :指定勤務時間 %>
       <%= f.text_field :name, class: 'form-control' %>
 
-      <%= f.label :メールアドレス %>
+      <%= f.label :基本勤務時間 %>
       <%= f.email_field :email, class: 'form-control' %>
      <% end %>
   </div>
