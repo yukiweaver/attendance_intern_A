@@ -87,8 +87,8 @@ class UsersController < ApplicationController
       flash[:success] = "基本情報を更新しました。"
       redirect_to @user
     else
-      flash.now[:danger] = "基本情報の更新に失敗しました。"
-      render 'basic_info'
+      flash[:danger] = "基本情報の更新に失敗しました。"
+      redirect_to @user
     end
   end
   

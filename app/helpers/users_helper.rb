@@ -7,4 +7,9 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+  
+  #勤怠B：基本情報の修正値取得時に小数二桁まで取得
+  def basic_info_edit(time)
+    format("%.2f", ((time.hour * 60.0) + time.min)/60) if !time.blank?
+  end
 end
