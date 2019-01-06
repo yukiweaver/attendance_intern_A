@@ -1,3 +1,4 @@
+<!-- 基本情報の修正ページ手動で作成 -->
 <% provide(:title, "基本情報の更新") %>
 <h1>基本情報の更新</h1>
 
@@ -5,7 +6,7 @@
   <div class="col-md-6 col-md-offset-3">
      <%# 勤怠B：urlを指定しない場合、編集失敗時、アカウント情報ページに何故か飛ぶため、urlを指定 %>
      <%= form_for(@user, url: basic_info_update_path(@user), method: :post) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>  <%# リスト 13.43 %>
+      <%= render 'shared/error_messages', object: f.object %>
     
       <%= f.label :指定勤務時間 %>
       <%= f.time_field :designate_work_time, class: 'form-control' %>
