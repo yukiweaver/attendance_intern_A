@@ -13,11 +13,14 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
   
   get    '/basic_info/:id',  to: "users#basic_info",  as: "basic_info"  #勤怠B：基本情報の修正ページへ遷移
+  post   '/basic_info_update/:id', to: 'users#basic_info_update', as: 'basic_info_update'
   
   #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
   resources :users do
     member do
       get :following, :followers
+      #post :basic_info_update  #勤怠B：必要なし？
+      
     end
   end
   resources :account_activations, only: [:edit]   #リスト 11.1: アカウント有効化に使うリソース (edit) を追加

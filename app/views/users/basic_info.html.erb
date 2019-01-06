@@ -3,7 +3,8 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-     <%= form_for(@user) do |f| %>
+     <%# 勤怠B：urlを指定しない場合、編集失敗時、アカウント情報ページに何故か飛ぶため、urlを指定 %>
+     <%= form_for(@user, url: basic_info_update_path(@user), method: :post) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>  <%# リスト 13.43 %>
     
       <%= f.label :指定勤務時間 %>

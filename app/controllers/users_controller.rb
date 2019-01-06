@@ -80,13 +80,25 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
+  #勤怠B：基本情報を編集
+  def basic_info_update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "基本情報を更新しました。"
+      redirect_to @user
+    else
+      flash.now[:danger] = "基本情報の更新に失敗しました。"
+      render 'basic_info'
+    end
+  end
+  
   private
   
     # リスト 7.19: createアクションでStrong Parametersを使う
-    # 勤怠：Strong Parametersにbelong追加
+    # 勤怠：Strong Parametersにbelong,designate_work_time,basic_work_time追加
     def user_params
       params.require(:user).permit(:name, :email, :belong, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :designate_work_time, :basic_work_time)
     end
     
     #リスト 10.15: beforeフィルターにlogged_in_userを追加

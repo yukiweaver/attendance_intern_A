@@ -10,3 +10,5 @@ ja:
          belong: 所属
          password: パスワード
          password_confirmation: パスワード確認
+         designate_work_time: 指定勤務時間
+         basic_work_time: 基本勤務時間
