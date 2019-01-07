@@ -16,7 +16,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
-    @current_day = Date.today
+    @current_day = Date.today  #勤怠B：現在の年月日を取得
+    @last_month = @current_day.last_month
+    @next_month = @current_day.next_month
     #@current_day = Date.today.strftime("%Y")
     #@current_day2 = Date.today.strftime("%m")
   end
