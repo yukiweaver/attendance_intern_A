@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  require "date"  #勤怠B：Dateクラスを使用
+  
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,   #リスト 10.15 リスト 10.35 リスト 10.58
                                         :following, :followers]   #リスト 14.25
   before_action :correct_user,   only: [:edit, :update]   #リスト 10.25
@@ -14,6 +16,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
+    @current_day = Date.today
+    #@current_day = Date.today.strftime("%Y")
+    #@current_day2 = Date.today.strftime("%m")
   end
   
   def new
