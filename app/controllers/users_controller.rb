@@ -17,8 +17,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     @current_day = Date.today  #勤怠B：現在の年月日を取得
-    @last_month = @current_day.prev_month
-    @next_month = @current_day.next_month
+    
+    if params[:current_day] != nil
+      @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
+    end
+    
+    @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
+    @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
     #@last_month = @current_day.prev_month.strftime("%Y:%m")
     #@next_month = @current_day.next_month
     #@current_day = Date.today.strftime("%Y")

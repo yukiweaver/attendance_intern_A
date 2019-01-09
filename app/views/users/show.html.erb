@@ -5,9 +5,9 @@
     <thead>
       <tr>
         <th colspan="1">
-          <%= link_to "◀", user_path(params:{id: @user.id, current_day: @last_month}), class: "btn btn-sm btn-primary" %> 
+          <%= link_to "◀", user_path(params:{current_day: @last_month}), class: "btn btn-sm btn-primary" %> 
           <%= @current_day.year %>年 <%= @current_day.month %>月 時間管理表 
-          <%= link_to "▶", "#", class: "btn btn-sm btn-primary" %>
+          <%= link_to "▶", user_path(params:{current_day: @next_month}), class: "btn btn-sm btn-primary" %>
         </th>
         <th>指定勤務時間 <%= basic_info_edit(@user.designate_work_time) %></th> <%# 勤怠B：basic_info_edit UsersHelperで定義 %>
         <th colspan="3">基本時間 <%= basic_info_edit(@user.basic_work_time) %></th>
