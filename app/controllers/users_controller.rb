@@ -16,16 +16,19 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
-    @current_day = Date.today  #勤怠B：現在の年月日を取得
+    #@current_day = Date.today  #勤怠B：現在の年月日を取得
     
     if params[:current_day] != nil
       @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
-      
-      @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
-      @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
-      @first_day = @current_day.beginning_of_month.strftime("%m/%d")  #勤怠B：月初 表示01/09
-      @last_day = @current_day.end_of_month.strftime("%m/%d")  #勤怠B：月末 表示 01/31
+    else
+      @current_day = Date.new(Date.today.year, Date.today.month)
     end
+    
+    @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
+    @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
+    @first_day = @current_day.beginning_of_month  #勤怠B：月初
+    @last_day = @current_day.end_of_month  #勤怠B：月末
+    @week = %w(日 月 火 水 木 金 土 日)  #勤怠B：wdayメソッドは、その日の曜日を数値で戻す。(日曜が0)
     
     #@last_month = @current_day.prev_month.strftime("%Y:%m")
     #@next_month = @current_day.next_month
