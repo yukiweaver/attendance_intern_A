@@ -20,10 +20,13 @@ class UsersController < ApplicationController
     
     if params[:current_day] != nil
       @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
+      
+      @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
+      @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
+      @first_day = @current_day.beginning_of_month.strftime("%m/%d")  #勤怠B：月初 表示01/09
+      @last_day = @current_day.end_of_month.strftime("%m/%d")  #勤怠B：月末 表示 01/31
     end
     
-    @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
-    @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
     #@last_month = @current_day.prev_month.strftime("%Y:%m")
     #@next_month = @current_day.next_month
     #@current_day = Date.today.strftime("%Y")
