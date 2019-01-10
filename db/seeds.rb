@@ -6,6 +6,9 @@ User.create!(name:  "植野 裕樹",
              password_confirmation: "foobar",
              admin:     true,
              #activated: true,
+             belong: "営業",
+             designate_work_time: Time.zone.parse("10:00"),
+             basic_work_time: Time.zone.parse("10:00"),
              activated_at: Time.zone.now)
 
 99.times do |n|
@@ -17,6 +20,9 @@ User.create!(name:  "植野 裕樹",
               password:              password,
               password_confirmation: password,
               #activated: true,
+              belong: "営業",
+              designate_work_time: Time.zone.parse("10:00"),
+              basic_work_time: Time.zone.parse("10:00"),
               activated_at: Time.zone.now)
 end
 
