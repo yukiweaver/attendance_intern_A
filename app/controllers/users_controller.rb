@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     #@current_day = Date.today  #勤怠B：現在の年月日を取得
     
-    #
+    
     if params[:current_day] != nil
       @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
     else

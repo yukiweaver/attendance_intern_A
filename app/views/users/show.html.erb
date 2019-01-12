@@ -63,8 +63,8 @@
         <td></td>
         <!-- 第五項：出社ボタン -->
         <td>
-          <% if current_user == @user && date.beginning_time == nil && date.leaving_time == nil %>
-          <%= button_to("出社") %>
+          <% if current_user == @user && date.beginning_time.nil? && date.leaving_time.nil? && date.day == Date.today %>
+          <%= button_to "出社" %>
           <% end %>
         </td>
         
