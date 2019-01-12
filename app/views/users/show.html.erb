@@ -49,11 +49,30 @@
         <th></th>
       </tr>
     </thead>
+    <!-- 以下日付や曜日などデータ部分 -->
     <tbody>
       <% (@first_day..@last_day).each do |date| %>  <!-- 月初から月末までの繰り返しを変数dateに格納  -->
       <tr>
-        <td><%= date.month %>/<%= date.day %></td>
+        <!-- 第一項：日付 -->
+        <td><%= date.month %>/<%= date.day %></td>  <!-- 変数dateから月と日を取得 -->
+        <!-- 第二項：曜日 -->
         <td><%= @week[date.wday] %></td>  <!-- wdayメソッドは、その日の曜日を数値で戻す。(日曜が0) -->
+        <!-- 第三項：出社（hours) -->
+        <td></td>
+        <!-- 第四項：出社（minitue）-->
+        <td></td>
+        <!-- 第五項：出社ボタン -->
+        <td>
+          <% if current_user == @user && date.beginning_time == nil && date.leaving_time == nil %>
+          <%= button_to("出社") %>
+          <% end %>
+        </td>
+        
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
       <% end %>
     </tbody>

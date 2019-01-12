@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'attendances/edit'
+
   get 'password_resets/new'
 
   get 'password_resets/edit'

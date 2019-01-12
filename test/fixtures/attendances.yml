@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  beginning_time: 2019-01-12 09:02:28
+  leaving_time: 2019-01-12 09:02:28
+
+two:
+  beginning_time: 2019-01-12 09:02:28
+  leaving_time: 2019-01-12 09:02:28

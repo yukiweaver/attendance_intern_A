@@ -18,6 +18,7 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     #@current_day = Date.today  #勤怠B：現在の年月日を取得
     
+    #
     if params[:current_day] != nil
       @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
     else
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
     @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
     @first_day = @current_day.beginning_of_month  #勤怠B：月初
     @last_day = @current_day.end_of_month  #勤怠B：月末
-    @week = %w(日 月 火 水 木 金 土 日)  #勤怠B：wdayメソッドは、その日の曜日を数値で戻す。(日曜が0)
+    @week = %w(日 月 火 水 木 金 土 日)  #勤怠B：%wで配列へ
     
     #@last_month = @current_day.prev_month.strftime("%Y:%m")
     #@next_month = @current_day.next_month
