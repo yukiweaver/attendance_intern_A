@@ -34,14 +34,17 @@ class UsersController < ApplicationController
     # 月初から月末までの繰り返しをブロック変数dに格納  
     (@first_day..@last_day).each do |d|
       # any?メソッドでattendancesテーブルに各日付のデータがあるか。{}の中は条件?、つまりattendance_dayとブロック変数dが等しいか
-      # データがなければ、インスタンス変数を定義→attendancesテーブルのattendance_dayカラムデータはブロック変数dとする。つまり月初から月末のデータ
+      # データがなければ、インスタンス変数を定義(Attendanceモデルオブジェクト作成)
+      # →attendancesテーブルのattendance_dayカラムのデータはブロック変数dとする。つまり月初から月末のデータ
+      # newやbuildはデータベースに保存されなため.saveでデータベース保存
       if not @user.attendances.any?{|a| a.attendance_day == d}
         #@attendance = Attendance.new(attendance_day: d, user_id: @user.id) 以下の@attendanceと同意味
         @attendance = @user.attendances.build(attendance_day: d)
         @attendance.save
       end
       
-      #whereメソッドで検索条件付与 attendance_day >= @first_day, attendance_day <= @last_day
+      # whereメソッドで検索条件付与 attendance_day >= @first_day, attendance_day <= @last_day
+      # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
       @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
     end
    
