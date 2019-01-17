@@ -13,7 +13,7 @@ module UsersHelper
     format("%.2f", ((time.hour * 60.0) + time.min)/60) if !time.blank?
   end
   
-  def current_day_edit(day)
-    puts(@current_day.year, "年", @current_day.month, "月")
+  def attendance_params
+      params.require(:attendance).permit(:beginning_time, :leaving_time, :attendance_day)
   end
 end

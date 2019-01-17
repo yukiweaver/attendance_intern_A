@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  require "date"  #勤怠B：Dateクラスを使用
+  include UsersHelper
   
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,   #リスト 10.15 リスト 10.35 リスト 10.58
                                         :following, :followers]   #リスト 14.25
@@ -53,7 +53,11 @@ class UsersController < ApplicationController
   def beginning_time
     @user = User.find(params: id)
     @attendance = Attendance.all
-    @beginnig_time = @user.attendances.beginnig_time
+    @beginnig_time = @user.attendances.attendance_day
+    if @beginning_time.update_attributes(attendance_params)  #attendance_paramsはUsersHelperで定義
+      flash[:info] = "出社しました。"
+      redirect_to @user
+    end
   end
   
   def new
@@ -140,6 +144,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :belong, :password,
                                    :password_confirmation, :designate_work_time, :basic_work_time)
     end
+    
     
     #リスト 10.15: beforeフィルターにlogged_in_userを追加
     # beforeアクション
