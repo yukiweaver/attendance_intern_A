@@ -1,4 +1,5 @@
 <% provide(:title, @user.name) %>
+<% require "time" %>
 <div class="row">
   <!-- 勤怠表示画面　一番上のテーブル -->
   <table class="table table-bordered table-striped table-condensed">
@@ -58,13 +59,13 @@
         <!-- 第二項：曜日 -->
         <td><%= @week[date.attendance_day.wday] %></td>  <!-- wdayメソッドは、その日の曜日を数値で戻す。(日曜が0) -->
         <!-- 第三項：出社（hours) -->
-        <td></td>
+        <td><%= date.beginning_time %></td>
         <!-- 第四項：出社（minitue）-->
         <td></td>
         <!-- 第五項：出社ボタン -->
         <td>
           <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today %>
-          <%= button_to "出社" %>
+          <%= link_to "出社", beginning_time_path %>
           <% end %>
         </td>
         

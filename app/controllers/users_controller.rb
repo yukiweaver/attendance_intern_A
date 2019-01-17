@@ -47,7 +47,13 @@ class UsersController < ApplicationController
       # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
       @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
     end
-   
+  end
+  
+  #出社ボタン押した後
+  def beginning_time
+    @user = User.find(params: id)
+    @attendance = Attendance.all
+    @beginnig_time = @user.attendances.beginnig_time
   end
   
   def new

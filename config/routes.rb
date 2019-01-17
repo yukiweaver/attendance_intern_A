@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   
   get    '/basic_info/:id',  to: "users#basic_info",  as: "basic_info"  #勤怠B：基本情報の修正ページへ遷移
   post   '/basic_info_update/:id', to: 'users#basic_info_update', as: 'basic_info_update'  #勤怠B：基本情報の更新
-  
+  post   '/beginning_time/:id', to: 'users#beginning_time', as: 'beginning_time'
   #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
   resources :users do
     member do
