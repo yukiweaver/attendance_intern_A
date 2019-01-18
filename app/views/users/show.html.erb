@@ -65,7 +65,7 @@
         <!-- 第五項：出社ボタン -->
         <td>
           <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today %>
-          <%= link_to "出社", beginning_time_path %>
+          <%= button_to "出社", beginning_time_path %>
           <% end %>
         </td>
         

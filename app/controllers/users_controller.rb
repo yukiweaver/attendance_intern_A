@@ -51,10 +51,10 @@ class UsersController < ApplicationController
   
   #出社ボタン押した後
   def beginning_time
-    @user = User.find(params: id)
+    @user = User.find(params[:id])
     @attendance = Attendance.all
-    @beginnig_time = @user.attendances.attendance_day
-    if @beginning_time.update_attributes(attendance_params)  #attendance_paramsはUsersHelperで定義
+    @beginnig_time = @user.attendances.find_by(attendance_day: Date.today)
+    if @beginning_time.update_attributes(beginning_time: Time.now)
       flash[:info] = "出社しました。"
       redirect_to @user
     end
