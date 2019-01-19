@@ -59,17 +59,21 @@
         <!-- 第二項：曜日 -->
         <td><%= @week[date.attendance_day.wday] %></td>  <!-- wdayメソッドは、その日の曜日を数値で戻す。(日曜が0) -->
         <!-- 第三項：出社（hours) -->
-        <td><%= date.beginning_time if date.beginning_time != nil %></td>
+        <td><%= date.beginning_time.hour if date.beginning_time != nil %></td>
         <!-- 第四項：出社（minitue）-->
-        <td></td>
+        <td><%= date.beginning_time.min if date.beginning_time != nil %></td>
         <!-- 第五項：出社ボタン -->
         <td>
           <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today %>
           <%= button_to "出社", beginning_time_path %>
           <% end %>
         </td>
-        
-        <td></td>
+        <!-- 第六項：退社ボタン -->
+        <td>
+          <% if date.leaving_time.nil? && date.beginning_time != nil && date.attendance_day == Date.today %>
+            
+          <% end %>
+        </td>
         <td></td>
         <td></td>
         <td></td>
