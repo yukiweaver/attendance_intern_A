@@ -68,14 +68,16 @@
           <%= button_to "出社", beginning_time_path %>
           <% end %>
         </td>
-        <!-- 第六項：退社ボタン -->
+        <!-- 第六項：退社（hours） -->
+        <td><%= date.leaving_time.hour if date.leaving_time != nil %></td>
+        <!-- 第七項：退社（minitues） -->
+        <td><%= date.leaving_time.min if date.leaving_time != nil %></td>
+        <!-- 第八項：退社ボタン -->
         <td>
           <% if date.leaving_time.nil? && date.beginning_time != nil && date.attendance_day == Date.today %>
-            
+            <%= button_to "退社", leaving_time_path %>
           <% end %>
         </td>
-        <td></td>
-        <td></td>
         <td></td>
         <td></td>
       </tr>

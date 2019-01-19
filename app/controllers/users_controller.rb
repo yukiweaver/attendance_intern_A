@@ -53,20 +53,22 @@ class UsersController < ApplicationController
   
   #出社ボタン押した後
   def beginning_time
-    #@attendance = Attendance.find_by(params[:user_id])
-    #@attendance = Attendance.all
-    #@beginnig_time = @user.attendances.find_by(attendance_day: Date.today)
-    #@attendance.update_attributes(beginning_time: Time.now)
-    
-    #if @beginning_time.update_attributes(beginning_time: Time.now)
-      #flash[:info] = "出社しました。"
-      #redirect_to @user
-    #end
     @user = User.find(params[:id])
     @attendance = Attendance.all
     @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
     if @beginning_time.update_attributes(beginning_time: Time.now)
       flash[:info] = "出社しました。"
+      redirect_to @user
+    end
+  end
+  
+  #退社ボタン押した後
+  def leaving_time
+    @user = User.find(params[:id])
+    @attendance = Attendance.all
+    @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
+    if @leaving_time.update_attributes(leaving_time: Time.now)
+      flash[:info] = "退社しました。"
       redirect_to @user
     end
   end
