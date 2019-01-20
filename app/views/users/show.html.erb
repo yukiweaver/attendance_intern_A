@@ -20,7 +20,7 @@
         <th>氏名 <%= @user.name %></th>
         <th>コード</th>
         <th>123</th>
-        <th>出勤日数</th>
+        <th>出勤日数 <%= @attendance_day %></th>
         <th>締め <%= @last_day.strftime("%m/%d") %></th>
       </tr>
     </thead>
@@ -88,6 +88,10 @@
         <td></td>
       </tr>
       <% end %>
+      <td colspan="2">総合勤務時間</td>
+      <td colspan="6"></td>
+      <td>在社時間の合計 <%= format("%2f", (@total_time)/3600) %></td>
+      <td></td>
     </tbody>
   </table>
 </div>

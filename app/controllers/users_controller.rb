@@ -49,6 +49,15 @@ class UsersController < ApplicationController
       # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
       @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
     end
+    
+    i = 1
+    @date.each do |date|
+      if date.beginning_time != nil && date.leaving_time != nil
+        @company_time = date.leaving_time - date.beginning_time
+        @total_time = @total_time.to_i + @company_time.to_i
+        i = i + 1
+      end
+    end
   end
   
   #出社ボタン押した後
