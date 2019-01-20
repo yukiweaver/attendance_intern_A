@@ -56,7 +56,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @attendance = Attendance.all
     @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
-    if @beginning_time.update_attributes(beginning_time: Time.now)
+    if @beginning_time.update_attributes(beginning_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+      Time.now.hour, Time.now.min))
       flash[:info] = "出社しました。"
       redirect_to @user
     end
@@ -67,7 +68,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @attendance = Attendance.all
     @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
-    if @leaving_time.update_attributes(leaving_time: Time.now)
+    if @leaving_time.update_attributes(leaving_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+      Time.now.hour, Time.now.min))
       flash[:info] = "退社しました。"
       redirect_to @user
     end
@@ -150,10 +152,6 @@ class UsersController < ApplicationController
   end
   
   private
-  
-  def attendance_params
-    params.require(:attendance).permit(:user_id, :beginning_time, :leaving_time, :attendance_day)
-  end
   
     # リスト 7.19: createアクションでStrong Parametersを使う
     # 勤怠：Strong Parametersにbelong,designate_work_time,basic_work_time追加

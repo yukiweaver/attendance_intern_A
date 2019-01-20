@@ -78,7 +78,12 @@
             <%= button_to "退社", leaving_time_path %>
           <% end %>
         </td>
-        <td></td>
+        <!-- 第九項：在社時間 -->
+        <td>
+          <% if date.beginning_time != nil && date.leaving_time != nil %>
+            <%= (date.leaving_time - date.beginning_time)/3600.round(2) %>
+          <% end %>
+        </td>
         <td></td>
       </tr>
       <% end %>
