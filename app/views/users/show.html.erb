@@ -81,7 +81,7 @@
         <!-- 第九項：在社時間 -->
         <td>
           <% if date.beginning_time != nil && date.leaving_time != nil %>
-            <%= (date.leaving_time - date.beginning_time)/3600.round(2) %>
+            <%= time_10div(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：time_10divはUsersHelperで定義 -->
           <% end %>
         </td>
         <td></td>
