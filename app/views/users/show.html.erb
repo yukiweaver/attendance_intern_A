@@ -81,9 +81,10 @@
         <!-- 第九項：在社時間 -->
         <td>
           <% if date.beginning_time != nil && date.leaving_time != nil %>
-            <%= time_10div(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：time_10divはUsersHelperで定義 -->
+            <%= company_time(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_timeはUsersHelperで定義 -->
           <% end %>
         </td>
+        <!-- 第十項：備考 -->
         <td></td>
       </tr>
       <% end %>

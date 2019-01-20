@@ -14,7 +14,7 @@ module UsersHelper
   end
   
   # 勤怠B：勤怠表示画面 在社時間 差分式
-  def time_10div(time)
+  def company_time(time)
     format("%.2f",(time)/3600)
   end
 end
