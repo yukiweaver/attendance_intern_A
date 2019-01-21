@@ -56,7 +56,7 @@ class UsersController < ApplicationController
         @company_time = date.leaving_time - date.beginning_time
         @start_company_time = 0
         @total_company_time = (@start_company_time + @company_time)/3600
-        @attendance_count = @user.attendances.where("beginning_time != ? or leaving_time != ?", blank?, blank?).count
+        @attendance_count = @user.attendances.where("beginning_time != ? or leaving_time != ?", nil?, nil?).count
       end
     end
   end

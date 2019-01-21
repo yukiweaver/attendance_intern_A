@@ -107,7 +107,7 @@
         在社時間の合計
         <% if @company_time != nil %>
           <%= total_company_edit(@total_company_time) %>  <!-- total_company_editはUsersHelperで定義 -->
-        <% else @company_time = nil %>
+        <% else @company_time == nil %>
           0.00
         <% end %>
       </td>
