@@ -50,12 +50,13 @@ class UsersController < ApplicationController
       @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
     end
     
-    
+    # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
     @date.each do |date|
       if date.beginning_time != nil && date.leaving_time != nil
         @company_time = date.leaving_time - date.beginning_time
         @start_company_time = 0
         @total_company_time = (@start_company_time + @company_time)/3600
+        @attendance_count = @user.attendances.where("beginning_time != ? or leaving_time != ?", blank?, blank?).count
       end
     end
   end

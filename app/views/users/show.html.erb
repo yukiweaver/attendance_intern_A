@@ -20,7 +20,13 @@
         <th>氏名 <%= @user.name %></th>
         <th>コード</th>
         <th>123</th>
-        <th>出勤日数 <%= @attendance_day %></th>
+        <th>出勤日数
+          <% if @attendance_count != nil %>
+          <%= @attendance_count %>日
+          <% else %>
+          0日
+          <% end %>
+        </th>
         <th>締め <%= @last_day.strftime("%m/%d") %></th>
       </tr>
     </thead>
@@ -81,7 +87,7 @@
         <!-- 第九項：在社時間 -->
         <td>
           <% if date.beginning_time != nil && date.leaving_time != nil %>
-            <%= company_time(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_timeはUsersHelperで定義 -->
+            <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
           <% end %>
         </td>
         <!-- 第十項：備考 -->
