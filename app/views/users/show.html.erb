@@ -94,13 +94,21 @@
         <td></td>
       </tr>
       <% end %>
-      <td colspan="2">総合勤務時間</td>
+      <td colspan="2">
+        総合勤務時間
+        <% if @user.basic_work_time != nil && @attendance_count != nil %>
+          <%= basic_info_edit(@user.basic_work_time) * @attendance_count %>
+        <% else @attendance == nil %>
+          0.00
+        <% end %>
+      </td>
       <td colspan="6"></td>
       <td>
         在社時間の合計
         <% if @company_time != nil %>
-        <%#= format("%2f",(@total_company_time.to_f)/3600.to_f).to_i.round(2) %>
-        <%= total_company_edit(@total_company_time) %>  <!-- total_company_editはUsersHelperで定義 -->
+          <%= total_company_edit(@total_company_time) %>  <!-- total_company_editはUsersHelperで定義 -->
+        <% else @company_time = nil %>
+          0.00
         <% end %>
       </td>
       <td></td>
