@@ -90,7 +90,12 @@
       <% end %>
       <td colspan="2">総合勤務時間</td>
       <td colspan="6"></td>
-      <td>在社時間の合計 <%#=  %></td>
+      <td>
+        在社時間の合計
+        <% if @company_time != nil %>
+        <%= @total_company_time %>
+        <% end %>
+      </td>
       <td></td>
     </tbody>
   </table>
