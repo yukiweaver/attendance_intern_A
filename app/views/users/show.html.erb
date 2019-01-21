@@ -93,7 +93,8 @@
       <td>
         在社時間の合計
         <% if @company_time != nil %>
-        <%= @total_company_time %>
+        <%#= format("%2f",(@total_company_time.to_f)/3600.to_f).to_i.round(2) %>
+        <%= total_company_edit(@total_company_time) %>  <!-- total_company_editはUsersHelperで定義 -->
         <% end %>
       </td>
       <td></td>

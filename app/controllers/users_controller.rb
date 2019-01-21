@@ -54,10 +54,8 @@ class UsersController < ApplicationController
     @date.each do |date|
       if date.beginning_time != nil && date.leaving_time != nil
         @company_time = date.leaving_time - date.beginning_time
-        # @start_company_time = 0
-        # @total_company_time = @start_company_time + @company_time.to_i
-        # @total_company_time = @total_company_time.to_i + @company_time.to_i
-        @total_company_time = @total_company_time.to_i + @company_time.to_i
+        @start_company_time = 0
+        @total_company_time = (@start_company_time + @company_time)/3600
       end
     end
   end
