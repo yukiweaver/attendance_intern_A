@@ -1,3 +1,4 @@
+<h1>勤怠編集ページ</h1>
 <div class="row">
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -12,14 +13,22 @@
     </thead>
     
     <tbody>
+      <% (@first_day..@last_day).each do |date| %>
       <tr>
-        <td>1/1</td>
+        <!-- 第一項：日付 -->
+        <td><%= date %></td>
+        <!-- 第二項：曜日 -->
         <td></td>
+        <!-- 第三項：出社時間 -->
         <td></td>
+        <!-- 第四項：退社時間 -->
         <td></td>
+        <!-- 第五項：在社時間 -->
         <td></td>
+        <!-- 第六項：備考 -->
         <td></td>
       </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

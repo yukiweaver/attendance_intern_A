@@ -22,8 +22,4 @@ module UsersHelper
   def total_company_edit(time)
     number_with_precision time/3600, precision:2
   end
-  
-  def comprehensive_working_times(time)
-    format("%.2f", time) if !time.blank?
-  end
 end
