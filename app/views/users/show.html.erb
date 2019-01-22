@@ -97,7 +97,7 @@
       <td colspan="2">
         総合勤務時間
         <% if @user.basic_work_time != nil && @attendance_count != nil %>
-          <%= format("%2f",(basic_info_edit(@user.basic_work_time).to_f * comprehensive_working_times(@attendance_count).to_f)) %>
+          <%= number_with_precision basic_info_edit(@user.basic_work_time).to_f * @attendance_count.to_f, precision:2 %>
         <% else @attendance_count == nil %>
           0.00
         <% end %>
