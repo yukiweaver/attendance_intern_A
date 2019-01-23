@@ -15,7 +15,7 @@
     
     <tbody>
       <div class="col-md-6 col-md-offset-3">
-        <%= form_for(@attendance, url: attendance_update_path, method: :post) do |f| %>
+        <%= form_for(@attendance, url: attendance_update_path, method: :put) do |f| %>
           <% @date.each do |date| %>
             <%= fields_for "attendances[]", date do |a| %>
               <tr>
@@ -38,6 +38,7 @@
               </tr>
             <% end %>
           <% end %>
+          <%= f.submit "更新", class: "btn btn-primary" %>
         <% end %>
       </div>
     </tbody>
