@@ -16,8 +16,8 @@
     <tbody>
       <div class="col-md-6 col-md-offset-3">
         <%= form_for(@attendance, url: attendance_update_path, method: :post) do |f| %>
-          <%#= fields_for "attendances[]", attendance do |a| %>
-            <% @date.each do |date| %>
+          <% @date.each do |date| %>
+            <%= fields_for "attendances[]", date do |a| %>
               <tr>
                 <!-- 第一項：日付 -->
                 <td><%= date.attendance_day.month %>/<%= date.attendance_day.day %></td>
@@ -25,11 +25,11 @@
                 <td><%= @week[date.attendance_day.wday] %></td>
                 <!-- 第三項：出社時間 -->
                 <td>
-                  <%= f.time_field :beginning_time, class: 'form-control' %>
+                  <%= a.time_field :beginning_time, class: 'form-control' %>
                 </td>
                 <!-- 第四項：退社時間 -->
                 <td>
-                  <%= f.time_field :leaving_time, class: 'form-control' %>
+                  <%= a.time_field :leaving_time, class: 'form-control' %>
                 </td>
                 <!-- 第五項：在社時間 -->
                 <td></td>
@@ -37,7 +37,7 @@
                 <td></td>
               </tr>
             <% end %>
-          <%# end %>
+          <% end %>
         <% end %>
       </div>
     </tbody>
