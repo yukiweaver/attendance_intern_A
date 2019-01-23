@@ -5,7 +5,7 @@ class AttendancesController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    @attendance = Attendance.find(params[:id])
+    @attendance = @user.attendances.build
     @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
     @last_month = @current_day.last_month
     @next_month = @current_day.next_month
@@ -15,6 +15,7 @@ class AttendancesController < ApplicationController
     
     (@first_day..@last_day).each do |d|
       if not @user.attendances.any?{|a| a.attendance_day == d}
+        #@attendance = Attendance.new(attendance_day: d, user_id: @user.id) 以下の@attendanceと同意味
         @attendance1 = @user.attendances.build(attendance_day: d)
         @attendance1.save
       end
@@ -25,5 +26,18 @@ class AttendancesController < ApplicationController
   def update
     @user = User.find(params[:id])
     @attendance = Attendance.find(paramas:[:id])
+    if @user.update_attributes(attendance_params)
+      flash[:success] = "勤怠編集情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
+  
+  private
+  
+    # 勤怠B：Strong Parameters
+    def attendance_params
+      params.require(:attendance).permit(:user_id, :beginning_time, :leaving_time, :attendance_day)
+    end
 end
