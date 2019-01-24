@@ -33,17 +33,18 @@ class AttendancesController < ApplicationController
     end
   end
   
-  # 勤怠B：勤怠編集ページ更新
+  #勤怠B：勤怠編集ページ更新
   def attendance_update
     @user = User.find(params[:id])
-    @attendance = @user.attendances.find(params[:id])
+    @attendance = @user.attendances.find_by(attendance_day: @first_day..@last_day)
     if @attendance.update_attributes(attendance_params)
       flash[:success] = "勤怠編集情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
       redirect_to @user
     else
-      render 'edit'
+      render 'attendance_edit'
     end
   end
+  
   
   private
   

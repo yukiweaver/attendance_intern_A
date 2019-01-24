@@ -42,7 +42,7 @@
               </tr>
             <% end %>
           <% end %>
-          <%= f.submit "更新", class: "btn btn-primary" %>
+          <%= f.submit "更新", url: attendance_update_path, method: :post, class: "btn btn-primary" %>
         <% end %>
       </div>
     </tbody>
