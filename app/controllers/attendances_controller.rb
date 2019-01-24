@@ -3,7 +3,7 @@ class AttendancesController < ApplicationController
   require "time"
   include AttendancesHelper
   
-  def edit
+  def attendance_edit
     @user = User.find(params[:id])
     @attendance = @user.attendances.build
     @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
@@ -21,10 +21,20 @@ class AttendancesController < ApplicationController
       end
       @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
     end
+    
+    # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
+    @date.each do |date|
+      if date.beginning_time != nil && date.leaving_time != nil
+        @company_time = date.leaving_time - date.beginning_time
+        #@start_company_time = 0
+        @total_company_time = (@total_company_time.to_f + @company_time)
+        @attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ?", nil?, nil?).count
+      end
+    end
   end
   
   # 勤怠B：勤怠編集ページ更新
-  def update
+  def attendance_update
     @user = User.find(params[:id])
     @attendance = @user.attendances.find(params[:id])
     if @attendance.update_attributes(attendance_params)
