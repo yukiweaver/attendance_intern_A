@@ -36,7 +36,7 @@ class AttendancesController < ApplicationController
   #勤怠B：勤怠編集ページ更新
   def attendance_update
     @user = User.find(params[:id])
-    @attendance = @user.attendances.find_by(attendance_day: @first_day..@last_day)
+    @attendance = @user.attendances.find_by(params[:id])
     if @attendance.update_attributes(attendance_params)
       flash[:success] = "勤怠編集情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
       redirect_to @user
@@ -49,12 +49,12 @@ class AttendancesController < ApplicationController
   private
   
     # 勤怠B：Strong Parameters
-     #def attendance_params
-       #params.require(:attendance).permit(:beginning_time, :leaving_time)
-     #end
-     def attendance_params
+    # def attendance_params
+    #   params.require(:attendance).permit(:beginning_time, :leaving_time)
+    # end
+    def attendance_params
       params.permit(attendances: [:beginning_time, :leaving_time, :id, :user_id])[:attendances]
-     end
+    end
     # def user_params
     #   params.require(:user).permit(:name, :email, :belong, :password,
     #                               :password_confirmation, :designate_work_time, :basic_work_time,

@@ -44,13 +44,7 @@ GEM
     autoprefixer-rails (9.3.1)
       execjs
     bcrypt (3.1.12)
-    better_errors (2.5.0)
-      coderay (>= 1.0.0)
-      erubi (>= 1.0.0)
-      rack (>= 0.9.0)
     bindex (0.5.0)
-    binding_of_caller (0.8.0)
-      debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -72,7 +66,6 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
-    debug_inspector (0.0.3)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     dry-inflector (0.1.2)
@@ -305,6 +298,8 @@ GEM
     pry (0.12.0)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     puma (3.9.1)
     rack (2.0.5)
     rack-test (1.1.0)
@@ -413,8 +408,6 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (= 3.1.12)
-  better_errors
-  binding_of_caller
   bootstrap-sass (= 3.3.7)
   bootstrap-will_paginate (= 1.0.0)
   byebug (= 9.0.6)
@@ -431,6 +424,7 @@ DEPENDENCIES
   minitest (= 5.10.3)
   minitest-reporters (= 1.1.14)
   pg (= 0.20.0)
+  pry-rails
   puma (= 3.9.1)
   rails (= 5.1.6)
   rails-controller-testing (= 1.0.2)

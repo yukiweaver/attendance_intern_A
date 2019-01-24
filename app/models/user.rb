@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   #勤怠B：attendancesテーブルと紐付け。userがattendanceを複数所有。
-  has_many :attendances, dependent: :destroy
-  
+  has_many :attendances, dependent: :destroy,
+                         foreign_key: "user_id"
   has_many :microposts, dependent: :destroy    #リスト 13.11 リスト 13.19
   #リスト 14.2: 能動的関係に対して1対多 (has_many) の関連付けを実装する
   has_many :active_relationships, class_name:  "Relationship",
