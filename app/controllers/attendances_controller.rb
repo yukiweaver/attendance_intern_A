@@ -3,6 +3,7 @@ class AttendancesController < ApplicationController
   require "time"
   include AttendancesHelper
   
+  # 勤怠B：勤怠編集ページ
   def attendance_edit
     @user = User.find(params[:id])
     @attendance = @user.attendances.build
@@ -36,7 +37,7 @@ class AttendancesController < ApplicationController
   #勤怠B：勤怠編集ページ更新
   def attendance_update
     @user = User.find(params[:id])
-    @attendance = @user.attendances.find_by(params[:id])
+    @attendance = @user.attendances.where(attendance_day: Time.now.beginning_of_month..Time.now.end_of_month)
     if @attendance.update_attributes(attendance_params)
       flash[:success] = "勤怠編集情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
       redirect_to @user

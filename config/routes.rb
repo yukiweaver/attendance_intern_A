@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :following, :followers
-      #post :basic_info_update  #勤怠B：必要なし？
       
     end
   end
