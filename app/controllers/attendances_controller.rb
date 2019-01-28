@@ -56,9 +56,6 @@ class AttendancesController < ApplicationController
       if @attendance.update_attributes(bt)
         flash[:success] = "勤怠編集情報を更新しました。"
         #redirect_to @user and return
-      else
-        flash[:danger] = "勤怠編集情報の更新に失敗しました。"
-        render 'attendance_edit'
       end
     end
     redirect_to @user
