@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   # 勤怠B：勤怠編集ページ
   def attendance_edit
     @user = User.find(params[:id])
-    @attendance = @user.attendances.find(params[:id])
+    #@attendance = Attendance.find(params[:id])
     @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
     @last_month = @current_day.last_month
     @next_month = @current_day.next_month
@@ -55,11 +55,13 @@ class AttendancesController < ApplicationController
       @attendance = @user.attendances.find(at)
       if @attendance.update_attributes(bt)
         flash[:success] = "勤怠編集情報を更新しました。"
-        redirect_to @user and return
+        #redirect_to @user and return
       else
+        flash[:danger] = "勤怠編集情報の更新に失敗しました。"
         render 'attendance_edit'
       end
     end
+    redirect_to @user
   end
   
   
