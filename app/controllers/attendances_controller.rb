@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   # 勤怠B：勤怠編集ページ
   def attendance_edit
     @user = User.find(params[:id])
-    @attendance = @user.attendances.build
+    @attendance = @user.attendances.find(params[:id])
     @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
     @last_month = @current_day.last_month
     @next_month = @current_day.next_month
@@ -35,14 +35,30 @@ class AttendancesController < ApplicationController
   end
   
   #勤怠B：勤怠編集ページ更新
+  # def attendance_update
+  #   @user = User.find(params[:id])
+  #   @attendance = @user.attendances.where(attendance_day: Time.now.beginning_of_month..Time.now.end_of_month)
+  #   @attendance.each do |at|
+  #     if at.update_attributes(attendance_params)
+  #       flash[:success] = "勤怠編集情報を更新しました。"
+  #       redirect_to @user
+  #     else
+  #       render 'attendance_edit'
+  #     end
+  #   end
+  # end
+  
+  # 勤怠B：勤怠編集ページ更新
   def attendance_update
     @user = User.find(params[:id])
-    @attendance = @user.attendances.where(attendance_day: Time.now.beginning_of_month..Time.now.end_of_month)
-    if @attendance.update_attributes(attendance_params)
-      flash[:success] = "勤怠編集情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
-      redirect_to @user
-    else
-      render 'attendance_edit'
+    attendance_params.each do |at, bt|
+      @attendance = @user.attendances.find(at)
+      if @attendance.update_attributes(bt)
+        flash[:success] = "勤怠編集情報を更新しました。"
+        redirect_to @user and return
+      else
+        render 'attendance_edit'
+      end
     end
   end
   
@@ -54,7 +70,7 @@ class AttendancesController < ApplicationController
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
     # end
     def attendance_params
-      params.permit(attendances: [:beginning_time, :leaving_time, :id, :user_id])[:attendances]
+      params.permit(attendances: [:beginning_time, :leaving_time])[:attendances]
     end
     # def user_params
     #   params.require(:user).permit(:name, :email, :belong, :password,
