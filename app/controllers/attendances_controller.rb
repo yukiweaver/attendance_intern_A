@@ -53,7 +53,14 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     attendance_params.each do |at, bt|
       @attendance = @user.attendances.find(at)
-      if @attendance.update_attributes(bt)
+      if @attendance.attendance_day.future?
+        flash[:info] = "当日より未来は編集できません。"
+      elsif bt["beginning_time"].blank? && bt["leaving_time"].blank?
+      elsif bt["beginning_time"].blank? || bt["leaving_time"].blank?
+        flash[:danger] = "出勤または退勤のみの編集はできません。"
+      elsif bt["beginning_time"] > bt["leaving_time"]
+        flash[:warning] = "出勤より退勤のほうが長く編集してください。"
+      else @attendance.update_attributes(bt)
         flash[:success] = "勤怠編集情報を更新しました。"
         #redirect_to @user and return
       end
@@ -64,13 +71,14 @@ class AttendancesController < ApplicationController
   
   private
   
-    # 勤怠B：Strong Parameters
-    # def attendance_params
-    #   params.require(:attendance).permit(:beginning_time, :leaving_time)
-    # end
+    # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに工夫が必要
     def attendance_params
       params.permit(attendances: [:beginning_time, :leaving_time])[:attendances]
     end
+    # def attendance_params
+    #   params.require(:attendance).permit(:beginning_time, :leaving_time)
+    # end
+    
     # def user_params
     #   params.require(:user).permit(:name, :email, :belong, :password,
     #                               :password_confirmation, :designate_work_time, :basic_work_time,
