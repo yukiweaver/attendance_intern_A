@@ -7,7 +7,7 @@ class AttendancesController < ApplicationController
   def attendance_edit
     @user = User.find(params[:id])
     
-    # 管理者のみ全ユーザーの勤怠編集ページに遷移可能
+    # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
     if current_user.admin? || current_user?(@user)
       #@attendance = Attendance.find(params[:id])
       @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
@@ -60,14 +60,21 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     attendance_params.each do |at, bt|
       @attendance = @user.attendances.find(at)
-      #binding.pry
+      
+      # 管理者も他ユーザーも未来日を更新することはできない
       if current_user.admin? && @attendance.attendance_day.future?
       elsif current_user?(@user) && @attendance.attendance_day.future?
+      
+      # 出勤時間、退勤時間どちらかが空欄だと更新できない
       elsif bt["beginning_time"].blank? && bt["leaving_time"].blank?
       elsif bt["beginning_time"].blank? || bt["leaving_time"].blank?
         flash[:danger] = "出勤時間または退勤時間が空欄です。"
+        
+      # 出勤時間より退勤時間の方が早い時間だと更新できない
       elsif bt["beginning_time"] > bt["leaving_time"]
         flash[:warning] = "出勤時間と退勤時間に誤りがあります。"
+        
+      # これら以外だと更新できる
       else @attendance.update_attributes(bt)
         flash[:success] = "勤怠編集情報を更新しました。しかし、本日以降は更新できません。"
         #redirect_to @user and return
