@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
      <%# 勤怠B：urlを指定しない場合、編集失敗時、アカウント情報ページに飛んでしまうため、urlを指定 %>
-     <%= form_for(@user, url: basic_info_update_path(@user), method: :post) do |f| %>
+     <%= form_for(@user, url: basic_info_update_path, method: :post) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
     
       <%= f.label :指定勤務時間 %>
