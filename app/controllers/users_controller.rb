@@ -154,6 +154,11 @@ class UsersController < ApplicationController
   #勤怠B：基本情報の更新ページ
   def basic_info
     @user = User.find(params[:id])
+    if current_user.admin?
+    else
+      flash[:danger] = "基本情報更新ページへ遷移することはできません。"
+      redirect_to @user
+    end
   end
   
   #勤怠B：基本情報を編集

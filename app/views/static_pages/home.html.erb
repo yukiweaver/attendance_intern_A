@@ -1,37 +1,9 @@
-<%# リスト 13.37: Homeページ (/) にマイクロポストの投稿フォームを追加 %>
-<% if logged_in? %>
-  <div class="row">
-    <aside class="col-md-4">
-      <section class="user_info">
-        <%= render 'shared/user_info' %>
-      </section>
-      <%# リスト 14.17: Homeページにフォロワーの統計情報を追加する %>
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>
-      <section class="micropost_form">
-        <%= render 'shared/micropost_form' %>
-      </section>
-    </aside>
-    <%# リスト 13.49: Homeページにステータスフィードを追加 %>
-    <div class="col-md-8">
-      <h3>投稿一覧</h3>
-      <%= render 'shared/feed' %>
-    </div>
-  </div>
-<% else %>
-  <%# 勤怠で変更　%>
-  <div class="center jumbotron">
-    <h1>勤怠システム</h1>
+<%# 勤怠で変更　%>
+<div class="center jumbotron">
+  <h1>勤怠システム</h1>
 
-    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
-    <h2>
-      アカウント作成は<a><%= link_to "こちら", signup_path %></a>から
-    </h2>
-  </div>
-
-  <%#= link_to image_tag("rails.png", alt: "Rails logo"),
-              'http://rubyonrails.org/' %>
-<% end %>
-<%# ↓猫の画像 %>
-<%#= link_to image_tag("kitten.jpg", alt: "Rails logo")  %>
+  <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
+  <h2>
+    アカウント作成は<a><%= link_to "こちら", signup_path %></a>から
+  </h2>
+</div>
