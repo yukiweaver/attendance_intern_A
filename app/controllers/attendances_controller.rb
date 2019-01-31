@@ -60,7 +60,6 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     attendance_params.each do |at, bt|
       @attendance = @user.attendances.find(at)
-      
       # 管理者も他ユーザーも未来日を更新することはできない
       if current_user.admin? && @attendance.attendance_day.future?
       elsif current_user?(@user) && @attendance.attendance_day.future?
