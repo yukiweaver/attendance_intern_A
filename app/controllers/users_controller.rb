@@ -11,6 +11,11 @@ class UsersController < ApplicationController
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
     @users = User.paginate(page: params[:page])
+    if current_user.admin?
+    else
+      flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
+      redirect_to "/"
+    end
     # pf: 検索機能追加でコード変更
     #@users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
   end
