@@ -32,7 +32,9 @@ class UsersController < ApplicationController
       if params[:current_day] != nil
         @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
       else
-        @current_day = Date.new(Date.today.year, Date.today.month)
+        #以下だと月をまたぐと反映されない
+        #@current_day = Date.new(Date.today.year, Date.today.month)
+        @current_day = Date.today
       end
       
       @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
@@ -64,7 +66,7 @@ class UsersController < ApplicationController
           @company_time = date.leaving_time - date.beginning_time
           #@start_company_time = 0
           @total_company_time = (@total_company_time.to_f + @company_time)
-          @attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ?", nil?, nil?).count
+          @attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ? and attendance_day >= ? and attendance_day <= ?", nil?, nil?, @first_day, @last_day).count
         end
       end
     else
