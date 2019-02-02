@@ -8,6 +8,7 @@ class StaticPagesController < ApplicationController
     # end
   end
   
+  # 勤怠B：ログイン時のトップページ（管理者ログイン時のヘッダーに伴う）
   def top
     if logged_in?
       @user = current_user

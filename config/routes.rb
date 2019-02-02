@@ -9,12 +9,11 @@ Rails.application.routes.draw do
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
   get    '/contact', to: 'static_pages#contact'
-  
-  get    '/users/index',  to: 'users#index',  as: "users"
   get    '/signup',  to: 'users#new'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  get    '/users/index',  to: 'users#index',  as: "users"  # 勤怠B：ユーザー一覧（管理者ログイン時のヘッダーに伴う）
   
   get    '/basic_info/:id',  to: "users#basic_info",  as: "basic_info"  #勤怠B：基本情報の修正ページへ遷移
   post   '/basic_info_update/:id', to: 'users#basic_info_update', as: 'basic_info_update'  #勤怠B：基本情報の更新
@@ -34,5 +33,5 @@ Rails.application.routes.draw do
   resources :microposts,          only: [:create, :destroy]   #リスト 13.30: マイクロポストリソースのルーティング
   resources :relationships,       only: [:create, :destroy]   #リスト 14.20: Relationshipリソース用のルーティング
   
-  get    '//:id',    to: 'static_pages#top',  as: "top"
+  get    '//:id',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
 end
