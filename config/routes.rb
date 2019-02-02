@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]   #リスト 12.1: パスワード再設定用リソースを追加
   resources :microposts,          only: [:create, :destroy]   #リスト 13.30: マイクロポストリソースのルーティング
   resources :relationships,       only: [:create, :destroy]   #リスト 14.20: Relationshipリソース用のルーティング
+  
+  get    '//:id',    to: 'static_pages#top',  as: "top"
 end

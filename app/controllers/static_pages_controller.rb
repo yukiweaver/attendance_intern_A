@@ -7,6 +7,12 @@ class StaticPagesController < ApplicationController
       @feed_items = current_user.feed.paginate(page: params[:page])
     end
   end
+  
+  def top
+    if logged_in?
+      @user = current_user
+    end
+  end
 
   def help
   end
