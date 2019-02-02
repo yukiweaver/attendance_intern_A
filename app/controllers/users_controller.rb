@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(page: params[:page])
     if current_user.admin?
+      @user = current_user
     else
       flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
       redirect_to "/"
