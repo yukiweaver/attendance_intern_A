@@ -33,5 +33,5 @@ Rails.application.routes.draw do
   resources :microposts,          only: [:create, :destroy]   #リスト 13.30: マイクロポストリソースのルーティング
   resources :relationships,       only: [:create, :destroy]   #リスト 14.20: Relationshipリソース用のルーティング
   
-  get    '//:id',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
+  get    '//top',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
 end
