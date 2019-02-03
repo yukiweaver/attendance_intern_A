@@ -72,10 +72,10 @@ class AttendancesController < ApplicationController
       if current_user.admin? && @attendance.attendance_day.future?
       elsif current_user?(@user) && @attendance.attendance_day.future?
       
-      # 出勤時間、退勤時間どちらかが空欄だと更新できない
+      # 出勤時間、退勤時間が空欄だと更新できない
       elsif bt["beginning_time"].blank? && bt["leaving_time"].blank?
       elsif bt["beginning_time"].blank? || bt["leaving_time"].blank?
-        flash[:danger] = "出勤時間または退勤時間が空欄です。"
+        flash[:warning] = "無効な編集内容があります。"
         
       # 出勤時間より退勤時間の方が早い時間だと更新できない
       elsif bt["beginning_time"] > bt["leaving_time"]
