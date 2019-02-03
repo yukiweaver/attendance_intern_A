@@ -10,7 +10,13 @@ class AttendancesController < ApplicationController
     # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
     if current_user.admin? || current_user?(@user)
       #@attendance = Attendance.find(params[:id])
-      @current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
+      #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
+      if params[:current_day] != nil
+        @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
+      else
+        @current_day = Date.today
+      end
+      
       @last_month = @current_day.last_month
       @next_month = @current_day.next_month
       @first_day = @current_day.beginning_of_month

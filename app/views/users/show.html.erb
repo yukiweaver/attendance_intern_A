@@ -33,7 +33,7 @@
   </table>
   <br>
   <!-- 勤怠表示画面　勤怠編集ボタン -->
-  <%= link_to "勤怠を編集", attendance_edit_path, class: "btn btn-primary" %>
+  <%= link_to "勤怠を編集", attendance_edit_path(params:{current_day: @current_day}), class: "btn btn-primary" %>
   
   <!-- 勤怠表示画面　下のメインのテーブル -->
   <table class="table table-bordered table-striped table-condensed">
