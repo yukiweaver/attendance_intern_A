@@ -11,6 +11,8 @@ class AttendancesController < ApplicationController
     if current_user.admin? || current_user?(@user)
       #@attendance = Attendance.find(params[:id])
       #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
+      
+      # 勤怠編集　パラメーターで先月、来月も表示可
       if params[:current_day] != nil
         @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
       else

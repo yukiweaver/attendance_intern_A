@@ -50,10 +50,12 @@
         </div>
       </tbody>
     </table>
-  <div class="attendance_button">
-    <%= link_to "キャンセル", user_path, {:class=>"btn btn-primary"} %>
-    <%= f.submit "編集を保存する", url: attendance_update_path, method: :post, class: "btn btn-primary" %>
-  </div>
+    <div class="attendance">
+      <%= f.submit "編集を保存する", url: attendance_update_path, method: :post, class: "btn btn-primary" %>
+    </div>
+    <div class="attendance_button">
+      <%= link_to "キャンセル", user_path, class: "btn btncancel btn-primary" %>
+    </div>
   <% end %>
 </div>
 

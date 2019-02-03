@@ -502,9 +502,16 @@ div.col-md-6.col-md-offset-3 a {
 }
 
 /* 勤怠編集　更新ボタン */
-div.attendance_button {
-  margin: auto;
-  width: 150px;
+.attendance {
+  text-align: center;
+  width: 100%;
+}
+.attendance_button {
+  padding: 10px;
+  a.btn.btncancel.btn-primary {
+    width: 100%;
+    text-align: center;
+  }
 }
 /* 5.1.2演習 
 img {
