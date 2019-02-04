@@ -62,15 +62,19 @@ class UsersController < ApplicationController
       end
       
       # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
+      #i = 0
       @date.each do |date|
         if date.beginning_time != nil && date.leaving_time != nil
           @company_time = date.leaving_time - date.beginning_time
           #@start_company_time = 0
           @total_company_time = (@total_company_time.to_f + @company_time)
           #@attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ? and attendance_day >= ? and attendance_day <= ?", nil?, nil?, @first_day, @last_day).count
-          @attendance_count = @user.attendances.where.not(beginning_time: blank?).where.not(leaving_time: blank?).where(attendance_day: @first_day..@last_day).count
+          #@attendance_count = @user.attendances.where.not(beginning_time: nil?).where.not(leaving_time: nil?).where(attendance_day: @first_day..@last_day).count
+          #i += 1
         end
       end
+      #@attendance_count = i
+      @attendance_count = @user.attendances.where.not(beginning_time: nil?).where.not(leaving_time: nil?).where(attendance_day: @first_day..@last_day).count
     else
       redirect_to current_user
       flash[:warning] = "他ユーザーの勤怠表示ページへ遷移することはできません。"
