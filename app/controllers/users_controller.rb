@@ -68,7 +68,7 @@ class UsersController < ApplicationController
           #@start_company_time = 0
           @total_company_time = (@total_company_time.to_f + @company_time)
           #@attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ? and attendance_day >= ? and attendance_day <= ?", nil?, nil?, @first_day, @last_day).count
-          @attendance_count = @user.attendances.where.not(beginning_time: nil?).where.not(leaving_time: nil?).where(attendance_day: @first_day..@last_day).count
+          @attendance_count = @user.attendances.where.not(beginning_time: blank?).where.not(leaving_time: blank?).where(attendance_day: @first_day..@last_day).count
         end
       end
     else
