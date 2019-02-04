@@ -7,7 +7,8 @@
         <li><%#= link_to "トップへ", root_path %></li>
         <li><%#= link_to "WEAVER", help_path %></li> 
         <% if logged_in? %>
-          <li><%= link_to "トップへ", top_path %></li>
+          <li><%#= link_to "トップへ", top_path %></li>
+          <li><%= link_to "トップへ", user_path(current_user) %></li>
           <% if current_user.admin? %> <%# 勤怠：admin_userのみ表示 %>
             <li><%= link_to "ユーザー一覧", users_path %></li>
             <% if @user.present? %>

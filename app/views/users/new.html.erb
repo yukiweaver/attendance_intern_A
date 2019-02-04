@@ -3,7 +3,8 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-     <%= form_for(@user, url: "/users", method: :post) do |f| %> <%# 勤怠B：ユーザー一覧遷移先変更に伴い、URL指定 %>
+     <%#= form_for(@user, url: "/users", method: :post) do |f| %> <%# 勤怠B：ユーザー一覧遷移先変更に伴い、URL指定 %>
+     <%= form_for(@user) do |f| %> <%# 勤怠B：ユーザー一覧遷移先変更に伴い、URL指定 %>
       <%= render 'shared/error_messages', object: f.object %>  <%# リスト 13.43 %>
     
       <%= f.label :名前 %>
