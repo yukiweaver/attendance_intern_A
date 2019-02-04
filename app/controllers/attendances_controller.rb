@@ -35,15 +35,15 @@ class AttendancesController < ApplicationController
       end
       
       # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
-      @date.each do |date|
-        if date.beginning_time != nil && date.leaving_time != nil
-          @company_time = date.leaving_time - date.beginning_time
+      #@date.each do |date|
+        #if date.beginning_time != nil && date.leaving_time != nil
+          #@company_time = date.leaving_time - date.beginning_time
           #@start_company_time = 0
-          @total_company_time = (@total_company_time.to_f + @company_time)
+          #@total_company_time = (@total_company_time.to_f + @company_time)
           #@attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ?", nil?, nil?).count
           #@attendance_count = @user.attendances.where.not(beginning_time: blank?).where.not(leaving_time: blank?).count
-        end
-      end
+        #end
+      #end
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
       redirect_to current_user
