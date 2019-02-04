@@ -26,7 +26,8 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
-    if current_user.admin? || current_user?(@user)
+    #if current_user.admin? || current_user?(@user)
+    if current_user.admin? || current_user.id == @user.id
       #@current_day = Date.today  #勤怠B：現在の年月日を取得
       
       

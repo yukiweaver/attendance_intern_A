@@ -8,7 +8,8 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     
     # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
-    if current_user.admin? || current_user?(@user)
+    #if current_user.admin? || current_user?(@user)
+    if current_user.admin? || current_user.id == @user.id
       #@attendance = Attendance.find(params[:id])
       #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
       
