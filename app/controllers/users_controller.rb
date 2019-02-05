@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,   #リスト 10.15 リスト 10.35 リスト 10.58
                                         :following, :followers]   #リスト 14.25
-  before_action :correct_user,   only: [:edit, :update]   #リスト 10.25
+  before_action :correct_user,   only: :update   #リスト 10.25
   before_action :admin_user,     only: :destroy   #リスト 10.59: destroyアクションを管理者だけに限定
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
@@ -131,6 +131,11 @@ class UsersController < ApplicationController
   #リスト 10.1: ユーザーのeditアクション
   def edit
     @user = User.find(params[:id])
+    if @user.id == current_user.id
+    else
+      flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
+      redirect_to @user
+    end
   end
   
   #リスト 10.8: ユーザーのupdateアクションの初期実装
