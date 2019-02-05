@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'attendances/edit'
-
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
 
   root   'static_pages#home'
   get    '/help',    to: 'static_pages#help'
@@ -20,17 +15,7 @@ Rails.application.routes.draw do
   post   '/leaving_time/:id', to: 'users#leaving_time', as: 'leaving_time'  #勤怠B：退社ボタン押し込み
   get    '/attendance_edit/:id', to: 'attendances#attendance_edit', as: 'attendance_edit'  #勤怠B：勤怠編集画面へ遷移
   post   '/attendance_update/:id', to: 'attendances#attendance_update', as: 'attendance_update'  #勤怠B：勤怠編集の更新
-  #リスト 14.15: Usersコントローラにfollowingアクションとfollowersアクションを追加
-  resources :users do
-    member do
-      get :following, :followers
-      
-    end
-  end
-  resources :account_activations, only: [:edit]   #リスト 11.1: アカウント有効化に使うリソース (edit) を追加
-  resources :password_resets,     only: [:new, :create, :edit, :update]   #リスト 12.1: パスワード再設定用リソースを追加
-  resources :microposts,          only: [:create, :destroy]   #リスト 13.30: マイクロポストリソースのルーティング
-  resources :relationships,       only: [:create, :destroy]   #リスト 14.20: Relationshipリソース用のルーティング
   
+  resources :users
   #get    '//top',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
 end

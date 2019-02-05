@@ -17,8 +17,6 @@ class UsersController < ApplicationController
       flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
       redirect_to current_user
     end
-    # pf: 検索機能追加でコード変更
-    #@users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
   end
   
   def show
@@ -139,22 +137,6 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "ユーザーを削除しました。"
     redirect_to users_url
-  end
-  
-  #リスト 14.25: followingアクション
-  def following
-    @title = "フォロー中"
-    @user  = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
-    render 'show_follow'
-  end
-  
-  #リスト 14.25: followersアクション
-  def followers
-    @title = "フォロワー"
-    @user  = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
   end
   
   #勤怠B：基本情報の更新ページ
