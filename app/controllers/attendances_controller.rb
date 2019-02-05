@@ -8,17 +8,14 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     
     # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
+    # 以下だと本番環境でバグ発生
     #if current_user.admin? || current_user?(@user)
     if current_user.admin? || current_user.id == @user.id
       #@attendance = Attendance.find(params[:id])
       #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
       
       # 勤怠編集　パラメーターで先月、来月も表示可
-      if params[:current_day] != nil
-        @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
-      else
-        @current_day = Date.today
-      end
+      @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
       
       @last_month = @current_day.last_month
       @next_month = @current_day.next_month

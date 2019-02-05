@@ -11,11 +11,12 @@ class UsersController < ApplicationController
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
     @users = User.paginate(page: params[:page])
-    if current_user.admin?
+    #if current_user.admin?
+    if current_user == User.find(1)
       @user = current_user
     else
       flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
-      redirect_to "/"
+      redirect_to current_user
     end
     # pf: 検索機能追加でコード変更
     #@users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
@@ -26,6 +27,7 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
+    # 以下だと本番環境でバグ発生
     #if current_user.admin? || current_user?(@user)
     if current_user.admin? || current_user.id == @user.id
       #@current_day = Date.today  #勤怠B：現在の年月日を取得
@@ -168,7 +170,8 @@ class UsersController < ApplicationController
   #勤怠B：基本情報の更新ページ
   def basic_info
     @user = User.find(params[:id])
-    if current_user.admin?
+    #if current_user.admin?
+    if current_user == User.find(1)
     else
       flash[:danger] = "基本情報更新ページへ遷移することはできません。"
       redirect_to @user
