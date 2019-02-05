@@ -27,8 +27,6 @@ class UsersController < ApplicationController
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
     if current_user.admin? || current_user?(@user)
-      #@current_day = Date.today  #勤怠B：現在の年月日を取得
-      
       
       if params[:current_day] != nil
         @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
@@ -38,31 +36,24 @@ class UsersController < ApplicationController
         @current_day = Date.today
       end
       
-      @last_month = @current_day.prev_month  #勤怠B：@current_dayからひと月前
-      @next_month = @current_day.next_month  #勤怠B：@current_dayからひと月先
-      @first_day = @current_day.beginning_of_month  #勤怠B：月初
-      @last_day = @current_day.end_of_month  #勤怠B：月末
-      @week = %w(日 月 火 水 木 金 土 日)  #勤怠B：%wで配列へ
+      @last_month = @current_day.prev_month  #@current_dayからひと月前
+      @next_month = @current_day.next_month  #@current_dayからひと月先
+      @first_day = @current_day.beginning_of_month  #月初
+      @last_day = @current_day.end_of_month  #月末
+      @week = %w(日 月 火 水 木 金 土 日)  #%wで配列へ
       
-      # 勤怠B：月初から月末までの繰り返しをブロック変数dに格納  
+      # 月初から月末までの繰り返しをブロック変数dに格納  
       (@first_day..@last_day).each do |d|
-        # any?メソッドでattendancesテーブルに各日付のデータがあるか。{}の中は条件?、つまりattendance_dayとブロック変数dが等しいか
-        # データがなければ、インスタンス変数を定義(Attendanceモデルオブジェクト作成)
-        # →attendancesテーブルのattendance_dayカラムのデータはブロック変数dとする。つまり月初から月末のデータ
-        # newやbuildはデータベースに保存されなため.saveでデータベース保存
         if not @user.attendances.any?{|a| a.attendance_day == d}
           #@attendance = Attendance.new(attendance_day: d, user_id: @user.id) 以下の@attendanceと同意味
           @attendance = @user.attendances.build(attendance_day: d)
           @attendance.save
         end
-        
-        # whereメソッドで検索条件付与 attendance_day >= @first_day, attendance_day <= @last_day
-        # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
         # 本番環境でバグ　orderメソッド追加で昇順へ　
         @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day).order(:attendance_day)
       end
       
-      # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
+      # 在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
       i = 0
       @date.each do |date|
         if date.beginning_time != nil && date.leaving_time != nil
@@ -116,10 +107,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      #@user.send_activation_email    #リスト 11.23: ユーザー登録にアカウント有効化を追加→リスト 11.36で変更
-      #flash[:info] = "メールを確認してアカウントを有効にしてください。"
       flash[:info] = "新規登録しました。"
-      #redirect_to root_url
       redirect_to @user
     else
       render 'new'
@@ -132,7 +120,7 @@ class UsersController < ApplicationController
     if @user.id == current_user.id
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
-      redirect_to current_user
+      redirect_to "/users/#{current_user.id}/edit"
     end
   end
   

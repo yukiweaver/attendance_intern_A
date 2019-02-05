@@ -9,8 +9,6 @@ class AttendancesController < ApplicationController
     
     # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
     if current_user.admin? || current_user?(@user)
-      #@attendance = Attendance.find(params[:id])
-      #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
       
       # 勤怠編集　パラメーターで先月、来月も表示可
       @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
@@ -66,17 +64,11 @@ class AttendancesController < ApplicationController
   
   private
   
-    # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに工夫が必要
+    # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
     def attendance_params
       params.permit(attendances: [:beginning_time, :leaving_time])[:attendances]
     end
     # def attendance_params
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
-    # end
-    
-    # def user_params
-    #   params.require(:user).permit(:name, :email, :belong, :password,
-    #                               :password_confirmation, :designate_work_time, :basic_work_time,
-    #                               attendances_attributes: [:beginning_time, :leaving_time])
     # end
 end
