@@ -1,3 +1,0 @@
-<%# リスト 14.39: Ruby JavaScript (RJS) を使ってフォローの関係性を削除する %>
-$("#follow_form").html("<%= escape_javascript(render('users/follow')) %>");
-$("#followers").html('<%= @user.followers.count %>');

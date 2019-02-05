@@ -23,7 +23,6 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
     if current_user.admin? || current_user?(@user)
