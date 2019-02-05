@@ -61,7 +61,7 @@ class UsersController < ApplicationController
         
         # whereメソッドで検索条件付与 attendance_day >= @first_day, attendance_day <= @last_day
         # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
-        @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day)
+        @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day).order(:attendance_day)
       end
       
       # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
