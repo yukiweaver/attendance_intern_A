@@ -134,18 +134,20 @@ class UsersController < ApplicationController
     if @user.id == current_user.id
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
-      redirect_to @user
+      redirect_to current_user
     end
   end
   
   #リスト 10.8: ユーザーのupdateアクションの初期実装
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
-      redirect_to @user
-    else
-      render 'edit'
+    if @user.id == current_user.id
+      if @user.update_attributes(user_params)
+        flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
+        redirect_to @user
+      else
+        render 'edit'
+      end
     end
   end
   
@@ -185,13 +187,15 @@ class UsersController < ApplicationController
   
   #勤怠B：基本情報を編集
   def basic_info_update
-    @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "基本情報を更新しました。"
-      redirect_to @user
-    else
-      flash[:danger] = "基本情報の更新に失敗しました。"
-      redirect_to @user
+    if current_user == User.find(1)
+      @user = User.find(params[:id])
+      if @user.update_attributes(user_params)
+        flash[:success] = "基本情報を更新しました。"
+        redirect_to @user
+      else
+        flash[:danger] = "基本情報の更新に失敗しました。"
+        redirect_to @user
+      end
     end
   end
   
