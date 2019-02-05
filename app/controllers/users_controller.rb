@@ -87,24 +87,28 @@ class UsersController < ApplicationController
   # 勤怠B:出社ボタン押込み時の処理
   def beginning_time
     @user = User.find(params[:id])
-    @attendance = Attendance.all
-    @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
-    if @beginning_time.update_attributes(beginning_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
-      Time.now.hour, Time.now.min))
-      flash[:info] = "出社しました。"
-      redirect_to @user
+    if current_user.admin? || current_user.id == @user.id
+      @attendance = Attendance.all
+      @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
+      if @beginning_time.update_attributes(beginning_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+        Time.now.hour, Time.now.min))
+        flash[:info] = "出社しました。"
+        redirect_to @user
+      end
     end
   end
   
   # 勤怠B：退社ボタン押し込み時の処理
   def leaving_time
     @user = User.find(params[:id])
-    @attendance = Attendance.all
-    @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
-    if @leaving_time.update_attributes(leaving_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
-      Time.now.hour, Time.now.min))
-      flash[:info] = "退社しました。"
-      redirect_to @user
+    if current_user.admin? || current_user.id == @user.id
+      @attendance = Attendance.all
+      @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
+      if @leaving_time.update_attributes(leaving_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+        Time.now.hour, Time.now.min))
+        flash[:info] = "退社しました。"
+        redirect_to @user
+      end
     end
   end
   
