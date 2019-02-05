@@ -11,8 +11,7 @@ class UsersController < ApplicationController
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   def index
     @users = User.paginate(page: params[:page])
-    #if current_user.admin?
-    if current_user == User.find(1)
+    if current_user.admin?
       @user = current_user
     else
       flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
@@ -27,9 +26,7 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page])    #リスト 13.23
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
-    # 以下だと本番環境でバグ発生
-    #if current_user.admin? || current_user?(@user)
-    if current_user.admin? || current_user.id == @user.id
+    if current_user.admin? || current_user?(@user)
       #@current_day = Date.today  #勤怠B：現在の年月日を取得
       
       
@@ -61,6 +58,7 @@ class UsersController < ApplicationController
         
         # whereメソッドで検索条件付与 attendance_day >= @first_day, attendance_day <= @last_day
         # attendancesテーブルと関連づけた@dateをviewでeach文として使用→usersのviewでattendancesカラムが使用可能に
+        # 本番環境でバグ　orderメソッド追加で昇順へ　
         @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day).order(:attendance_day)
       end
       
@@ -87,28 +85,24 @@ class UsersController < ApplicationController
   # 勤怠B:出社ボタン押込み時の処理
   def beginning_time
     @user = User.find(params[:id])
-    if current_user.admin? || current_user.id == @user.id
-      @attendance = Attendance.all
-      @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
-      if @beginning_time.update_attributes(beginning_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
-        Time.now.hour, Time.now.min))
-        flash[:info] = "出社しました。"
-        redirect_to @user
-      end
+    @attendance = Attendance.all
+    @beginning_time = @user.attendances.find_by(attendance_day: Date.today)
+    if @beginning_time.update_attributes(beginning_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+      Time.now.hour, Time.now.min))
+      flash[:info] = "出社しました。"
+      redirect_to @user
     end
   end
   
   # 勤怠B：退社ボタン押し込み時の処理
   def leaving_time
-    @user = User.find(params[:id])
-    if current_user.admin? || current_user.id == @user.id
-      @attendance = Attendance.all
-      @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
-      if @leaving_time.update_attributes(leaving_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
-        Time.now.hour, Time.now.min))
-        flash[:info] = "退社しました。"
-        redirect_to @user
-      end
+  @user = User.find(params[:id])
+    @attendance = Attendance.all
+    @leaving_time = @user.attendances.find_by(attendance_day: Date.today)
+    if @leaving_time.update_attributes(leaving_time: Time.new(Time.now.year, Time.now.month, Time.now.day, 
+      Time.now.hour, Time.now.min))
+      flash[:info] = "退社しました。"
+      redirect_to @user
     end
   end
   
@@ -144,14 +138,12 @@ class UsersController < ApplicationController
   
   #リスト 10.8: ユーザーのupdateアクションの初期実装
   def update
-    @user = User.find(params[:id])
-    if @user.id == current_user.id
-      if @user.update_attributes(user_params)
-        flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
-        redirect_to @user
-      else
-        render 'edit'
-      end
+  @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
+      redirect_to @user
+    else
+      render 'edit'
     end
   end
   
@@ -181,8 +173,7 @@ class UsersController < ApplicationController
   #勤怠B：基本情報の更新ページ
   def basic_info
     @user = User.find(params[:id])
-    #if current_user.admin?
-    if current_user == User.find(1)
+    if current_user.admin?
     else
       flash[:danger] = "基本情報更新ページへ遷移することはできません。"
       redirect_to @user
@@ -191,15 +182,13 @@ class UsersController < ApplicationController
   
   #勤怠B：基本情報を編集
   def basic_info_update
-    if current_user == User.find(1)
-      @user = User.find(params[:id])
-      if @user.update_attributes(user_params)
-        flash[:success] = "基本情報を更新しました。"
-        redirect_to @user
-      else
-        flash[:danger] = "基本情報の更新に失敗しました。"
-        redirect_to @user
-      end
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "基本情報を更新しました。"
+      redirect_to @user
+    else
+      flash[:danger] = "基本情報の更新に失敗しました。"
+      redirect_to @user
     end
   end
   

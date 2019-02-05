@@ -8,9 +8,7 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     
     # 管理者のみ全ユーザーの勤怠編集ページに遷移可能 他ユーザーは自分の編集ページのみ遷移可能
-    # 以下だと本番環境でバグ発生
-    #if current_user.admin? || current_user?(@user)
-    if current_user.admin? || current_user.id == @user.id
+    if current_user.admin? || current_user?(@user)
       #@attendance = Attendance.find(params[:id])
       #@current_day = Date.new(Date.today.year, Date.today.month, Date.today.day)
       
@@ -29,38 +27,14 @@ class AttendancesController < ApplicationController
           @attendance1 = @user.attendances.build(attendance_day: d)
           @attendance1.save
         end
+        # 本番環境でバグ　orderメソッド追加で昇順へ
         @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day).order(:attendance_day)
       end
-      
-      # 勤怠B：在社時間と在社時間の合計、出勤日数　在社時間@company_timeはviewでは使用しない
-      #@date.each do |date|
-        #if date.beginning_time != nil && date.leaving_time != nil
-          #@company_time = date.leaving_time - date.beginning_time
-          #@start_company_time = 0
-          #@total_company_time = (@total_company_time.to_f + @company_time)
-          #@attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ?", nil?, nil?).count
-          #@attendance_count = @user.attendances.where.not(beginning_time: blank?).where.not(leaving_time: blank?).count
-        #end
-      #end
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
       redirect_to current_user
     end
   end
-  
-  #勤怠B：勤怠編集ページ更新
-  # def attendance_update
-  #   @user = User.find(params[:id])
-  #   @attendance = @user.attendances.where(attendance_day: Time.now.beginning_of_month..Time.now.end_of_month)
-  #   @attendance.each do |at|
-  #     if at.update_attributes(attendance_params)
-  #       flash[:success] = "勤怠編集情報を更新しました。"
-  #       redirect_to @user
-  #     else
-  #       render 'attendance_edit'
-  #     end
-  #   end
-  # end
   
   # 勤怠B：勤怠編集ページ更新
   def attendance_update
