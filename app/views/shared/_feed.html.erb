@@ -1,8 +1,0 @@
-<%# リスト 13.48: ステータスフィードのパーシャル %>
-<% if @feed_items.any? %>
-  <ol class="microposts">
-    <%= render @feed_items %>
-  </ol>
-  <%# ページネートの日本語化 %>
-  <%= will_paginate @feed_items, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>
-<% end %>
