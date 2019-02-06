@@ -30,7 +30,7 @@ class AttendancesController < ApplicationController
       end
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
-      redirect_to current_user
+      redirect_to "/attendance_edit/#{current_user.id}/?current_day=#{Date.today}"
     end
   end
   
