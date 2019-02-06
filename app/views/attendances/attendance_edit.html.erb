@@ -1,5 +1,6 @@
 <% provide(:title, "勤怠編集ページ") %>
 <h1>勤怠編集ページ</h1>
+<h2><%= @user.name %>さんの勤怠編集データを表示</h2>
 <div class="row">
   <%= form_for(@user, url: attendance_update_path, method: :post) do |f| %>
   
