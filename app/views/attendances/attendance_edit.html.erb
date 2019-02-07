@@ -3,6 +3,8 @@
 <h2><%= @user.name %>さんの勤怠編集データを表示</h2>
 <div class="row">
   <%= form_for(@user, url: attendance_update_path, method: :post) do |f| %>
+  <%= hidden_field_tag :current_day, @current_day %>
+  <%= f.hidden_field :id, :value => @user.id %>
   
     <!-- 勤怠B：勤怠編集テーブルヘッダー部分 -->
     <table class="table table-bordered table-striped table-condensed">

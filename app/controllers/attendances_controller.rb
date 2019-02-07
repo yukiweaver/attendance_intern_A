@@ -11,7 +11,13 @@ class AttendancesController < ApplicationController
     if current_user.admin? || current_user?(@user)
       
       # 勤怠編集　パラメーターで先月、来月も表示可
-      @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
+      if params[:current_day] != nil
+        @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
+      else
+        #以下だと月をまたぐと反映されない
+        #@current_day = Date.new(Date.today.year, Date.today.month)
+        @current_day = Date.today
+      end
       
       @last_month = @current_day.last_month
       @next_month = @current_day.next_month
@@ -36,7 +42,7 @@ class AttendancesController < ApplicationController
   
   # 勤怠B：勤怠編集ページ更新
   def attendance_update
-    @user = User.find(params[:id])
+    @user = User.find(params[:user][:id])
     attendance_params.each do |at, bt|
       @attendance = @user.attendances.find(at)
       # 管理者も他ユーザーも未来日を更新することはできない
@@ -58,7 +64,7 @@ class AttendancesController < ApplicationController
         #redirect_to @user and return
       end
     end
-    redirect_to @user
+    redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
   end
   
   
