@@ -64,6 +64,7 @@ class AttendancesController < ApplicationController
         #redirect_to @user and return
       end
     end
+    # リダイレクト先でhidden_fieldの値を受け取る
     redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
   end
   
