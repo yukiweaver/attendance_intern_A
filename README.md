@@ -39,3 +39,4 @@ $ rails server
 
 詳しくは、[*Ruby on Rails チュートリアル*](https://railstutorial.jp/)
 を参考にしてください。# attendance_intern_B
+# attendance_intern_A
