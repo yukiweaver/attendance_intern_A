@@ -68,6 +68,10 @@ class AttendancesController < ApplicationController
     redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
   end
   
+  def attendance_index
+    
+  end
+  
   
   private
   
