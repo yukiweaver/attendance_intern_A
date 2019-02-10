@@ -9,8 +9,11 @@
      <%= form_for(@user, url: basic_info_update_path, method: :post) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
     
-      <%= f.label :指定勤務時間 %>
+      <%= f.label :指定勤務開始時間 %>
       <%= f.time_field :designate_work_time, class: 'form-control' %>
+      
+      <%= f.label :指定勤務終了時間 %>
+      <%= f.time_field :designate_end_time, class: 'form-control' %>
 
       <%= f.label :基本勤務時間 %>
       <%= f.time_field :basic_work_time, class: 'form-control' %>

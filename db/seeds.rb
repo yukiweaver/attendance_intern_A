@@ -8,6 +8,7 @@ User.create!(name:  "植野 裕樹",
              #activated: true,
              belong: "営業",
              designate_work_time: Time.zone.parse("10:00"),
+             designate_end_time: Time.zone.parse("20:00"),
              basic_work_time: Time.zone.parse("10:00"),
              activated_at: Time.zone.now)
 
@@ -22,6 +23,7 @@ User.create!(name:  "植野 裕樹",
               #activated: true,
               belong: "営業",
               designate_work_time: Time.zone.parse("10:00"),
+              designate_end_time: Time.zone.parse("20:00"),
               basic_work_time: Time.zone.parse("10:00"),
               activated_at: Time.zone.now)
 end

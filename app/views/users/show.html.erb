@@ -11,8 +11,8 @@
           <%= link_to "▶", user_path(params:{current_day: @next_month}), class: "btn btn-sm btn-primary" %>
         </th>
         <th>
-          指定勤務時間 <%= basic_info_edit(@user.designate_work_time) %><br> <%# 勤怠B：basic_info_edit UsersHelperで定義 %>
-          指定勤務終了時間
+          指定勤務開始時間 <%= basic_info_edit(@user.designate_work_time) %><br> <%# 勤怠B：basic_info_edit UsersHelperで定義 %>
+          指定勤務終了時間 <%= basic_info_edit(@user.designate_end_time) %>
         </th>
         <th colspan="3">基本時間 <%= basic_info_edit(@user.basic_work_time) %></th>
         <th>初日 <%= @first_day.strftime("%m/%d") %></th>
@@ -136,6 +136,11 @@
           0.00
         <% end %>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td></td>
     </tbody>
   </table>
