@@ -69,7 +69,13 @@ class AttendancesController < ApplicationController
   end
   
   def attendance_index
-    
+    @users = User.all.includes(:attendances)
+    if current_user.admin?
+      #@user = @users.attendances.all
+    else
+      flash[:warning] = "出勤者一覧ページへは遷移できません。"
+      redirect_to current_user
+    end
   end
   
   

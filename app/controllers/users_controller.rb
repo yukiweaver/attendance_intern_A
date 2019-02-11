@@ -39,7 +39,7 @@ class UsersController < ApplicationController
       @last_day = @current_day.end_of_month  #月末
       @week = %w(日 月 火 水 木 金 土 日)  #%wで配列へ
       
-      # 月初から月末までの繰り返しをブロック変数dに格納  
+      # 月初から月末までの繰り返しをブロック変数dに格納
       (@first_day..@last_day).each do |d|
         if not @user.attendances.any?{|a| a.attendance_day == d}
           #@attendance = Attendance.new(attendance_day: d, user_id: @user.id) 以下の@attendanceと同意味
