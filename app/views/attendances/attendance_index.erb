@@ -11,14 +11,18 @@
     </thead>
     
     <tbody>
-      <% @users.each do |user| %>
       <tr>
         <td></td>
         <td>
-          <%= user.name %><br>
+          <% @users.each do |user| %>
+            <% user.attendances.each do |attendance| %>
+              <% if attendance.beginning_time != nil && attendance.leaving_time == nil %>
+                <%= user.name %><br>
+              <% end %>
+            <% end %>
+          <% end %>
         </td>
       </tr>
-      <% end %>
     </tbody>
   </table>
 </div>
