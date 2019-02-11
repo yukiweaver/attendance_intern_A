@@ -22,7 +22,7 @@
         <th>所属 <%= @user.belong %></th>
         <th>氏名 <%= @user.name %></th>
         <th>コード</th>
-        <th>123</th>
+        <th><%= @user.number %></th>
         <th>出勤日数
           <% if @attendance_count != nil %>
           <%= @attendance_count %>日

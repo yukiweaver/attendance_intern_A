@@ -12,7 +12,15 @@
     
     <tbody>
       <tr>
-        <td></td>
+        <td>
+          <% @users.each do |user| %>
+            <% user.attendances.each do |attendance| %>
+              <% if attendance.beginning_time != nil && attendance.leaving_time == nil %>
+                <%= user.number %><br>
+              <% end %>
+            <% end %>
+          <% end %>
+        </td>
         <td>
           <% @users.each do |user| %>
             <% user.attendances.each do |attendance| %>
