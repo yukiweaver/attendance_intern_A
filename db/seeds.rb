@@ -13,6 +13,7 @@ User.create!(name:  "植野 裕樹",
              designate_end_time: Time.zone.parse("20:00"),
              basic_work_time: Time.zone.parse("10:00"),
              activated_at: Time.zone.now)
+             
 
 99.times do |n|
   name  = Faker::Name.name
