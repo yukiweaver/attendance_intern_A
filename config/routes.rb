@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get    'base_points/index'
   post   'base_points/create'
+  delete 'base_points/destroy'
 
   root   'static_pages#home'
   get    '/help',    to: 'static_pages#help'

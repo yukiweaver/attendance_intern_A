@@ -1,4 +1,4 @@
-# 拠点　コントローラー
+# 勤怠A：拠点　コントローラー
 class BasePointsController < ApplicationController
   
   # 勤怠A：拠点一覧
@@ -12,7 +12,7 @@ class BasePointsController < ApplicationController
     end
   end
   
-  # 勤怠A:拠点情報の新規追加
+  # 勤怠A：拠点情報の新規追加
   def create
     @base = Base.new(params_base)
     if @base.save
@@ -22,9 +22,17 @@ class BasePointsController < ApplicationController
     end
   end
   
+  def destroy
+    @base = Base.find(params[:id])
+    if @base.destroy
+      flash[:success] = "拠点を削除しました。"
+      redirect_to base_points_index_path
+    end
+  end
+  
   private
   
-  # 勤怠A:ストロングパラメーター
+  # 勤怠A：ストロングパラメーター
   def params_base
     params.require(:base).permit(:base_number, :base_name, :base_type)
   end
