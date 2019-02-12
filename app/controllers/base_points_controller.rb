@@ -12,17 +12,19 @@ class BasePointsController < ApplicationController
     end
   end
   
+  # 勤怠A:拠点情報の新規追加
   def create
     @base = Base.new(params_base)
     if @base.save
-      @bases = Base.all
       flash[:success] = "拠点登録が完了しました。"
-      redirect_to "/base_points/index"
+      redirect_to base_points_index_path
+      #render "index"
     end
   end
   
   private
   
+  # 勤怠A:ストロングパラメーター
   def params_base
     params.require(:base).permit(:base_number, :base_name, :base_type)
   end
