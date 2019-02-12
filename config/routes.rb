@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get    'base_points/index'
-  post   'base_points/create'
-  delete 'base_points/destroy'
+  # get    'base_points/index'
+  # post   'base_points/create'
+  # post   '/base_points/:id/destroy',  to: "base_points#destroy",  as: "base_points_destroy"
 
   root   'static_pages#home'
   get    '/help',    to: 'static_pages#help'
@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   #get    '/base_points/index', to: 'base_points#index'  #勤怠A：拠点一覧へ遷移
   
   resources :users
+  resources :base_points
   #get    '//top',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
 end

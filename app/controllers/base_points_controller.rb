@@ -17,7 +17,7 @@ class BasePointsController < ApplicationController
     @base = Base.new(params_base)
     if @base.save
       flash[:success] = "拠点登録が完了しました。"
-      redirect_to base_points_index_path
+      redirect_to base_points_path
       #render "index"
     end
   end
@@ -26,7 +26,7 @@ class BasePointsController < ApplicationController
     @base = Base.find(params[:id])
     if @base.destroy
       flash[:success] = "拠点を削除しました。"
-      redirect_to base_points_index_path
+      redirect_to base_points_path
     end
   end
   
