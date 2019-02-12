@@ -14,6 +14,15 @@ User.create!(name:  "植野 裕樹",
              basic_work_time: Time.zone.parse("10:00"),
              activated_at: Time.zone.now)
              
+Base.create!(base_number: 1,
+             base_name: "拠点A",
+             base_type: "出勤")
+
+1.times do |n|
+  Base.create!(base_number: 2,
+             base_name: "拠点B",
+             base_type: "退勤")
+end
 
 99.times do |n|
   name  = Faker::Name.name
