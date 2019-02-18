@@ -22,6 +22,7 @@ class BasePointsController < ApplicationController
     end
   end
   
+  # 勤怠A：拠点情報の削除
   def destroy
     @base = Base.find(params[:id])
     if @base.destroy
@@ -29,6 +30,14 @@ class BasePointsController < ApplicationController
       redirect_to base_points_path
     end
   end
+  
+  # def update
+  #   @base = Base.find(params[:id])
+  #   if @base.update_attributes(params_base)
+  #     flash[:success] = "拠点情報を修正しました。"
+  #     redirect_to base_points_path
+  #   end
+  # end
   
   private
   
