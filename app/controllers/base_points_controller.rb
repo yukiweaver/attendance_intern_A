@@ -4,11 +4,10 @@ class BasePointsController < ApplicationController
   # 勤怠A：拠点一覧
   def index
     @bases = Base.all
-    if current_user.admin?
-      @base = Base.new
+    if params[:id].present?
+      @base = Base.find(params[:id])
     else
-      flash[:warning] = "拠点一覧ページへ遷移できません。"
-      redirect_to current_user
+      @base = Base.new
     end
   end
   
@@ -31,13 +30,13 @@ class BasePointsController < ApplicationController
     end
   end
   
-  # def update
-  #   @base = Base.find(params[:id])
-  #   if @base.update_attributes(params_base)
-  #     flash[:success] = "拠点情報を修正しました。"
-  #     redirect_to base_points_path
-  #   end
-  # end
+  def update
+    @base = Base.find(params[:id])
+    if @base.update_attributes(params_base)
+      flash[:success] = "拠点情報を修正しました。"
+      redirect_to base_points_path
+    end
+  end
   
   private
   
