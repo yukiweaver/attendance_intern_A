@@ -12,3 +12,7 @@ ja:
          password_confirmation: パスワード確認
          designate_work_time: 指定勤務時間
          basic_work_time: 基本勤務時間
+       base:
+         base_number: 拠点番号
+         base_name: 拠点名
+         base_type: 勤怠種類

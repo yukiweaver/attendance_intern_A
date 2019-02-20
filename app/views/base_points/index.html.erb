@@ -12,7 +12,8 @@
   
   <% @bases.each do |base| %>
   <tr>
-    <td><%= link_to "修正", base_points_path(id: base.id), class:"btn btn-primary" %></td>
+    <!--  link_to "修正", base_points_path(id: base.id), class:"btn btn-primary" 以下と同義 -->
+    <td><%= link_to "修正", base_points_path(params:{id: base.id}), class:"btn btn-primary" %></td>
     <td><%= link_to "削除", base_point_path(base.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class:"btn btn-primary" %></td>
     <td><%= base.base_number %></td>
     <td><%= base.base_name %></td>
