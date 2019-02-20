@@ -11,3 +11,10 @@
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
+
+// 勤怠A：拠点情報の追加ボタン　アコーディオン
+$(function(){
+  $("#ac1").click(function(){
+    $(".accordion1").slideToggle();
+  });
+});

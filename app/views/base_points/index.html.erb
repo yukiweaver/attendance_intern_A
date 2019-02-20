@@ -25,26 +25,30 @@
 
 <table class="table table-bordered table-striped table-condensed">
   <tr>
-    <td><%= link_to "拠点情報の追加", base_points_path, class:"btn btn-primary" %></td>
+    <td>
+      <button type="button" class="btn btn-primary" id="ac1" autofocus="true">拠点情報の追加</button>
+    </td>
   </tr>
 </table>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@base, url: base_points_path, method: :post) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-
-      <%= f.label :拠点番号 %>
-      <%= f.number_field :base_number, class: 'form-control' %>
-
-      <%= f.label :拠点名 %>
-      <%= f.text_field :base_name, class: 'form-control' %>
-      
-      <%= f.label :勤怠種類 %>
-      <%= f.text_field :base_type, class: 'form-control' %>
-
-      <%= f.submit "拠点追加", class: "btn btn-primary" %>
-    <% end %>
+    <div class="accordion1" >
+      <%= form_for(@base, url: base_points_path, method: :post) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+  
+        <%= f.label :拠点番号 %>
+        <%= f.number_field :base_number, class: 'form-control' %>
+  
+        <%= f.label :拠点名 %>
+        <%= f.text_field :base_name, class: 'form-control' %>
+        
+        <%= f.label :勤怠種類 %>
+        <%= f.text_field :base_type, class: 'form-control' %>
+  
+        <%= f.submit "拠点追加", class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
 </div>
 
