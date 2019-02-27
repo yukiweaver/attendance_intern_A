@@ -128,7 +128,8 @@ class UsersController < ApplicationController
     end
   end
   
-  #リスト 10.8: ユーザーのupdateアクションの初期実装
+  #リスト 10.8: ユーザーのupdateアクション
+  # beforeアクション外し、管理者が編集する場合indexページへ、管理者以外のユーザーが自分の情報を編集するとき、勤怠ページへ
   def update
   @user = User.find(params[:id])
     if current_user.admin?

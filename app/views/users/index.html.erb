@@ -34,11 +34,23 @@
       <%= f.label :所属 %>
       <%= f.text_field :belong, class: 'form-control' %>
 
+      <%= f.label :社員番号 %>
+      <%= f.number_field :number, class: 'form-control' %>
+      
+      <%= f.label :カードID %>
+      <%= f.number_field :card_number, class: 'form-control' %>
+      
       <%= f.label :パスワード %>
       <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "パスワード確認" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
+      
+      <%= f.label :基本勤務時間 %>
+      <%= f.time_field :basic_work_time, class: 'form-control' %>
+      
+      <%= f.label :指定勤務開始時間 %>
+      <%= f.time_field :designate_work_time, class: 'form-control' %>
+      
+      <%= f.label :指定勤務終了時間 %>
+      <%= f.time_field :designate_end_time, class: 'form-control' %>
 
       <%= f.submit "更新", class: "btn btn-primary" %>
     <% end %>
