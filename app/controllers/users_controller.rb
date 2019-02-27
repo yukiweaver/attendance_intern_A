@@ -5,17 +5,24 @@ class UsersController < ApplicationController
   
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,   #リスト 10.15 リスト 10.35 リスト 10.58
                                         :following, :followers]   #リスト 14.25
-  before_action :correct_user,   only: :update   #リスト 10.25
-  before_action :admin_user,     only: :destroy   #リスト 10.59: destroyアクションを管理者だけに限定
+  #before_action :correct_user,   only: :update   #リスト 10.25
+  before_action :admin_user,     only: [:destroy, :index]   #リスト 10.59: destroyアクションを管理者だけに限定
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
+  # def index
+  #   @users = User.paginate(page: params[:page])
+  #   if current_user.admin?
+  #     @user = current_user
+  #   else
+  #     flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
+  #     redirect_to current_user
+  #   end
+  # end
+  
   def index
-    @users = User.paginate(page: params[:page])
-    if current_user.admin?
-      @user = current_user
-    else
-      flash[:warning] = "ユーザー一覧ページへ遷移することはできません。"
-      redirect_to current_user
+    @users = User.all
+    if params[:id].present?
+      @user = User.find(params[:id])
     end
   end
   
@@ -124,11 +131,20 @@ class UsersController < ApplicationController
   #リスト 10.8: ユーザーのupdateアクションの初期実装
   def update
   @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
-      redirect_to @user
+    if current_user.admin?
+      if @user.update_attributes(user_params)
+        flash[:success] = "アカウント情報を更新しました。"   #リスト 10.12: ユーザーのupdateアクション
+        redirect_to users_url
+      else
+        render 'index'
+      end
     else
-      render 'edit'
+       if @user.update_attributes(user_params)
+         flash[:success] = "アカウント情報を更新しました。"
+         redirect_to @user
+       else
+         render 'edit'
+       end
     end
   end
   
@@ -182,6 +198,7 @@ class UsersController < ApplicationController
     
     # リスト 10.59:管理者かどうか確認
     def admin_user
+      @user = current_user
       redirect_to(root_url) unless current_user.admin?
     end
 end
