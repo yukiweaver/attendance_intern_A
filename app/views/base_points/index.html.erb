@@ -1,6 +1,5 @@
 <% provide(:title, "拠点一覧") %>
 <h1>拠点一覧</h1>
-<p>jQuery稼働テスト</p>
 <!-- 拠点一覧　テーブル -->
 <table class="table table-bordered table-striped table-condensed">
   <tr>
@@ -14,7 +13,8 @@
   <% @bases.each do |base| %>
   <tr>
     <!--  link_to "修正", base_points_path(id: base.id), class:"btn btn-primary" 以下と同義 -->
-    <td><%= link_to "修正", base_points_path(params:{id: base.id}), class:"btn btn-primary" %></td>
+    <td id="ac2"><%= link_to "修正", base_points_path(params:{id: base.id}), class:"btn btn-primary" %></td>
+    <!--<td><button type="button" class="btn btn-primary" id="ac2" autofocus="true" onclick="location.href='/base_points/#{id: base.id}'">修正</button></td>-->
     <td><%= link_to "削除", base_point_path(base.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class:"btn btn-primary" %></td>
     <td><%= base.base_number %></td>
     <td><%= base.base_name %></td>
@@ -54,19 +54,21 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@base, url: "/base_points/#{@base.id}", method: :patch) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      
-      <%= f.label :拠点番号 %>
-      <%= f.number_field :base_number, class: 'form-control' %>
-      
-      <%= f.label :拠点名 %>
-      <%= f.text_field :base_name, class: 'form-control' %>
-      
-      <%= f.label :勤怠種類 %>
-      <%= f.text_field :base_type, class: 'form-control' %>
-
-      <%= f.submit "修正", class: "btn btn-primary" %>
-    <% end %>
+    <div class="accordion2">
+      <%= form_for(@base, url: "/base_points/#{@base.id}", method: :patch) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        
+        <%= f.label :拠点番号 %>
+        <%= f.number_field :base_number, class: 'form-control' %>
+        
+        <%= f.label :拠点名 %>
+        <%= f.text_field :base_name, class: 'form-control' %>
+        
+        <%= f.label :勤怠種類 %>
+        <%= f.text_field :base_type, class: 'form-control' %>
+  
+        <%= f.submit "修正", class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -18,3 +18,10 @@ $(function(){
     $(".accordion1").slideToggle();
   });
 });
+
+// $(function(){
+//   $("#ac2").click(function(){
+//     $(this).find(".accordion2").slideToggle();
+//     // $(".accordion2").slideToggle();
+//   });
+// });
