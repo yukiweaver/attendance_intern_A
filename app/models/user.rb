@@ -28,6 +28,15 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }      #uniqueness: でemailの一意性を検証する
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true    #リスト 10.13: パスワードが空のままでも更新できる処理
+  
+  # 勤怠A：csvファイル読み込み
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      user = find_by(id: row["id"]) || new
+      user.attributes = row.to_hash.slice(*updatable_attributes)
+      user.save!
+    end
+  end
     
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
@@ -124,6 +133,12 @@ class User < ApplicationRecord
 
   
   private
+  
+    # 更新を許可するカラムを定義
+    def self.updatable_attributes
+      ["name", "email", "belong", "number", "card_number", "basic_work_time", "designate_work_time",
+      "designate_end_time", "admin", "password"]
+    end
 
     # リスト 11.3:メールアドレスをすべて小文字にする
     def downcase_email

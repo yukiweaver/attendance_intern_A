@@ -26,6 +26,11 @@ class UsersController < ApplicationController
     end
   end
   
+  def import
+    User.import(params[:file])
+    redirect_to users_url, notice: "ユーザーを追加しました。"
+  end
+  
   def show
     @user = User.find(params[:id])
     
@@ -184,7 +189,8 @@ class UsersController < ApplicationController
     # 勤怠：Strong Parametersにbelong,designate_work_time,basic_work_time追加
     def user_params
       params.require(:user).permit(:name, :email, :belong, :password,
-                                   :password_confirmation, :designate_work_time, :basic_work_time)
+                                   :password_confirmation, :designate_work_time, :basic_work_time,
+                                   :designate_end_time, :number, :card_number)
     end
     
     

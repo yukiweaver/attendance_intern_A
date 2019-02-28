@@ -22,7 +22,9 @@ Rails.application.routes.draw do
   get    '/attendance_index', to: 'attendances#attendance_index', as: 'attendance_index'  #勤怠A：出勤社員一覧へ遷移
   #get    '/base_points/index', to: 'base_points#index'  #勤怠A：拠点一覧へ遷移
   
-  resources :users
+  resources :users do
+    collection {post :import}
+  end
   resources :base_points
   #get    '//top',    to: 'static_pages#top',  as: "top"  # 勤怠B：ログイン有でのトップページの遷移先（管理者ログインのヘッダーに伴う）
 end

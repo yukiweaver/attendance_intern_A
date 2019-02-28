@@ -1,6 +1,11 @@
 <%# リスト 10.37: ユーザーのindexビュー %>
 <% provide(:title, 'ユーザー一覧') %>
 <h1>ユーザー一覧</h1>
+<!-- ファイルをアップロードする入力フィールドを追加 -->
+<%= form_tag import_users_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "csvをインポート" %>
+<% end %>
 
 <%# ページネートの日本語化 %>
 <%#= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>    <%# リスト 10.45: indexページでpaginationを使う %>
