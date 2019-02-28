@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get    '/attendance_index', to: 'attendances#attendance_index', as: 'attendance_index'  #勤怠A：出勤社員一覧へ遷移
   #get    '/base_points/index', to: 'base_points#index'  #勤怠A：拠点一覧へ遷移
   
+  # 勤怠A：csv読み込みのため、routes追加
   resources :users do
     collection {post :import}
   end

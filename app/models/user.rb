@@ -29,11 +29,16 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true    #リスト 10.13: パスワードが空のままでも更新できる処理
   
-  # 勤怠A：csvファイル読み込み
+  # 勤怠A：csvファイル読み込み selfはUserでも可
   def self.import(file)
+    # CSVファイルからデータを読み込む
     CSV.foreach(file.path, headers: true) do |row|
+      # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
       user = find_by(id: row["id"]) || new
+      # CSVからname、emailなどのデータを取得し、設定する
+      # ActiveSupportのHash拡張であるslice、ハッシュから指定した値だけを取り出す
       user.attributes = row.to_hash.slice(*updatable_attributes)
+      # 保存する
       user.save!
     end
   end

@@ -26,9 +26,12 @@ class UsersController < ApplicationController
     end
   end
   
+  # 勤怠A：csvファイル読み込み
+  # importはモデルで定義したメソッドを呼び出して使用している
   def import
     User.import(params[:file])
-    redirect_to users_url, notice: "ユーザーを追加しました。"
+    flash[:success] = "ユーザーを追加しました。"
+    redirect_to users_url#, notice: "ユーザーを追加しました。"
   end
   
   def show
