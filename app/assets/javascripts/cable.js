@@ -19,9 +19,7 @@ $(function(){
   });
 });
 
-// $(function(){
-//   $("#ac2").click(function(){
-//     $(this).find(".accordion2").slideToggle();
-//     // $(".accordion2").slideToggle();
-//   });
-// });
+$(function file_selected(file_field){
+    var filename = $(file_field)[0].files[0].name;
+    $("#filename").val(filename);
+  });

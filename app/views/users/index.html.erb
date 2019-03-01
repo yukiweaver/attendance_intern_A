@@ -4,8 +4,13 @@
 
 <!-- 勤怠A：csvファイルをアップロードする入力フィールドを追加 -->
 <%= form_tag import_users_path, multipart: true, method: :post do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "csvをインポート" %>
+  <div class="file_search">
+    <%= text_field_tag :file_name, "", id: 'file_name', disabled: true %>
+    <%= file_field_tag :file, id: 'file_input', style: 'display: none', onchange: "file_selected($(this));" %>
+    <%= button_tag "ファイルを選択", class: 'btn btn-primary', type: 'button', onclick: "$('#file_input').click();" %></br></br>
+    <%#= submit_tag "csvをインポート", class: "btn btn-primary" %>
+    <button type='submit', class='btn btn-primary'>csvをインポート</button>
+  </div>
 <% end %>
 
 <%# ページネートの日本語化 %>
@@ -62,6 +67,5 @@
     <% end %>
   </div>
 </div>
-
 <%# ページネートの日本語化 %>
 <%#= will_paginate @users, :previous_label => '&lt 前へ', :next_label => '次へ &gt' %>    <%# リスト 10.45: indexページでpaginationを使う %>

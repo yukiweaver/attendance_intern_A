@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   end
   
   # 勤怠A：csvファイル読み込み
-  # importはモデルで定義したメソッドを呼び出して使用している
+  # .importはモデルで定義したメソッドを呼び出して使用している
   def import
     User.import(params[:file])
     flash[:success] = "ユーザーを追加しました。"
