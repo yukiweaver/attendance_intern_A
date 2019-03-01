@@ -5,7 +5,7 @@
 <!-- 勤怠A：csvファイルをアップロードする入力フィールドを追加 -->
 <%= form_tag import_users_path, multipart: true, method: :post do %>
   <div class="file_search">
-    <%= text_field_tag :file_name, "", id: 'file_name', disabled: true %>
+    <%= text_field_tag :filename, "", id: 'filename', disabled: true %>
     <%= file_field_tag :file, id: 'file_input', style: 'display: none', onchange: "file_selected($(this));" %>
     <%= button_tag "ファイルを選択", class: 'btn btn-primary', type: 'button', onclick: "$('#file_input').click();" %></br></br>
     <%#= submit_tag "csvをインポート", class: "btn btn-primary" %>

@@ -19,7 +19,8 @@ $(function(){
   });
 });
 
-$(function file_selected(file_field){
+// 勤怠A：ユーザ一覧csvインポート
+function file_selected(file_field){
     var filename = $(file_field)[0].files[0].name;
     $("#filename").val(filename);
-  });
+  }
