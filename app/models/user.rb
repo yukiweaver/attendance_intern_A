@@ -38,12 +38,11 @@ class User < ApplicationRecord
       # CSVからname、emailなどのデータを取得し、設定する
       # ActiveSupportのHash拡張であるslice、ハッシュから指定した値だけを取り出す
       user.attributes = row.to_hash.slice(*updatable_attributes)
-      if row["email"].valid?
-        # 保存する
+      # 保存する
+      if user.valid?
         user.save!
       else
-        flash[:danger] = "失敗しました。"
-        redirect_to users_url
+        Rails.logger.warn(user.errors.inspect)
       end
     end
   end

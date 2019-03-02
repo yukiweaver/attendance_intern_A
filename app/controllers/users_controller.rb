@@ -29,9 +29,24 @@ class UsersController < ApplicationController
   # 勤怠A：csvファイル読み込み
   # .importはモデルで定義したメソッドを呼び出して使用している
   def import
-    User.import(params[:file])
-    flash[:success] = "ユーザーを追加しました。"
-    redirect_to users_url#, notice: "ユーザーを追加しました。"
+    if params[:file].blank?
+      flash[:danger] = "読み込むCSVを選択してください。"
+      redirect_to action: 'index', error: '読み込むCSVを選択してください。'
+    elsif
+      File.extname(params[:file].original_filename) != '.csv'
+      flash[:danger] = "CSVファイルのみ選択可能です。"
+      redirect_to action: 'index', notice: "CSVファイルのみ選択可能です。"
+    else
+      User.import(params[:file])
+      if User.exists?(email: "yuki@gmail.com")
+        flash[:danger] = "失敗しました。"
+        redirect_to users_url
+      else
+        flash[:success] = "ユーザーを追加しました。"
+        redirect_to users_url
+        return
+      end
+    end
   end
   
   def show
