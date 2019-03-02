@@ -33,19 +33,14 @@ class UsersController < ApplicationController
       flash[:danger] = "読み込むCSVを選択してください。"
       redirect_to action: 'index', error: '読み込むCSVを選択してください。'
     elsif
+    # extnameでファイルの拡張子部分を返す
       File.extname(params[:file].original_filename) != '.csv'
       flash[:danger] = "CSVファイルのみ選択可能です。"
       redirect_to action: 'index', notice: "CSVファイルのみ選択可能です。"
     else
       User.import(params[:file])
-      if User.exists?(email: "yuki@gmail.com")
-        flash[:danger] = "失敗しました。"
-        redirect_to users_url
-      else
-        flash[:success] = "ユーザーを追加しました。"
-        redirect_to users_url
-        return
-      end
+      flash[:success] = "ユーザーを追加しました。"
+      redirect_to users_url
     end
   end
   
