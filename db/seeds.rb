@@ -24,7 +24,7 @@ Base.create!(base_number: 1,
              base_type: "退勤")
 end
 
-19.times do |n|
+9.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
