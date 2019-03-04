@@ -1,10 +1,14 @@
 <%# 勤怠で変更　%>
 <% provide(:title, "勤怠システム") %>
 <div class="center jumbotron">
+  <% if current_user.nil? %>
   <h1>勤怠システム</h1>
 
   <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>
   <h2>
     アカウント作成は<a><%= link_to "こちら", signup_path %></a>から
   </h2>
+  <% else current_user.admin? %>
+    <h1>勤怠システム</h1>
+  <% end %>
 </div>

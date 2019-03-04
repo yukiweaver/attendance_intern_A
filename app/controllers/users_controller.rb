@@ -7,6 +7,7 @@ class UsersController < ApplicationController
                                         :following, :followers]   #リスト 14.25
   #before_action :correct_user,   only: :update   #リスト 10.25
   before_action :admin_user,     only: [:destroy, :index]   #リスト 10.59: destroyアクションを管理者だけに限定
+  before_action :not_admin_user, only: :show  #管理者は勤怠ページへ遷移不可
   
   #リスト 10.35 リスト 10.36 リスト 10.46: indexアクションでUsersをページネート
   # def index
@@ -39,8 +40,10 @@ class UsersController < ApplicationController
       redirect_to action: 'index', notice: "CSVファイルのみ選択可能です。"
     else
       User.import(params[:file])
-      flash[:success] = "ユーザーを追加しました。"
+      #if params[:file].save
+      flash[:success] = "ユーザー一覧ページを更新しました。"
       redirect_to users_url
+      #end
     end
   end
   
@@ -220,5 +223,10 @@ class UsersController < ApplicationController
     def admin_user
       @user = current_user
       redirect_to(root_url) unless current_user.admin?
+    end
+    
+    # 勤怠A：管理者は遷移不可
+    def not_admin_user
+      redirect_to(root_url) if current_user.admin?
     end
 end

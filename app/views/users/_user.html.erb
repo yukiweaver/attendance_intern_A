@@ -5,6 +5,8 @@
   <% if current_user.admin? && !current_user?(user) %>    <%# リスト 10.57: ユーザー削除用リンクの実装 pf:style属性追加 %>
     | <%= link_to "削除", user, method: :delete, 
           data: { confirm: "本当に削除しますか？" }, class: "btn btn-primary", :style=>"color:white" %></br></br>
-    | <%= link_to "編集", users_path(params: {id: user.id}), class: "btn btn-primary", :style=>"color:white" %>
+    <div class="user-edit">
+    | <%= link_to "編集", users_path(params: {id: user.id}), class: "btn btn-lg btn-primary", :style=>"color:white" %>
+    </div>
   <% end %>
 </li>
