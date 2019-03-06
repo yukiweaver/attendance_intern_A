@@ -14,6 +14,20 @@ User.create!(name:  "植野 裕樹",
              basic_work_time: Time.zone.parse("10:00"),
              activated_at: Time.zone.now)
              
+User.create!(name:  "上長A",
+             email: "superior@railstutorial.org",
+             password:              "foobar",
+             password_confirmation: "foobar",
+             number: 2222,
+             card_number: 2222,
+             superior:     true,
+             #activated: true,
+             belong: "営業",
+             designate_work_time: Time.zone.parse("10:00"),
+             designate_end_time: Time.zone.parse("20:00"),
+             basic_work_time: Time.zone.parse("10:00"),
+             activated_at: Time.zone.now)
+             
 Base.create!(base_number: 1,
              base_name: "拠点A",
              base_type: "出勤")
