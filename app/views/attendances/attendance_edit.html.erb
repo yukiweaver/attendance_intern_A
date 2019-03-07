@@ -15,8 +15,10 @@
           <th>曜日</th>
           <th>出社</th>
           <th>退社</th>
+          <th>翌日</th>
           <th>在社時間</th>
           <th>備考</th>
+          <th>指示者確認</th>
         </tr>
       </thead>
       
@@ -32,19 +34,33 @@
                 <td><%= @week[date.attendance_day.wday] %></td>
                 <!-- 第三項：出社時間 -->
                 <td>
-                  <%= a.time_field :beginning_time, class: 'form-control' %>
+                  <% if date.attendance_day > Date.today %>
+                    <%= a.time_field :beginning_time, class: 'form-control', :readonly => true %>
+                  <% else %>
+                    <%= a.time_field :beginning_time, class: 'form-control' %>
+                  <% end %>
                 </td>
                 <!-- 第四項：退社時間 -->
                 <td>
-                  <%= a.time_field :leaving_time, class: 'form-control' %>
+                  <% if date.attendance_day > Date.today %>
+                    <%= a.time_field :leaving_time, class: 'form-control', :readonly => true %>
+                  <% else %>
+                    <%= a.time_field :leaving_time, class: 'form-control' %>
+                  <% end %>
                 </td>
-                <!-- 第五項：在社時間 -->
+                <!-- 第五項：翌日 -->
+                <td></td>
+                <!-- 第六項：在社時間 -->
                 <td>
                   <% if date.beginning_time != nil && date.leaving_time != nil %>
                     <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
                   <% end %>
                 </td>
-                <!-- 第六項：備考 -->
+                <!-- 第七項：備考 -->
+                <td>
+                  <%= a.text_field :note, class: 'form-controll' %>
+                </td>
+                <!-- 第八項：指示者確認 -->
                 <td></td>
               </tr>
             <% end %>

@@ -105,7 +105,9 @@
           <% end %>
         </td>
         <!-- 第十一項：備考 -->
-        <td></td>
+        <td>
+          <%= date.note %>
+        </td>
         <!-- 第十二項：終了予定時間（hours） -->
         <td></td>
         <!-- 第十三項：終了予定時間（minites） -->
@@ -142,7 +144,11 @@
       <td></td>
       <td></td>
       <td>
-        
+        <%= form_for(@user) do |f| %>
+          <%= f.label :name, "勤怠申請" %>
+          <%= f.select :name, ["植野裕樹","上長A"] %>
+          <%= f.submit "申請" %>
+        <% end %>
       </td>
     </tbody>
   </table>

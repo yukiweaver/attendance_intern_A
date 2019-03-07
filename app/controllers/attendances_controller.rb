@@ -41,31 +41,47 @@ class AttendancesController < ApplicationController
   end
   
   # 勤怠B：勤怠編集ページ更新
-  def attendance_update
-    @user = User.find(params[:user][:id])
-    attendance_params.each do |at, bt|
-      @attendance = @user.attendances.find(at)
-      # 管理者も他ユーザーも未来日を更新することはできない
-      if current_user.admin? && @attendance.attendance_day.future?
-      elsif current_user?(@user) && @attendance.attendance_day.future?
+  # def attendance_update
+  #   @user = User.find(params[:user][:id])
+  #   attendance_params.each do |at, bt|
+  #     @attendance = @user.attendances.find(at)
+  #     # 管理者も他ユーザーも未来日を更新することはできない
+  #     if current_user.admin? && @attendance.attendance_day.future?
+  #     elsif current_user?(@user) && @attendance.attendance_day.future?
       
-      # 出勤時間、退勤時間が空欄だと更新できない
-      elsif bt["beginning_time"].blank? && bt["leaving_time"].blank?
-      elsif bt["beginning_time"].blank? || bt["leaving_time"].blank?
-        flash[:warning] = "無効な編集内容があります。"
+  #     # 出勤時間、退勤時間が空欄だと更新できない
+  #     elsif bt["beginning_time"].blank? && bt["leaving_time"].blank?
+  #     elsif bt["beginning_time"].blank? || bt["leaving_time"].blank?
+  #       flash[:warning] = "無効な編集内容があります。"
         
-      # 出勤時間より退勤時間の方が早い時間だと更新できない
-      elsif bt["beginning_time"] > bt["leaving_time"]
-        flash[:warning] = "出勤時間と退勤時間に誤りがあります。"
+  #     # 出勤時間より退勤時間の方が早い時間だと更新できない
+  #     elsif bt["beginning_time"] > bt["leaving_time"]
+  #       flash[:warning] = "出勤時間と退勤時間に誤りがあります。"
         
-      # これら以外だと更新できる
-      else @attendance.update_attributes(bt)
-        flash[:success] = "勤怠編集情報を更新しました。しかし、本日以降は更新できません。"
-        #redirect_to @user and return
+  #     # これら以外だと更新できる
+  #     else @attendance.update_attributes(bt)
+  #       flash[:success] = "勤怠編集情報を更新しました。しかし、本日以降は更新できません。"
+  #       #redirect_to @user and return
+  #     end
+  #   end
+  #   # リダイレクト先でhidden_fieldの値を受け取る
+  #   redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
+  # end
+  
+  def attendance_update
+    @user = User.find(params[:id])
+    if attendances_invalid?
+      attendance_params.each do |at, bt|
+        @attendance = @user.attendances.find(at)
+        @attendance.update_attributes(bt)
       end
+        flash[:success] = "勤怠編集情報を更新しました。"
+        # リダイレクト先でhidden_fieldの値を受け取る
+        redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
+    else
+        flash[:danger] = "不正な時間入力がありました、再入力してください。"
+        redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
     end
-    # リダイレクト先でhidden_fieldの値を受け取る
-    redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
   end
   
   def attendance_index
@@ -83,7 +99,7 @@ class AttendancesController < ApplicationController
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
     def attendance_params
-      params.permit(attendances: [:beginning_time, :leaving_time])[:attendances]
+      params.permit(attendances: [:beginning_time, :leaving_time, :note])[:attendances]
     end
     # def attendance_params
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
