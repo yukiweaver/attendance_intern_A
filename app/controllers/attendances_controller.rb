@@ -68,9 +68,10 @@ class AttendancesController < ApplicationController
   #   redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
   # end
   
+  # 勤怠A：勤怠編集更新
   def attendance_update
     @user = User.find(params[:id])
-    if attendances_invalid?
+    if attendances_invalid?  # AttendancesHelper
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
         @attendance.update_attributes(bt)

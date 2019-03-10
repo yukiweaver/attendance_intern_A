@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
     # 管理者のみ他ユーザーの勤怠表示画面に遷移可能、他ユーザーは自分の勤怠画面のみ
-    if current_user.admin? || current_user?(@user)
+    #if current_user.admin? || current_user?(@user)
       
       if params[:current_day] != nil
         @current_day = Date.strptime(params[:current_day])  #勤怠B：strptimeは「文字列」を「日付」に変換
@@ -92,10 +92,12 @@ class UsersController < ApplicationController
           @attendance_count = i
         end
       end
-    else
-      redirect_to current_user
-      flash[:warning] = "他ユーザーの勤怠表示ページへ遷移することはできません。"
-    end
+      
+      #send_data render_to_string, filename: "#{@user.name}.csv", type: :csv
+    #else
+      #redirect_to current_user
+      #flash[:warning] = "他ユーザーの勤怠表示ページへ遷移することはできません。"
+    #end
   end
   
   # 勤怠B:出社ボタン押込み時の処理

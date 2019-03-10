@@ -8,7 +8,7 @@ module AttendancesHelper
       elsif item[:beginning_time].blank? || item[:leaving_time].blank?
         attendances = false
         break
-      elsif item[:beginning_time].to_s > item[:leaving_time].to_s
+      elsif item["beginning_time"].to_s > item["leaving_time"].to_s
         attendances = false
         break
       end
