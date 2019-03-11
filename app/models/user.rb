@@ -143,7 +143,7 @@ class User < ApplicationRecord
   
   private
   
-    # 更新を許可するカラムを定義
+    # csvファイル 更新を許可するカラムを定義
     def self.updatable_attributes
       ["name", "email", "belong", "number", "card_number", "basic_work_time", "designate_work_time",
       "designate_end_time", "admin", "password"]
