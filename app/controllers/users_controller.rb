@@ -92,8 +92,11 @@ class UsersController < ApplicationController
           @attendance_count = i
         end
       end
-      
-      #send_data render_to_string, filename: "#{@user.name}.csv", type: :csv
+      # csv出力 ファイル名指定 欠陥あり
+      # sand_data 動的に生成されたデータを出力
+      # render_to_string 表示結果を文字列として取得
+      #filename = "#{@user.name}の#{@current_day.month}月.csv"
+      #send_data(render_to_string, :type => 'text/csv', :filename => filename)
     #else
       #redirect_to current_user
       #flash[:warning] = "他ユーザーの勤怠表示ページへ遷移することはできません。"
