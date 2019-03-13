@@ -92,6 +92,8 @@ class UsersController < ApplicationController
           @attendance_count = i
         end
       end
+      
+      @superiors = User.find_by(id: 3)
       # csv出力 ファイル名指定 欠陥あり
       # sand_data 動的に生成されたデータを出力
       # render_to_string 表示結果を文字列として取得
