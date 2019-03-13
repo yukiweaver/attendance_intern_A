@@ -153,3 +153,40 @@
     </tbody>
   </table>
 </div>
+
+<!-- 一日分の残業申請フォーム -->
+<%= @date.each do |date| %>
+  <div class ="white-popup mfp-with-anim mfp-hide">
+    <h3 align="center">残業申請</h3>
+    <%= form_for(date, url: attendance_overtime_path, method: :post) do |f| %>
+      <table class="txt1 table table-bordered table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>曜日</th>
+            <th>終了予定時間</th>
+            <th>翌日</th>
+            <th>業務処理内容</th>
+            <th>指示者確認</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <!-- 日付 -->
+            <td><%= date.attendance_day.month %>/<%= date.attendance_day.day %></td>
+            <!-- 曜日 -->
+            <td><%= @week[date.attendance_day.wday] %></td>
+            <!-- 終了予定時間 -->
+            <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
+            <!-- 翌日　チェックボックス -->
+            <td><%= check_box_tag :check %></td>
+            <!-- 業務処理内容 -->
+            <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
+            <!-- 指示者確認 -->
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% end %>
