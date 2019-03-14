@@ -181,7 +181,7 @@
               <!-- 業務処理内容 -->
               <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
               <!-- 指示者確認 -->
-              <td><%= f.select :instructor_test, [@superiors.name], :include_blank => true %></td>
+              <td><%= f.select :instructor_test, [@superior], :include_blank => true %></td>
             </tr>
           </tbody>
         </table>
