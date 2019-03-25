@@ -93,18 +93,15 @@ class UsersController < ApplicationController
         end
       end
       
+      # モデルのname属性のみ配列で取得
       #@superiors = User.all.map { |user| user.name } 以下とほぼ同義
       @superiors = User.pluck :name
-      @superiors.slice!(3..11)
-      #@superiors = User.where.not(id: @user.id, superior: false)
       if current_user.id == 2
         @superior = @superiors[2]
       elsif current_user.id == 3
         @superior = @superiors[1]
       else
-        @superiors.each do |superior|
-          @superior = superior
-        end
+        @superior = @superiors[1..2]
       end
       # binding.pry
       # csv出力 ファイル名指定 欠陥あり

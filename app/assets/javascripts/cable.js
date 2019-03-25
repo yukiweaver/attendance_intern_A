@@ -24,3 +24,16 @@ function file_selected(file_field){
     var filename = $(file_field)[0].files[0].name;
     $("#filename").val(filename);
   }
+
+// $(function(){
+//   $("#modal-open").click(function(){
+//     $("body").append('<div id="modal-bg"></div>');
+//     modalResize();
+//     $("#modal-bg,#modal-main").fadeIn("slow");
+//     $("#modal-bg,#modal-main").click(function(){
+//       $("#modal-main,#modal-bg").fadeOut("slow",function(){
+//         $('#modal-bg').remove();
+//       });
+//     });
+//   });
+// });

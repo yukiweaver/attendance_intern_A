@@ -95,6 +95,10 @@ class AttendancesController < ApplicationController
     end
   end
   
+  def overtime
+    @user = User.find(params[:id])
+  end
+  
   
   private
   
