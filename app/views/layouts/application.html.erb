@@ -4,7 +4,7 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/rails_default' %>
     <%= render 'layouts/shim' %>
-    <%#= favicon_link_tag('favicon.ico') %>
+    <!-- モーダル表示用外部CSS -->
     <link rel="stylesheet" href="magnific-popup.css" />
   </head>
   <body>
@@ -17,7 +17,8 @@
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>-->
+    <!-- モーダル表示用外部js -->
 　　<script src="jquery.magnific-popup.min.js"></script>
   </body>
 </html>
