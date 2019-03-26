@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   get    '/attendance_edit/:id', to: 'attendances#attendance_edit', as: 'attendance_edit'  #勤怠B：勤怠編集画面へ遷移
   post   '/attendance_update/:id', to: 'attendances#attendance_update', as: 'attendance_update'  #勤怠B：勤怠編集の更新
   get    '/attendance_index', to: 'attendances#attendance_index', as: 'attendance_index'  #勤怠A：出勤社員一覧へ遷移
-  post   '/attendance_overtime/:id', to: 'attendances#overtime', as: 'attendance_overtime'  #勤怠A：1日分の残業申請
+  # get    '/attendance_overtime/:id', to: 'attendances#overtime', as: 'attendance_overtime' #勤怠A：1日分の残業申請遷移
+  post   '/attendance_overtime_update/:id', to: 'attendances#overtime_update', as: 'attendance_overtime_update'  #勤怠A：1日分の残業申請更新
   
   # 勤怠A：csv読み込みのため、routes追加
   resources :users do

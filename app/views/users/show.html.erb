@@ -70,10 +70,11 @@
     </thead>
     <!-- 以下日付や曜日などデータ部分 -->
     <tbody>
+      <!--<div id="product-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>-->
       <% @date.each do |date| %>  <!-- 月初から月末までの繰り返しを変数dateに格納  -->
       <tr>
         <!-- 第一項：残業申請 -->
-        <td><a href="" id="modal-open" class="btn btn-primary">残業申請</a></td>
+        <td class="modal-open"><a href="#modal<%= date.id %>", class="btn btn-primary" data-effect="mfp-zoom-in">残業申請</a></td>
         <!-- 第二項：日付 -->
         <td><%= date.attendance_day.month %>/<%= date.attendance_day.day %></td>  <!-- 変数dateから月と日を取得 -->
         <!-- 第三項：曜日 -->
@@ -154,9 +155,9 @@
   </table>
   <!-- 一日分の残業申請フォーム -->
   <%= @date.each do |date| %>
-    <div class ="white-popup mfp-with-anim mfp-hide" style="display: none" id="modal-main">
-      <h3 align="center">残業申請</h3>
-      <%= form_for(date, url: attendance_overtime_path, method: :post) do |f| %>
+    <div class ="white-popup mfp-with-anim mfp-hide" id="modal<%= date.id %>" style="background-color:white">
+      <h3 align="center" style="padding-top:15px">残業申請</h3>
+      <%= form_for(date, url: attendance_overtime_update_path, method: :post) do |f| %>
         <table class="txt1 table table-bordered table-striped table-condensed">
           <thead>
             <tr>
@@ -190,3 +191,18 @@
     </div>
   <% end %>
 </div>
+
+<script>
+// 1日分の残業申請フォーム　モーダル表示
+  $(".modal-open").magnificPopup({
+  delegate: 'a',
+  removalDelay: 500,
+  callbacks:{
+    beforeOpen: function() {
+      this.st.mainClass = this.st.el.attr('data-effect');
+    },
+  },
+});
+</script>
+
+      

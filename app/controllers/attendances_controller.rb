@@ -95,7 +95,11 @@ class AttendancesController < ApplicationController
     end
   end
   
-  def overtime
+  # def overtime
+  #   @user = User.find(params[:id])
+  # end
+  
+  def overtime_update
     @user = User.find(params[:id])
   end
   
