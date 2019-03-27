@@ -106,19 +106,21 @@
           <% end %>
         </td>
         <!-- 第十一項：備考 -->
-        <td>
-          <%= date.note %>
-        </td>
+        <td><%= date.note %></td>
         <!-- 第十二項：終了予定時間（hours） -->
-        <td></td>
+        <td><%= date.scheduled_end_time.hour if date.scheduled_end_time != nil %></td>
         <!-- 第十三項：終了予定時間（minites） -->
-        <td></td>
+        <td><%= date.scheduled_end_time.min if date.scheduled_end_time != nil %></td>
         <!-- 第十四項：時間外時間 -->
-        <td></td>
+        <td>
+          <!--<%# if date.designate_end_time && date.scheduled_end_time != nil %>-->
+          <!--  <%#= (date.scheduled_end_time).to_f - (date.designate_end_time).to_f %>-->
+          <!--<%# end %>-->
+        </td>
         <!-- 第十五項：業務処理内容 -->
-        <td></td>
+        <td><%= date.business_outline if date.business_outline != nil %></td>
         <!-- 第十六項：指示者確認 -->
-        <td></td>
+        <td><%= date.instructor_test if date.instructor_test != nil %></td>
       </tr>
       <% end %>
       <td colspan="2">
@@ -154,42 +156,53 @@
     </tbody>
   </table>
   <!-- 一日分の残業申請フォーム（モーダルで表示） -->
-  <%= @date.each do |date| %>
-    <div class ="white-popup mfp-with-anim mfp-hide" id="<%= date.attendance_day.day %>" style="background-color:white">
-      <h3 align="center" style="padding-top:15px">残業申請</h3>
-      <%= form_for(date, url: attendance_overtime_update_path, method: :post) do |f| %>
-        <table class="txt1 table table-bordered table-striped table-condensed">
-          <thead>
-            <tr>
-              <th>日付</th>
-              <th>曜日</th>
-              <th>終了予定時間</th>
-              <th>翌日</th>
-              <th>業務処理内容</th>
-              <th>指示者確認</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <!-- 日付 -->
-              <td><%= date.attendance_day.month %>/<%= date.attendance_day.day %></td>
-              <!-- 曜日 -->
-              <td><%= @week[date.attendance_day.wday] %></td>
-              <!-- 終了予定時間 -->
-              <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
-              <!-- 翌日　チェックボックス -->
-              <td><%= check_box_tag :check, id: :next_day, :as => :boolean %></td>
-              <!-- 業務処理内容 -->
-              <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
-              <!-- 指示者確認 -->
-              <td><%= f.select :instructor_test, @superior, :include_blank => true %></td>
-            </tr>
-          </tbody>
-        </table>
-        <%= f.submit "残業を申請する", class: "btn btn-sm btn-primary" %>
-      <% end %>
-    </div>
-  <% end %>
+  <div style="display:none">
+    <%= @date.each do |date| %>
+      <div class ="white-popup mfp-with-anim mfp-hide" id="<%= date.attendance_day.day %>" style="background-color:white">
+        <h3 align="center" style="padding-top:15px">残業申請</h3>
+        <%= form_for(date, url: attendance_overtime_update_path, method: :post) do |f| %>
+        <%= f.hidden_field :id, :value => date.id %> <!-- attendancesテーブルのidを渡す(idが60とかになる) -->
+        <%= f.hidden_field :user_id, :value => @user.id %>
+        <%= f.hidden_field :current_day, :value => @currrent_day %>
+          <table class="txt1 table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>終了予定時間</th>
+                <th>翌日</th>
+                <th>業務処理内容</th>
+                <th>指示者確認</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <!-- 日付 -->
+                <td><%= date.attendance_day.month %>/<%= date.attendance_day.day %></td>
+                <!-- 曜日 -->
+                <td><%= @week[date.attendance_day.wday] %></td>
+                <!-- 終了予定時間 -->
+                <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
+                <!-- 翌日　チェックボックス -->
+                <td><%= check_box_tag :check, id: :next_day, :as => :boolean %></td>
+                <!-- 業務処理内容 -->
+                <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
+                <!-- 指示者確認 -->
+                <td>
+                  <% if current_user.superior? %>
+                    <%= f.select :instructor_test, [@superior], :include_blank => true %>
+                  <% else %>
+                    <%= f.select :instructor_test, @superior, :include_blank => true %>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "残業を申請する", class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <script>

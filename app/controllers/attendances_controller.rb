@@ -99,8 +99,23 @@ class AttendancesController < ApplicationController
   #   @user = User.find(params[:id])
   # end
   
+  # 勤怠A：一日分の残業申請
+  # users/show.html.erbのhidden_fieldのパラメータ取得
   def overtime_update
-    @user = User.find(params[:id])
+    # 取得できるものは以下と同じ @user = User.find(params[:id])
+    @user = User.find(params[:attendance][:user_id])
+    @attendance = @user.attendances.find(params[:attendance][:id])
+    # binding.pry
+    if @attendance.scheduled_end_time.blank?
+      flash[:warning] = "残業申請に失敗しました。"
+      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
+      return
+    else 
+      @attendance.update_attributes(overtime_params)
+      flash[:success] = "残業申請が完了しました。"
+      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
+    end
+    # binding.pry
   end
   
   
@@ -113,4 +128,9 @@ class AttendancesController < ApplicationController
     # def attendance_params
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
     # end
+    
+    def overtime_params
+      params.require(:attendance).permit(:scheduled_end_time, :next_day, :business_outline, :instructor_test)
+      # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
+    end
 end
