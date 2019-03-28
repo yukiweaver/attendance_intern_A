@@ -169,10 +169,10 @@
               <tr>
                 <th>日付</th>
                 <th>曜日</th>
-                <th>終了予定時間</th>
+                <th>終了予定時間（必須）</th>
                 <th>翌日</th>
                 <th>業務処理内容</th>
-                <th>指示者確認</th>
+                <th>指示者確認（必須）</th>
               </tr>
             </thead>
             <tbody>
@@ -184,7 +184,7 @@
                 <!-- 終了予定時間 -->
                 <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
                 <!-- 翌日　チェックボックス -->
-                <td><%= check_box_tag :check, id: :next_day, :as => :boolean %></td>
+                <td><%= f.check_box :next_day, id: :next_day, :as => :boolean %></td>
                 <!-- 業務処理内容 -->
                 <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
                 <!-- 指示者確認 -->

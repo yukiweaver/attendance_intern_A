@@ -106,14 +106,18 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:attendance][:user_id])
     @attendance = @user.attendances.find(params[:attendance][:id])
     # binding.pry
-    if @attendance.scheduled_end_time.blank?
-      flash[:warning] = "残業申請に失敗しました。"
+    if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:instructor_test].blank?
+      flash[:warning] = "必須箇所が空欄です。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
-      return
-    else 
+    elsif
+      params[:attendance][:next_day] == "1"
+      
+      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
+    else
       @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請が完了しました。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
+      return
     end
     # binding.pry
   end
