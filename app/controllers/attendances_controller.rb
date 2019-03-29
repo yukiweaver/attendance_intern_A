@@ -109,19 +109,23 @@ class AttendancesController < ApplicationController
     if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:instructor_test].blank?
       flash[:warning] = "必須箇所が空欄です。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
-    elsif
-      params[:attendance][:next_day] == "1"
-      
-      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
     else
       @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請が完了しました。"
-      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
-      return
+      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
+    end
+    
+    if params[:attendance][:next_day] == "1"
+      @attendance.update_attribute(:scheduled_end_time, @attendance.scheduled_end_time.tomorrow)
+      # params[:attendance][:scheduled_end_time].to_datetime.tomorrow
+      flash[:warning] = "翌日テスト中。"
+      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
     end
     # binding.pry
   end
-  
+  # @user.update_attribute = { :username = 'A' }
+  # {"scheduled_end_time"=>"11:11", "next_day"=>"1", "business_outline"=>"", "instructor_test"=>"上長B"
+
   
   private
   
@@ -133,6 +137,7 @@ class AttendancesController < ApplicationController
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
     # end
     
+    # 勤怠A：一日分の残業申請
     def overtime_params
       params.require(:attendance).permit(:scheduled_end_time, :next_day, :business_outline, :instructor_test)
       # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
