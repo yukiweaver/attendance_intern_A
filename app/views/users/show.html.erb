@@ -96,7 +96,7 @@
         <!-- 第九項：退社ボタン -->
         <td>
           <% if date.leaving_time.nil? && date.beginning_time != nil && date.attendance_day == Date.today %>
-            <%= button_to "退社", leaving_time_path %>
+            <%= button_to "退社", leaving_time_path, class: "btn btn-primary" %>
           <% end %>
         </td>
         <!-- 第十項：在社時間 -->
@@ -105,7 +105,7 @@
             <% if date.next_day != true %>
               <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
             <% else %>
-              <%= company_time_edit(date.leaving_time - date.beginning_time) %>
+              <%= company_time_edit((date.leaving_time+86400.0) - date.beginning_time) %>
             <% end %>
           <% end %>
         </td>

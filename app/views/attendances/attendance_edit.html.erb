@@ -56,7 +56,7 @@
                     <% if date.next_day != true %>
                       <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
                     <% else %>
-                      <%= company_time_edit((date.leaving_time - date.beginning_time)+24.0) %>
+                      <%= company_time_edit((date.leaving_time+86400.0) - date.beginning_time) %>
                     <% end %>
                   <% end %>
                 </td>
