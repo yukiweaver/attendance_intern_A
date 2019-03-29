@@ -115,12 +115,12 @@ class AttendancesController < ApplicationController
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
     end
     
-    if params[:attendance][:next_day] == "1"
-      @attendance.update_attribute(:scheduled_end_time, @attendance.scheduled_end_time.tomorrow)
-      # params[:attendance][:scheduled_end_time].to_datetime.tomorrow
-      flash[:warning] = "翌日テスト中。"
-      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
-    end
+    # if params[:attendance][:next_day] == "1"
+    #   @attendance.update_attribute(:scheduled_end_time, @attendance.scheduled_end_time.tomorrow)
+    #   # params[:attendance][:scheduled_end_time].to_datetime.tomorrow
+    #   flash[:warning] = "翌日テスト中。"
+    #   redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
+    # end
     # binding.pry
   end
   # @user.update_attribute = { :username = 'A' }

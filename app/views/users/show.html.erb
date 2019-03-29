@@ -86,7 +86,7 @@
         <!-- 第六項：出社ボタン -->
         <td>
           <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today %>
-            <%= button_to "出社", beginning_time_path %>
+            <%= button_to "出社", beginning_time_path, class: "btn btn-primary" %>
           <% end %>
         </td>
         <!-- 第七項：退社（hours） -->
@@ -102,7 +102,11 @@
         <!-- 第十項：在社時間 -->
         <td>
           <% if date.beginning_time != nil && date.leaving_time != nil %>
-            <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
+            <% if date.next_day != true %>
+              <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
+            <% else %>
+              <%= company_time_edit(date.leaving_time - date.beginning_time) %>
+            <% end %>
           <% end %>
         </td>
         <!-- 第十一項：備考 -->
@@ -114,7 +118,11 @@
         <!-- 第十四項：時間外時間 -->
         <td>
           <% if @user.designate_end_time && date.scheduled_end_time != nil %>
-            <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))) %>
+            <% if date.next_day != true %>
+              <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))) %>
+            <% else %>
+              <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))+24.0) %>
+            <% end %>
           <% end %>
         </td>
         <!-- 第十五項：業務処理内容 -->

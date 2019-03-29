@@ -49,11 +49,15 @@
                   <% end %>
                 </td>
                 <!-- 第五項：翌日 -->
-                <td></td>
+                <td><%= a.check_box :next_day, id: :next_day, :as => :boolean %></td>
                 <!-- 第六項：在社時間 -->
                 <td>
                   <% if date.beginning_time != nil && date.leaving_time != nil %>
-                    <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
+                    <% if date.next_day != true %>
+                      <%= company_time_edit(date.leaving_time - date.beginning_time) %>  <!-- 勤怠B：company_time_editはUsersHelperで定義 -->
+                    <% else %>
+                      <%= company_time_edit((date.leaving_time - date.beginning_time)+24.0) %>
+                    <% end %>
                   <% end %>
                 </td>
                 <!-- 第七項：備考 -->
