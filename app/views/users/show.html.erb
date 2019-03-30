@@ -118,7 +118,7 @@
         <!-- 第十四項：時間外時間（翌日対応） -->
         <td>
           <% if @user.designate_end_time && date.scheduled_end_time != nil %>
-            <% if date.next_day != true %>
+            <% if date.leaving_next_day != true %>
               <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))) %>
             <% else %>
               <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))+24.0) %>
@@ -193,7 +193,7 @@
                 <!-- 終了予定時間 -->
                 <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
                 <!-- 翌日　チェックボックス -->
-                <td><%= f.check_box :next_day, id: :next_day, :as => :boolean %></td>
+                <td><%= f.check_box :leaving_next_day, id: :leaving_next_day, :as => :boolean %></td>
                 <!-- 業務処理内容 -->
                 <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
                 <!-- 指示者確認 -->

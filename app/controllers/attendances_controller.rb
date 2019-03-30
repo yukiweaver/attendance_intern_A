@@ -140,7 +140,7 @@ class AttendancesController < ApplicationController
     
     # 勤怠A：一日分の残業申請
     def overtime_params
-      params.require(:attendance).permit(:scheduled_end_time, :next_day, :business_outline, :instructor_test)
+      params.require(:attendance).permit(:scheduled_end_time, :leaving_next_day, :business_outline, :instructor_test)
       # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
     end
 end
