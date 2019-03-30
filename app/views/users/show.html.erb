@@ -34,7 +34,16 @@
       </tr>
     </thead>
   </table>
-  <br>
+  <% if current_user.superior? %>
+    <p>【所属長承認申請のお知らせ】</p>
+    <p>【勤怠変更申請のお知らせ】</p>
+    <p>
+      【残業申請のお知らせ】
+      <% if %>
+        <%= link_to "○件の通知があります", "#" %>
+      <% end %>
+    </p>
+  <% end %>
   <!-- 勤怠表示画面　勤怠編集ボタン -->
   <%= link_to "勤怠を編集", attendance_edit_path(params:{current_day: @current_day}), class: "btn btn-primary" %>
   <%= link_to "CSV出力", user_path(format: :csv, params:{current_day: @current_day}), class: "btn btn-primary" %><br>
@@ -145,7 +154,7 @@
       <td>
         在社時間の合計
         <% if @company_time != nil %>
-          <%= total_company_edit(@total_company_time) %>  <!-- total_company_editはUsersHelperで定義 -->
+          <%= total_company_edit(@total_company_time) %>
         <% else @company_time == nil %>
           0.00
         <% end %>

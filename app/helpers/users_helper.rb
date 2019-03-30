@@ -20,6 +20,6 @@ module UsersHelper
   
   # 勤怠B：勤怠表示画面 在社時間の合計 フォーマットヘルパー使用→指定の桁で丸める
   def total_company_edit(time)
-    number_with_precision time/3600, precision:2
+    number_with_precision time, precision:2
   end
 end

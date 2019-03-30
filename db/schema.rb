@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20190330062916) do
     t.date "attendance_day"
     t.string "note"
     t.datetime "scheduled_end_time"
-    t.boolean "next_day", default: false
+    t.boolean "next_day", default: false  # 勤怠編集の「翌日」
     t.string "business_outline"
     t.string "instructor_test"
-    t.boolean "leaving_next_day", default: false
+    t.boolean "leaving_next_day", default: false  # 残業申請の「翌日」
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

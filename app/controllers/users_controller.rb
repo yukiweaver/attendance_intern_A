@@ -82,9 +82,13 @@ class UsersController < ApplicationController
       i = 0
       @date.each do |date|
         if date.beginning_time != nil && date.leaving_time != nil
-          @company_time = date.leaving_time - date.beginning_time
+          if date.next_day != true
+            @company_time = company_time_edit(date.leaving_time - date.beginning_time)
+          else
+            @company_time = company_time_edit((date.leaving_time+86400.0) - date.beginning_time)
+          end
           #@start_company_time = 0
-          @total_company_time = (@total_company_time.to_f + @company_time)
+          @total_company_time = (@total_company_time.to_f + @company_time.to_f)
           # 出勤日数が以下の定義だと本番環境で適用されない（postgreSQL）
           #@attendance_count = @user.attendances.where("beginning_time != ? and leaving_time != ? and attendance_day >= ? and attendance_day <= ?", nil?, nil?, @first_day, @last_day).count
           #@attendance_count = @user.attendances.where.not(beginning_time: nil?).where.not(leaving_time: nil?).where(attendance_day: @first_day..@last_day).count
