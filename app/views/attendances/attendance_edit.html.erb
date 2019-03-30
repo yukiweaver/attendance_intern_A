@@ -50,7 +50,7 @@
                 </td>
                 <!-- 第五項：翌日 -->
                 <td><%= a.check_box :next_day, id: :next_day, :as => :boolean %></td>
-                <!-- 第六項：在社時間 -->
+                <!-- 第六項：在社時間（翌日対応） -->
                 <td>
                   <% if date.beginning_time != nil && date.leaving_time != nil %>
                     <% if date.next_day != true %>

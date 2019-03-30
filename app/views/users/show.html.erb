@@ -99,7 +99,7 @@
             <%= button_to "退社", leaving_time_path, class: "btn btn-primary" %>
           <% end %>
         </td>
-        <!-- 第十項：在社時間 -->
+        <!-- 第十項：在社時間（翌日対応） -->
         <td>
           <% if date.beginning_time != nil && date.leaving_time != nil %>
             <% if date.next_day != true %>
@@ -115,7 +115,7 @@
         <td><%= date.scheduled_end_time.hour if date.scheduled_end_time != nil %></td>
         <!-- 第十三項：終了予定時間（minites） -->
         <td><%= date.scheduled_end_time.min if date.scheduled_end_time != nil %></td>
-        <!-- 第十四項：時間外時間 -->
+        <!-- 第十四項：時間外時間（翌日対応） -->
         <td>
           <% if @user.designate_end_time && date.scheduled_end_time != nil %>
             <% if date.next_day != true %>

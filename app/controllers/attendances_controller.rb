@@ -85,6 +85,7 @@ class AttendancesController < ApplicationController
     end
   end
   
+  # 勤怠A：出勤者一覧
   def attendance_index
     @users = User.all.includes(:attendances)
     if current_user.admin?

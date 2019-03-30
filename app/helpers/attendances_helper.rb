@@ -8,13 +8,11 @@ module AttendancesHelper
       elsif item[:beginning_time].blank? || item[:leaving_time].blank?
         attendances = false
         break
-      elsif  item[:next_day] == "1"
-        item["beginning_time"].to_s > item["leaving_time"].to_s
-        attendances = true
-        break
-      else
-        item["beginning_time"].to_s > item["leaving_time"].to_s
+      elsif  item[:next_day] == "0" && item["beginning_time"].to_s > item["leaving_time"].to_s
         attendances = false
+        break
+      elsif  item[:next_day] == "1" && item["beginning_time"].to_s > item["leaving_time"].to_s
+        attendances = true
       end
     end
     attendances
