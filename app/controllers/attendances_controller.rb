@@ -34,6 +34,16 @@ class AttendancesController < ApplicationController
         # 本番環境でバグ　orderメソッド追加で昇順へ
         @date = @user.attendances.where("attendance_day >= ? and attendance_day <= ?", @first_day, @last_day).order(:attendance_day)
       end
+      # モデルのname属性のみ配列で取得
+      #@superiors = User.all.map { |user| user.name } 以下とほぼ同義
+      @superiors = User.pluck :name
+      if current_user.id == 2
+        @superior = @superiors[2]
+      elsif current_user.id == 3
+        @superior = @superiors[1]
+      else
+        @superior = @superiors[1..2]
+      end
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
       redirect_to "/attendance_edit/#{current_user.id}/?current_day=#{Date.today}"
@@ -132,8 +142,13 @@ class AttendancesController < ApplicationController
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
     def attendance_params
-      params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day, :instructor_test])[:attendances]
+      params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day])[:attendances]
     end
+    
+    # # 勤怠A：勤怠編集　指示者確認を選択したときはこっち
+    # def attendance_test_params
+    #   params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day, :attendance_test])[:attendances]
+    # end
     # def attendance_params
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
     # end

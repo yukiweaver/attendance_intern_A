@@ -65,7 +65,13 @@
                   <%= a.text_field :note, class: 'form-controll' %>
                 </td>
                 <!-- 第八項：指示者確認 -->
-                <td></td>
+                <td>
+                  <% if current_user.superior? %>
+                    <%= a.select :attendance_test, [@superior], :include_blank => true %>
+                  <% else %>
+                    <%= a.select :attendance_test, @superior, :include_blank => true %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           <% end %>
