@@ -142,13 +142,8 @@ class AttendancesController < ApplicationController
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
     def attendance_params
-      params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day])[:attendances]
+      params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day, :attendance_test])[:attendances]
     end
-    
-    # # 勤怠A：勤怠編集　指示者確認を選択したときはこっち
-    # def attendance_test_params
-    #   params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day, :attendance_test])[:attendances]
-    # end
     # def attendance_params
     #   params.require(:attendance).permit(:beginning_time, :leaving_time)
     # end

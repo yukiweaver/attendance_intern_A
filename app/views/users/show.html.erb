@@ -81,6 +81,7 @@
     <tbody>
       <!--<div id="product-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>-->
       <% @date.each do |date| %>  <!-- 月初から月末までの繰り返しを変数dateに格納  -->
+      <%# binding.pry %>
       <tr>
         <!-- 第一項：残業申請 -->
         <td class="modal-open"><a href="#<%= date.attendance_day.day %>" class="btn btn-primary">残業申請</a></td>
@@ -137,7 +138,14 @@
         <!-- 第十五項：業務処理内容 -->
         <td><%= date.business_outline if date.business_outline != nil %></td>
         <!-- 第十六項：指示者確認 -->
-        <td><%= date.instructor_test if date.instructor_test != nil %></td>
+        <td>
+          <% if date.instructor_test != nil %>
+            残業申請：<%= date.instructor_test %>へ申請中</br>
+          <% end %>
+          <% if not date.attendance_test.blank? %>
+            勤怠変更：<%= date.attendance_test %>へ申請中
+          <% end %>
+        </td>
       </tr>
       <%# binding.pry %>
       <% end %>
