@@ -85,6 +85,7 @@ class AttendancesController < ApplicationController
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
         @attendance.update_attributes(bt)
+        # binding.pry
       end
         flash[:success] = "勤怠編集情報を更新しました。"
         # リダイレクト先でhidden_fieldの値を受け取る

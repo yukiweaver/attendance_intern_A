@@ -107,9 +107,25 @@ class UsersController < ApplicationController
       else
         @superior = @superiors[1..2]
       end
+      
+      # 勤怠編集の指示者を取得
+      @attendance_superior1 = Attendance.where(attendance_test: "上長A")
+      @attendance_superior2 = Attendance.where(attendance_test: "上長B")
+      @superior1_count = @attendance_superior1.count
+      @superior2_count = @attendance_superior2.count
+      
+      # 一日分の残業申請フォームの指示者取得
+      @overtime_superior1 = Attendance.where(instructor_test: "上長A")
+      @overtime_superior2 = Attendance.where(instructor_test: "上長B")
+      @overtime_superior1_count = @overtime_superior1.count
+      @over_time_superior2_count = @overtime_superior2.count
+      
+      
+      
+      
       # binding.pry
       # csv出力 ファイル名指定 欠陥あり
-      # sand_data 動的に生成されたデータを出力
+      # sand_data動的に生成されたデータを出力
       # render_to_string 表示結果を文字列として取得
       #filename = "#{@user.name}の#{@current_day.month}月.csv"
       #send_data(render_to_string, :type => 'text/csv', :filename => filename)

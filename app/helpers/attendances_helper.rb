@@ -3,6 +3,7 @@ module AttendancesHelper
   def attendances_invalid?
     attendances = true
     attendance_params.each do |id, item|
+      # binding.pry
       if item[:beginning_time].blank? && item[:leaving_time].blank?
         next
       elsif item[:beginning_time].blank? || item[:leaving_time].blank?
