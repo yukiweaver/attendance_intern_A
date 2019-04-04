@@ -182,10 +182,10 @@
       <td></td>
       <td></td>
       <td>
-        <%= form_for(@user) do |f| %>
-          <%= f.label :name, "勤怠申請" %>
-          <%= f.select :name, ["植野裕樹","上長A"] %>
-          <%= f.submit "申請" %>
+        勤怠申請：なし
+        <%= form_tag("#", method: :post) do %>
+          <%= select_tag("instructor_test", options_for_select(@superior), :include_blank => true) %>
+          <%= submit_tag "申請", class: "btn btn-primary" %>
         <% end %>
       </td>
     </tbody>
