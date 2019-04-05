@@ -120,7 +120,8 @@ class UsersController < ApplicationController
       @overtime_superior1_count = @overtime_superior1.count
       @over_time_superior2_count = @overtime_superior2.count
       
-      
+      @application_user = OneMonthAttendance.new(application_user_id: @user.id)
+      # @application_user.save
       
       
       # binding.pry

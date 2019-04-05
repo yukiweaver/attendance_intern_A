@@ -137,7 +137,25 @@ class AttendancesController < ApplicationController
   end
   # @user.update_attribute = { :username = 'A' }
   # {"scheduled_end_time"=>"11:11", "next_day"=>"1", "business_outline"=>"", "instructor_test"=>"上長B"
-
+  
+  # 一月分の勤怠申請
+  def month_update
+    @user = User.find(params[:one_month_attendance][:application_id])
+    if params[:one_month_attendance][:authorizer_user_test].blank?
+      flash[:warning] = "指示者確認欄が空白です。"
+      redirect_to @user
+    end
+    
+    @one_month_attendance = OneMonthAttendance.find_by(application_user_id: params[:one_month_attendance][:application_id],
+                                                       application_date: params[:one_month_attendance][:application_date])
+    if @one_month_attendance.nil?
+      @one_month_attendance = OneMonthAttendance.new(one_month_attendance_params)
+      if @one_month_attendance.save
+        flash[:success] = "勤怠申請が完了しました。"
+      end
+    end
+    redirect_to @user
+  end
   
   private
   
@@ -153,5 +171,10 @@ class AttendancesController < ApplicationController
     def overtime_params
       params.require(:attendance).permit(:scheduled_end_time, :leaving_next_day, :business_outline, :instructor_test)
       # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
+    end
+    
+    # 勤怠A：月の勤怠申請
+    def one_month_attendance_params
+      params.require(:one_month_attendance).permit(:application_user_id, :authorizer_user_test, :application_date)
     end
 end

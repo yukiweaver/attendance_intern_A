@@ -183,9 +183,18 @@
       <td></td>
       <td>
         勤怠申請：なし
-        <%= form_tag("#", method: :post) do %>
-          <%= select_tag("instructor_test", options_for_select(@superior), :include_blank => true) %>
-          <%= submit_tag "申請", class: "btn btn-primary" %>
+        <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
+          <%= f.hidden_field :year, :value => @current_day.year %>
+          <%= f.hidden_field :month, :value => @current_day.month %>
+          <%= f.hidden_field :month_attendance, :value => @date %>
+          <%= f.hidden_field :application_id, :value => @user.id %>
+          <%= f.hidden_field :application_date, :value => @current_day %>
+          <% if current_user.superior? %>
+            <%= f.select :authorizer_user_test, [@superior], :include_blank => true %>
+          <% else %>
+            <%= f.select :authorizer_user_test, @superior, :include_blank => true %>
+          <% end %>
+          <%= f.submit "申請", class: "btn btn-primary" %>
         <% end %>
       </td>
     </tbody>
