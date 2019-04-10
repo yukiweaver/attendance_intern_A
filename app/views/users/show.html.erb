@@ -35,7 +35,14 @@
     </thead>
   </table>
   <% if current_user.superior? %>
-    <p>【所属長承認申請のお知らせ】</p>
+    <p>
+      【所属長承認申請のお知らせ】
+      <% if @application_superior1 != nil && current_user.id == 2 %>
+        <%= link_to "#{@application_superior1_count}件の通知があります", "#" %>
+      <% elsif @application_superior2 != nil && current_user.id == 3 %>
+        <%= link_to "#{@application_superior2_count}件の通知があります", "#" %>
+      <% end %>
+    </p>
     <p>
       【勤怠変更申請のお知らせ】
       <% if @attendance_superior1 != nil && current_user.id == 2 %>
@@ -48,7 +55,7 @@
       【残業申請のお知らせ】
       <% if @overtime_superior1 != nil && current_user.id == 2 %>
         <%= link_to "#{@overtime_superior1_count}件の通知があります", "#" %>
-      <% elsif @overtime_superior2 != nil && current_user == 3 %>
+      <% elsif @overtime_superior2 != nil && current_user.id == 3 %>
         <%= link_to "#{@overtime_superior2_count}件の通知があります", "#" %>
       <% end %>
     </p>
@@ -186,8 +193,8 @@
         <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
           <%= f.hidden_field :year, :value => @current_day.year %>
           <%= f.hidden_field :month, :value => @current_day.month %>
-          <%= f.hidden_field :month_attendance, :value => @date %>
-          <%= f.hidden_field :application_id, :value => @user.id %>
+          <%#= f.hidden_field :month_attendance, :value => @date %>
+          <%= f.hidden_field :application_user_id, :value => @user.id %>
           <%= f.hidden_field :application_date, :value => @current_day %>
           <% if current_user.superior? %>
             <%= f.select :authorizer_user_test, [@superior], :include_blank => true %>
@@ -201,7 +208,7 @@
   </table>
   <!-- 一日分の残業申請フォーム（モーダルで表示） -->
   <div style="display:none">
-    <%= @date.each do |date| %>
+    <% @date.each do |date| %>
       <div class ="white-popup mfp-with-anim mfp-hide" id="<%= date.attendance_day.day %>" style="background-color:white">
         <h3 align="center" style="padding-top:15px">残業申請</h3>
         <%= form_for(date, url: attendance_overtime_update_path, method: :post) do |f| %>

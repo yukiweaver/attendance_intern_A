@@ -118,10 +118,17 @@ class UsersController < ApplicationController
       @overtime_superior1 = Attendance.where(instructor_test: "上長A")
       @overtime_superior2 = Attendance.where(instructor_test: "上長B")
       @overtime_superior1_count = @overtime_superior1.count
-      @over_time_superior2_count = @overtime_superior2.count
+      @overtime_superior2_count = @overtime_superior2.count
       
       @application_user = OneMonthAttendance.new(application_user_id: @user.id)
       # @application_user.save
+      
+      # 月の勤怠申請の指示者取得
+      @application_superior1 = OneMonthAttendance.where(authorizer_user_test: "上長A")
+      @application_superior2 = OneMonthAttendance.where(authorizer_user_test: "上長B")
+      @application_superior1_count = @application_superior1.count
+      @application_superior2_count = @application_superior2.count
+      
       
       
       # binding.pry

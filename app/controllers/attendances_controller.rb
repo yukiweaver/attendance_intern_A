@@ -140,20 +140,23 @@ class AttendancesController < ApplicationController
   
   # 一月分の勤怠申請
   def month_update
-    @user = User.find(params[:one_month_attendance][:application_id])
+    @user = User.find(params[:one_month_attendance][:application_user_id])
     if params[:one_month_attendance][:authorizer_user_test].blank?
       flash[:warning] = "指示者確認欄が空白です。"
-      redirect_to @user
+      redirect_to @user and return
     end
     
-    @one_month_attendance = OneMonthAttendance.find_by(application_user_id: params[:one_month_attendance][:application_id],
+    @one_month_attendance = OneMonthAttendance.find_by(application_user_id: params[:one_month_attendance][:application_user_id],
                                                        application_date: params[:one_month_attendance][:application_date])
     if @one_month_attendance.nil?
       @one_month_attendance = OneMonthAttendance.new(one_month_attendance_params)
       if @one_month_attendance.save
         flash[:success] = "勤怠申請が完了しました。"
+      else
+        flash[:danger] = "勤怠申請に失敗しました。"
       end
     end
+    flash[:warning] = "すでに申請しています。"
     redirect_to @user
   end
   
