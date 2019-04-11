@@ -189,7 +189,13 @@
       <td></td>
       <td></td>
       <td>
-        勤怠申請：なし
+        <% if @request_user.authorizer_user_test.blank? %>
+          勤怠申請：なし
+        <% elsif @request_user.authorizer_user_test == "上長A" %>
+          勤怠申請：<%= @request_user.authorizer_user_test %>に申請中
+        <% elsif @request_user.authorizer_user_test == "上長B" %>
+          勤怠申請：<%= @request_user.authorizer_user_test %>に申請中
+        <% end %>
         <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
           <%= f.hidden_field :year, :value => @current_day.year %>
           <%= f.hidden_field :month, :value => @current_day.month %>

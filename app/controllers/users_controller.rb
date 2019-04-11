@@ -128,6 +128,10 @@ class UsersController < ApplicationController
       @application_superior2 = OneMonthAttendance.where(authorizer_user_test: "上長B")
       @application_superior1_count = @application_superior1.count
       @application_superior2_count = @application_superior2.count
+
+      # 月の勤怠　本日の日付、申請者でレコード取得
+      @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
+      
       
       
       

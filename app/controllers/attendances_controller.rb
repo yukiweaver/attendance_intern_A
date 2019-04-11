@@ -155,8 +155,9 @@ class AttendancesController < ApplicationController
       else
         flash[:danger] = "勤怠申請に失敗しました。"
       end
+    else
+      flash[:warning] = "すでに申請しています。"
     end
-    flash[:warning] = "すでに申請しています。"
     redirect_to @user
   end
   
