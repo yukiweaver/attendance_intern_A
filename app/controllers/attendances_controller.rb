@@ -161,6 +161,9 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
+  def authorizer_overtime_update
+  end
+  
   private
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要

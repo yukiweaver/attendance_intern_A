@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   # get    '/attendance_overtime/:id', to: 'attendances#overtime', as: 'attendance_overtime' #勤怠A：1日分の残業申請遷移
   post   '/attendance_overtime_update/:id', to: 'attendances#overtime_update', as: 'attendance_overtime_update'  #勤怠A：1日分の残業申請更新
   post   '/attendance_month_update/:id', to: 'attendances#month_update', as: 'attendance_month_update'  # 勤怠A：一月分の勤怠申請
+  post   '/attendance_overtime_update/:id', to: 'attendances#authorizer_overtime_update', as: 'authorizer_overtime_update'
   
   # 勤怠A：csv読み込みのため、routes追加
   resources :users do
