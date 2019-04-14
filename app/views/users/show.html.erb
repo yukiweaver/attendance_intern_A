@@ -144,11 +144,7 @@
         <!-- 第十四項：時間外時間（翌日対応） -->
         <td>
           <% if @user.designate_end_time && date.scheduled_end_time != nil %>
-            <% if date.leaving_next_day != true %>
-              <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))) %>
-            <% else %>
-              <%= format("%.2f",(date.scheduled_end_time.hour.to_f + (date.scheduled_end_time.min.to_f / 60)) - (@user.designate_end_time.hour.to_f + (@user.designate_end_time.min.to_f / 60))+24.0) %>
-            <% end %>
+            <%= overtime_hours(date.leaving_next_day, date.scheduled_end_time, @user.designate_end_time) %>
           <% end %>
         </td>
         <!-- 第十五項：業務処理内容 -->

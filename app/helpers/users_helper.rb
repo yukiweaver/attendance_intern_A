@@ -8,18 +8,27 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
   
-  #勤怠B：基本情報の修正値取得時に小数二桁まで取得
+  # 基本情報の修正値取得時に小数二桁まで取得
   def basic_info_edit(time)
     format("%.2f", ((time.hour * 60.0) + time.min)/60) if !time.blank?
   end
   
-  # 勤怠B：勤怠表示画面 在社時間 差分式
+  # 勤怠表示画面 在社時間 差分式
   def company_time_edit(time)
     format("%.2f",(time)/3600)
   end
   
-  # 勤怠B：勤怠表示画面 在社時間の合計 フォーマットヘルパー使用→指定の桁で丸める
+  # 勤怠表示画面 在社時間の合計 フォーマットヘルパー使用→指定の桁で丸める
   def total_company_edit(time)
     number_with_precision time, precision:2
+  end
+  
+  # 勤怠表示画面 時間外時間
+  def overtime_hours(day, time, time2)
+    if day.blank?
+      format("%.2f", (time.hour.to_f + (time.min.to_f / 60)) - (time2.hour.to_f + (time2.min.to_f / 60)))
+    else
+      format("%.2f", (time.hour.to_f + (time.min.to_f / 60)) - (time2.hour.to_f + (time2.min.to_f / 60))+24.0)
+    end
   end
 end
