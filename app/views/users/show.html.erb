@@ -216,7 +216,7 @@
         <%= form_for(date, url: attendance_overtime_update_path, method: :post) do |f| %>
         <%= f.hidden_field :id, :value => date.id %> <!-- attendancesテーブルのidを渡す -->
         <%= f.hidden_field :user_id, :value => @user.id %>
-        <%= f.hidden_field :current_day, :value => @currrent_day %>
+        <%= f.hidden_field :current_day, :value => @current_day %>
           <table class="txt1 table table-bordered table-striped table-condensed">
             <thead>
               <tr>
