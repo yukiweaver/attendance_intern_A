@@ -132,6 +132,8 @@ class UsersController < ApplicationController
       # 月の勤怠　本日の日付、申請者でレコード取得
       @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
       
+      # @applicant_user = User.find_by(id: params[:attendance][:user_id])
+      
       
       
       
