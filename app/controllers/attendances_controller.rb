@@ -122,6 +122,7 @@ class AttendancesController < ApplicationController
       flash[:warning] = "必須箇所が空欄です。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
     else
+      #@attendance.applying!
       @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請が完了しました。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
