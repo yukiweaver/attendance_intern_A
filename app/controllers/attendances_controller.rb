@@ -155,8 +155,15 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
-  # 一日分の残業承認
+  # 一日分の残業申請の承認
   def authorizer_overtime_update
+    @user = User.find(params[:attendance][:application_id])
+    authorizer_overtime_params.each do |id, item|
+      if item[:change] == "1"
+        @attendance = @user.attendances.find(id)
+        @attendance.update_attributes(item)
+      end
+    end
   end
   
   private
@@ -178,5 +185,10 @@ class AttendancesController < ApplicationController
     # 勤怠A：月の勤怠申請
     def one_month_attendance_params
       params.require(:one_month_attendance).permit(:application_user_id, :authorizer_user_test, :application_date)
+    end
+    
+    # 一日分の残業申請の承認
+    def authorizer_overtime_params
+      params.permit(overtime: [:application_status, :change])[:overtime]
     end
 end
