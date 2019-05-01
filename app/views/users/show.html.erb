@@ -53,11 +53,7 @@
     </p>
     <p class="overtime-modal-open">
       【残業申請のお知らせ】
-      <% if @overtime_superior1 != nil && current_user.id == 2 %>
-        <%= link_to "#{@overtime_superior1_count}件の通知があります", "#" %>
-      <% elsif @overtime_superior2 != nil && current_user.id == 3 %>
-        <%= link_to "#{@overtime_superior2_count}件の通知があります", "#" %>
-      <% end %>
+      <a href=""><%= "#{@overtime_me_count}件の通知があります" %></a>
     </p>
   <% end %>
   <!-- 勤怠表示画面　勤怠編集ボタン -->
