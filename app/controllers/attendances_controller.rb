@@ -114,7 +114,6 @@ class AttendancesController < ApplicationController
   # 勤怠A：一日分の残業申請
   # users/show.html.erbのhidden_fieldのパラメータ取得
   def overtime_update
-    # 取得できるものは以下と同じ @user = User.find(params[:id])
     @user = User.find(params[:attendance][:user_id])
     @attendance = @user.attendances.find(params[:attendance][:id])
     # binding.pry
@@ -122,19 +121,12 @@ class AttendancesController < ApplicationController
       flash[:warning] = "必須箇所が空欄です。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
     else
-      #@attendance.applying!
+      # カラムapplication_statusを申請中の「nothing」→「applying」に変更
+      @attendance.applying!
       @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請が完了しました。"
       redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
     end
-    
-    # if params[:attendance][:next_day] == "1"
-    #   @attendance.update_attribute(:scheduled_end_time, @attendance.scheduled_end_time.tomorrow)
-    #   # params[:attendance][:scheduled_end_time].to_datetime.tomorrow
-    #   flash[:warning] = "翌日テスト中。"
-    #   redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
-    # end
-    # binding.pry
   end
   # @user.update_attribute = { :username = 'A' }
   # {"scheduled_end_time"=>"11:11", "next_day"=>"1", "business_outline"=>"", "instructor_test"=>"上長B"

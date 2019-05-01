@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20190421134224) do
     t.datetime "scheduled_end_time"
     t.boolean "next_day", default: false
     t.string "business_outline"
-    t.string "instructor_test"
+    t.integer "instructor_test"
     t.boolean "leaving_next_day", default: false
     t.string "attendance_test"
     t.boolean "change", default: false

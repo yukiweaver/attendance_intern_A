@@ -152,7 +152,9 @@
         <!-- 第十六項：指示者確認 -->
         <td>
           <% if date.instructor_test != nil %>
-            残業申請：<%= date.instructor_test %>へ申請中</br>
+            <% if date.applying? %>
+              残業申請：<%= User.find(date.instructor_test).name %>へ申請中
+            <% end %>
           <% end %>
           <% if not date.attendance_test.blank? %>
             勤怠変更：<%= date.attendance_test %>へ申請中
@@ -242,11 +244,7 @@
                 <td><%= f.text_field :business_outline, class: 'form-controll' %></td>
                 <!-- 指示者確認 -->
                 <td>
-                  <% if current_user.superior? %>
-                    <%= f.select :instructor_test, [@superior], :include_blank => true %>
-                  <% else %>
-                    <%= f.select :instructor_test, @superior, :include_blank => true %>
-                  <% end %>
+                  <%= f.collection_select :instructor_test, @superiors, :id, :name, :include_blank => true %>
                 </td>
               </tr>
             </tbody>

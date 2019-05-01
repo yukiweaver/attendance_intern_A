@@ -97,16 +97,20 @@ class UsersController < ApplicationController
         end
       end
       
-      # モデルのname属性のみ配列で取得
-      #@superiors = User.all.map { |user| user.name } 以下とほぼ同義
-      @superiors = User.pluck :name
-      if current_user.id == 2
-        @superior = @superiors[2]
-      elsif current_user.id == 3
-        @superior = @superiors[1]
-      else
-        @superior = @superiors[1..2]
-      end
+      # モデルのid属性のみ配列で取得
+      #@superiors = User.pluck :id 以下とほぼ同義
+      # @superiors = User.all.map { |user| user.id }
+      # if current_user.id == 2
+      #   @superior = @superiors[2]
+      # elsif current_user.id == 3
+      #   @superior = @superiors[1]
+      # else
+      #   @superior = @superiors[1..2]
+      # end
+      
+      # 自分以外の上長ユーザーを取得
+      @superiors = User.where(superior: true).where.not(id: current_user.id)
+      # binding.pry
       
       # 勤怠編集の指示者を取得
       @attendance_superior1 = Attendance.where(attendance_test: "上長A")
@@ -132,7 +136,7 @@ class UsersController < ApplicationController
       # 月の勤怠　本日の日付、申請者でレコード取得
       @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
       
-      # @applicant_user = User.find_by(id: params[:attendance][:user_id])
+      @overtime_me = Attendance.where(instructor_test: "上長A", application_status: "applying")
       
       
       
