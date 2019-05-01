@@ -31,4 +31,9 @@ module UsersHelper
       format("%.2f", (time.hour.to_f + (time.min.to_f / 60)) - (time2.hour.to_f + (time2.min.to_f / 60))+24.0)
     end
   end
+  
+  # ログインしているユーザーのみ
+  def overtime_test(user, current_user)
+    user.id == current_user.id
+  end
 end

@@ -155,6 +155,7 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
+  # 一日分の残業承認
   def authorizer_overtime_update
   end
   
