@@ -113,14 +113,14 @@ class UsersController < ApplicationController
       # binding.pry
       
       # 勤怠編集の指示者を取得
-      @attendance_superior1 = Attendance.where(attendance_test: "上長A")
-      @attendance_superior2 = Attendance.where(attendance_test: "上長B")
+      @attendance_superior1 = Attendance.where(attendance_test: 2)
+      @attendance_superior2 = Attendance.where(attendance_test: 3)
       @superior1_count = @attendance_superior1.count
       @superior2_count = @attendance_superior2.count
       
       # 一日分の残業申請フォームの指示者取得
-      @overtime_superior1 = Attendance.where(instructor_test: "上長A")
-      @overtime_superior2 = Attendance.where(instructor_test: "上長B")
+      @overtime_superior1 = Attendance.where(instructor_test: 2)
+      @overtime_superior2 = Attendance.where(instructor_test: 3)
       @overtime_superior1_count = @overtime_superior1.count
       @overtime_superior2_count = @overtime_superior2.count
       
@@ -138,6 +138,8 @@ class UsersController < ApplicationController
       
       # 自分に申請された残業申請取得
       @overtime_me = Attendance.where(instructor_test: current_user.id, application_status: "applying")
+      
+      @overtime_user = @user.attendances.new
       
       
       

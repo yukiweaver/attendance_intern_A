@@ -51,7 +51,7 @@
         <%= link_to "#{@superior2_count}件の通知があります", "#" %>
       <% end %>
     </p>
-    <p>
+    <p class="overtime-modal-open">
       【残業申請のお知らせ】
       <% if @overtime_superior1 != nil && current_user.id == 2 %>
         <%= link_to "#{@overtime_superior1_count}件の通知があります", "#" %>
@@ -256,52 +256,63 @@
   </div>
   
   <!-- 上長が残業申請を確認 モーダルで表示 -->
-  <% @date.each do |d| %>
-    <div class ="white-popup mfp-with-anim " id="<%= d.attendance_day.day %>" style="background-color:white">
-      <h3 align="center"><%= "#{@user.name}からの残業申請" %></h3>
-        <%= form_for(d, url: authorizer_overtime_update_path, method: :post) do |df| %>
-          <table class="txt1 table table-bordered table-striped table-condensed">
-            <thead>
-              <tr>
-                <th>日付</th>
-                <th>曜日</th>
-                <th>終了予定時間</th>
-                <th>指定勤務終了時間</th>
-                <th>業務処理内容</th>
-                <th>指示者確認</th>
-                <th>変更</th>
-                <th>勤怠を確認</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <!-- 日付 -->
-                <td><%= d.attendance_day.month %>/<%= d.attendance_day.day %></td>
-                <!-- 曜日 -->
-                <td><%= @week[d.attendance_day.wday] %></td>
-                <!-- 終了予定時間 -->
-                <td>
-                <% if d.scheduled_end_time != nil %>
-                  <%= d.scheduled_end_time.strftime("%H:%M") %>
+  <%= form_for(@overtime_user, url: authorizer_overtime_update_path, method: :post) do |df| %>
+    <% @overtime_me.each do |d| %>
+      <div class ="white-popup mfp-with-anim " id="<%= d.attendance_day.day %>" style="background-color:white">
+        <h3 align="center"><%= "#{d.user.name}からの残業申請" %></h3>
+            <table class="txt1 table table-bordered table-striped table-condensed">
+              <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>曜日</th>
+                  <th>終了予定時間</th>
+                  <th>指定勤務終了時間</th>
+                  <th>時間外時間</th>
+                  <th>業務処理内容</th>
+                  <th>指示者確認</th>
+                  <th>変更</th>
+                  <th>勤怠を確認</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= fields_for "overtime[]", d do |ot| %>
+                <%# binding.pry %>
+                <tr>
+                  <!-- 日付 -->
+                  <td><%= d.attendance_day.month %>/<%= d.attendance_day.day %></td>
+                  <!-- 曜日 -->
+                  <td><%= @week[d.attendance_day.wday] %></td>
+                  <!-- 終了予定時間 -->
+                  <td>
+                  <% if d.scheduled_end_time != nil %>
+                    <%= d.scheduled_end_time.strftime("%H:%M") %>
+                  <% end %>
+                  </td>
+                  <!-- 指定勤務終了時間 -->
+                  <td>
+                    <%= basic_info_edit(d.user.designate_end_time) if d.user.designate_end_time != nil %>
+                  </td>
+                  <!-- 時間外時間 -->
+                  <td>
+                    <% if d.user.designate_end_time && d.scheduled_end_time != nil %>
+                      <%= overtime_hours(d.leaving_next_day, d.scheduled_end_time, d.user.designate_end_time) %>
+                    <% end %>
+                  </td>
+                  <!-- 業務処理内容 -->
+                  <td><%= d.business_outline if d.business_outline != nil %></td>
+                  <!-- 指示者確認 -->
+                  <td><%= d.application_status if d.application_status != nil %></td>
+                  <!-- 変更 -->
+                  <td><%= df.check_box :change %></td>
+                  <!-- 勤怠を確認 -->
+                  <td><%= link_to "確認", "/users/#{d.user.id}", class: "btn btn-primary" %></td>
+                </tr>
                 <% end %>
-                </td>
-                <!-- 指定勤務終了時間 -->
-                <td>
-                  <%#= d.designate_end_time unless d.designate_end_time != nil %>
-                </td>
-                <!-- 業務処理内容 -->
-                <td><%= d.business_outline if d.business_outline != nil %></td>
-                <!-- 指示者確認 -->
-                <td><%= d.instructor_test if d.instructor_test != nil %></td>
-                <!-- 変更 -->
-                <td><%= df.check_box :change %></td>
-                <!-- 勤怠を確認 -->
-                <td><%= link_to "確認", "#", class: "btn btn-primary" %></td>
-              </tr>
-            </tbody>
-          </table>
-        <% end %>
-    </div>
+              </tbody>
+            </table>
+            <%= df.submit "変更を送信する", class: "btn btn-sm btn-primary" %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
