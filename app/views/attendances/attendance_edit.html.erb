@@ -66,11 +66,12 @@
                 </td>
                 <!-- 第八項：指示者確認 -->
                 <td>
-                  <% if current_user.superior? %>
-                    <%= a.select :attendance_test, [@superior], :include_blank => true %>
-                  <% else %>
-                    <%= a.select :attendance_test, @superior, :include_blank => true %>
-                  <% end %>
+                  <%# if current_user.superior? %>
+                    <%#= a.select :attendance_test, [@superior], :include_blank => true %>
+                  <%# else %>
+                    <%#= a.select :attendance_test, @superior, :include_blank => true %>
+                    <%= a.collection_select :attendance_test, @superiors, :id, :name, :include_blank => true %>
+                  <%# end %>
                 </td>
               </tr>
             <% end %>

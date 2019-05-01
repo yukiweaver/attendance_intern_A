@@ -36,14 +36,15 @@ class AttendancesController < ApplicationController
       end
       # モデルのname属性のみ配列で取得
       #@superiors = User.all.map { |user| user.name } 以下とほぼ同義
-      @superiors = User.pluck :name
-      if current_user.id == 2
-        @superior = @superiors[2]
-      elsif current_user.id == 3
-        @superior = @superiors[1]
-      else
-        @superior = @superiors[1..2]
-      end
+      # @superiors = User.pluck :name
+      # if current_user.id == 2
+      #   @superior = @superiors[2]
+      # elsif current_user.id == 3
+      #   @superior = @superiors[1]
+      # else
+      #   @superior = @superiors[1..2]
+      # end
+      @superiors = User.where(superior: true).where.not(id: current_user.id)
     else
       flash[:warning] = "他ユーザーの編集ページへ遷移することはできません。"
       redirect_to "/attendance_edit/#{current_user.id}/?current_day=#{Date.today}"

@@ -136,7 +136,8 @@ class UsersController < ApplicationController
       # 月の勤怠　本日の日付、申請者でレコード取得
       @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
       
-      @overtime_me = Attendance.where(instructor_test: "上長A", application_status: "applying")
+      # 自分に申請された残業申請取得
+      @overtime_me = Attendance.where(instructor_test: current_user.id, application_status: "applying")
       
       
       

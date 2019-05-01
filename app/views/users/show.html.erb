@@ -157,7 +157,7 @@
             <% end %>
           <% end %>
           <% if not date.attendance_test.blank? %>
-            勤怠変更：<%= date.attendance_test %>へ申請中
+            勤怠変更：<%= User.find(date.attendance_test).name %>へ申請中
           <% end %>
         </td>
       </tr>
@@ -189,10 +189,10 @@
       <td>
         <% if @request_user == nil %>
           勤怠申請：なし
-        <% elsif @request_user.authorizer_user_test == "上長A" %>
-          勤怠申請：<%= @request_user.authorizer_user_test %>に申請中
-        <% elsif @request_user.authorizer_user_test == "上長B" %>
-          勤怠申請：<%= @request_user.authorizer_user_test %>に申請中
+        <% elsif @request_user.authorizer_user_test == 2 %>
+          勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中
+        <% elsif @request_user.authorizer_user_test == 3 %>
+          勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中
         <% end %>
         <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
           <%= f.hidden_field :year, :value => @current_day.year %>
@@ -200,11 +200,11 @@
           <%#= f.hidden_field :month_attendance, :value => @date %>
           <%= f.hidden_field :application_user_id, :value => @user.id %>
           <%= f.hidden_field :application_date, :value => @current_day %>
-          <% if current_user.superior? %>
-            <%= f.select :authorizer_user_test, [@superior], :include_blank => true %>
-          <% else %>
-            <%= f.select :authorizer_user_test, @superior, :include_blank => true %>
-          <% end %>
+          <%# if current_user.superior? %>
+            <%#= f.select :authorizer_user_test, [@superior], :include_blank => true %>
+          <%# else %>
+          <%= f.collection_select :authorizer_user_test, @superiors, :id, :name, :include_blank => true %>
+          <%# end %>
           <%= f.submit "申請", class: "btn btn-primary" %>
         <% end %>
       </td>

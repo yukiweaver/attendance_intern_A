@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20190421134224) do
     t.string "business_outline"
     t.integer "instructor_test"
     t.boolean "leaving_next_day", default: false
-    t.string "attendance_test"
+    t.integer "attendance_test"
     t.boolean "change", default: false
     t.integer "application_status", default: 0
     t.integer "attendance_application_status", default: 0
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20190421134224) do
 
   create_table "one_month_attendances", force: :cascade do |t|
     t.integer "application_user_id"
-    t.string "authorizer_user_test"
+    t.integer "authorizer_user_test"
     t.date "application_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
