@@ -53,7 +53,7 @@
     </p>
     <p class="overtime-modal-open">
       【残業申請のお知らせ】
-      <a href=""><%= "#{@overtime_me_count}件の通知があります" %></a>
+      <a href="" data-toggle="modal" data-target="#modal-sample"><%= "#{@overtime_me_count}件の通知があります" %></a>
     </p>
   <% end %>
   <!-- 勤怠表示画面　勤怠編集ボタン -->
@@ -264,15 +264,22 @@
   </div>
   
   <!-- 上長が残業申請を確認 モーダルで表示 -->
-  <%= form_for(@overtime_user, url: authorizer_overtime_update_path, method: :post) do |df| %>
+  <div <div class="modal fade" id="modal-sample" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <%= form_for(@overtime_user, url: authorizer_overtime_update_path, method: :post) do |df| %>
     <% @overtime_me.each do |d| %>
       <%= df.hidden_field :application_id, :value => d.user.id %>
       <%= df.hidden_field :attendance_id, :value => d.id %>
       <%= df.hidden_field :change_test, :value => d.change %>
       <%= df.hidden_field :authorizer_id, :value => @user.id %>
       <%= df.hidden_field :current_day, :value => @current_day %>
-      <div class ="white-popup mfp-with-anim " id="<%= d.attendance_day.day %>" style="background-color:white">
-        <h3 align="center"><%= "#{d.user.name}からの残業申請" %></h3>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 align="center" class="modal-title" id="modal-label"><%= "#{d.user.name}からの残業申請" %></h3>
+        <div class="modal-body">
           <table class="txt1 table table-bordered table-striped table-condensed">
             <thead>
               <tr>
@@ -323,10 +330,15 @@
               <% end %>
             </tbody>
           </table>
-          <%= df.submit "変更を送信する", class: "btn btn-sm btn-primary" %>
+        </div>
       </div>
     <% end %>
+    <div class="modal-footer">
+      <%= df.submit "変更を送信する", class: "btn btn-sm btn-primary" %>
+    </div>
   <% end %>
+  </div>
+  </div>
 </div>
 
 <script>
