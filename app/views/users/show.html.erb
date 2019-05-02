@@ -268,6 +268,7 @@
     <% @overtime_me.each do |d| %>
       <%= df.hidden_field :application_id, :value => d.user.id %>
       <%= df.hidden_field :attendance_id, :value => d.id %>
+      <%= df.hidden_field :change_test, :value => d.change %>
       <%= df.hidden_field :authorizer_id, :value => @user.id %>
       <%= df.hidden_field :current_day, :value => @current_day %>
       <div class ="white-popup mfp-with-anim " id="<%= d.attendance_day.day %>" style="background-color:white">

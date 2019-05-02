@@ -157,16 +157,19 @@ class AttendancesController < ApplicationController
   
   # 一日分の残業申請の承認
   def authorizer_overtime_update
-    # 申請者のユーザー取得
-    @user = User.find(params[:attendance][:application_id])
-    authorizer_overtime_params.each do |id, item|
-      if item[:change] == "1" && !item[:application_status] == nil
-        @attendance = @user.attendances.find(id)
-        @attendance.update_attributes(item)
-        flash[:success] = "残業申請を確認しました。"
-      else
-        flash[:danger] = "変更が反映されませんでした。"
+    # 申請者のユーザー取得　↓複数申請者がいた場合、期待したユーザーが取得できない
+    # @user = User.find(params[:attendance][:application_id])
+    if !params[:attendance][:change_test].blank?
+      authorizer_overtime_params.each do |id, item|
+        # binding.pry
+        if item[:change] == "1"
+          @attendance = Attendance.find(id)
+          @attendance.update_attributes(item)
+        end
       end
+      flash[:success] = "残業申請を更新しました。"
+    else
+      flash[:danger] = "変更が反映されませんでした。"
     end
     redirect_to "/users/#{current_user.id}"
   end
