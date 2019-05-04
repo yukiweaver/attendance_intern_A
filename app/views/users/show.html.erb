@@ -342,14 +342,63 @@
       <% end %>
     </div>
   </div>
-  
-  <!-- 勤怠変更の承認フォーム　モーダルで表示 -->
+</div>
+
+<!-- 勤怠変更の承認フォーム　モーダルで表示 -->
   <%= form_for(@overtime_user, url: authorizer_attendance_update_path, method: :post) do |ou| %>
-    <% @attendance_me.each do |am| %>
-      
+  <h3 align="center"><%= "#{@user.name}からの勤怠変更申請" %></h3>
+  <% @attendance_me.each do |am| %>
+    <table class="txt1 table table-bordered table-striped table-condensed">
+      <thead>
+      <tr>
+        <th rowspan="3">日付</th>
+        <th rowspan="3">曜日</th>
+        <th colspan="4">変更前</th>
+        <th colspan="4">変更後</th>
+        <th rowspan="3">備考</th>
+        <th rowspan="3">指示者確認</th>
+        <th rowspan="3">変更</th>
+        <th rowspan="3">勤怠を確認</th>
+      </tr>
+      <tr>
+        <th colspan="2">出社</th>
+        <th colspan="2">退社</th>
+        <th colspan="2">出社</th>
+        <th colspan="2">退社</th>
+      </tr>
+      <tr>
+        <th>時</th>
+        <th>分</th>
+        <th>時</th>
+        <th>分</th>
+        <th>時</th>
+        <th>分</th>
+        <th>時</th>
+        <th>分</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td><%= am.attendance_day.month %>/<%= am.attendance_day.day %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
     <% end %>
   <% end %>
-</div>
 
 <script>
 // 1日分の残業申請フォーム　モーダル表示
