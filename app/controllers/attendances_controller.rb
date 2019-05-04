@@ -85,6 +85,9 @@ class AttendancesController < ApplicationController
     if attendances_invalid?  # AttendancesHelper
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
+        if !bt[:attendance_test].blank?
+          @attendance.work_applying!
+        end
         @attendance.update_attributes(bt)
         # binding.pry
       end
@@ -190,7 +193,7 @@ class AttendancesController < ApplicationController
       # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
     end
     
-    # 勤怠A：月の勤怠申請
+    # 月の勤怠申請
     def one_month_attendance_params
       params.require(:one_month_attendance).permit(:application_user_id, :authorizer_user_test, :application_date)
     end

@@ -1,5 +1,5 @@
 module AttendancesHelper
-  # 勤怠A：勤怠編集 翌日対応　attendances#attendance_updateで使用
+  # 勤怠編集 翌日対応　attendances#attendance_updateで使用
   def attendances_invalid?
     attendances = true
     attendance_params.each do |id, item|

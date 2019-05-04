@@ -138,9 +138,13 @@ class UsersController < ApplicationController
       
       @overtime_user = @user.attendances.new
 
-      # 自分に申請された残業申請取得
+      # 自分に申請された残業申請取得とカウント
       @overtime_me = Attendance.where(instructor_test: current_user.id, application_status: "applying")
       @overtime_me_count = @overtime_me.count
+      
+      # 自分に申請された勤怠変更申請を取得とカウント
+      @attendance_me = Attendance.where(attendance_test: current_user.id, attendance_application_status: "work_applying")
+      @attendance_me_count = @attendance_me.count
       # binding.pry
       
       

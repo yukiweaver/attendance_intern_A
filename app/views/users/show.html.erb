@@ -45,11 +45,7 @@
     </p>
     <p>
       【勤怠変更申請のお知らせ】
-      <% if @attendance_superior1 != nil && current_user.id == 2 %>
-        <%= link_to "#{@superior1_count}件の通知があります", "#" %>
-      <% elsif @attendance_superior2 != nil && current_user.id == 3 %>
-        <%= link_to "#{@superior2_count}件の通知があります", "#" %>
-      <% end %>
+      <a href=""><%= "#{@attendance_me_count}件の通知があります" %></a>
     </p>
     <p class="overtime-modal-open">
       【残業申請のお知らせ】
@@ -162,8 +158,15 @@
               残業申請：<%= User.find(date.instructor_test).name %>から否認
             <% end %>
           <% end %>
+          <br/>
           <% if not date.attendance_test.blank? %>
-            勤怠変更：<%= User.find(date.attendance_test).name %>へ申請中
+            <% if date.work_applying? %>
+              勤怠変更：<%= User.find(date.attendance_test).name %>へ申請中
+            <% elsif date.work_approval? %>
+              勤怠変更：<%= User.find(date.attendance_test).name %>から承認
+            <% elsif date.work_denial? %>
+              勤怠変更：<%= User.find(date.attendance_test).name %>から否認
+            <% end %>
           <% end %>
         </td>
       </tr>
