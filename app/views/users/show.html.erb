@@ -45,7 +45,7 @@
     </p>
     <p>
       【勤怠変更申請のお知らせ】
-      <a href=""><%= "#{@attendance_me_count}件の通知があります" %></a>
+      <a href="" data-toggle="modal" data-target="#modal-sample2"><%= "#{@attendance_me_count}件の通知があります" %></a>
     </p>
     <p class="overtime-modal-open">
       【残業申請のお知らせ】
@@ -345,87 +345,101 @@
 </div>
 
 <!-- 勤怠変更の承認フォーム　モーダルで表示 -->
-  <%= form_for(@overtime_user, url: authorizer_attendance_update_path, method: :post) do |ou| %>
-  <% @attendance_me.each do |am| %>
-    <%= ou.hidden_field :application_id, :value => am.user.id %>
-    <%= ou.hidden_field :authorizer_id, :value => @user.id %>
-    <%= ou.hidden_field :current_day, :value => @current_day %>
-    <%= ou.hidden_field :attendance_application_status, :value => am.attendance_application_status %>
-  <%# binding.pry %>
-    <h3 align="center"><%= "#{am.user.name}からの勤怠変更申請" %></h3>
-    <table class="txt1 table table-bordered table-striped table-condensed">
-      <thead>
-      <tr>
-        <th rowspan="3">日付</th>
-        <th rowspan="3">曜日</th>
-        <th colspan="4">変更前</th>
-        <th colspan="4">変更後</th>
-        <th rowspan="3">備考</th>
-        <th rowspan="3">指示者確認</th>
-        <th rowspan="3">変更</th>
-        <th rowspan="3">勤怠を確認</th>
-      </tr>
-      <tr>
-        <th colspan="2">出社</th>
-        <th colspan="2">退社</th>
-        <th colspan="2">出社</th>
-        <th colspan="2">退社</th>
-      </tr>
-      <tr>
-        <th>時</th>
-        <th>分</th>
-        <th>時</th>
-        <th>分</th>
-        <th>時</th>
-        <th>分</th>
-        <th>時</th>
-        <th>分</th>
-      </tr>
-      </thead>
-
-      <tbody>
-        <!-- 一括更新するには配列を指定 -->
-        <%= fields_for "one_attendance[]", am do |oa| %>
-          <tr>
-            <!-- 第一項：日付 -->
-            <td><%= am.attendance_day.month %>/<%= am.attendance_day.day %></td>
-            <!-- 第二項：曜日 -->
-            <td><%= @week[am.attendance_day.wday] %></td>
-            <!-- 第三項：変更前　出社　時 -->
-            <td><%= am.before_beginning_time.hour if am.before_beginning_time != nil %></td>
-            <!-- 第四項：変更前　出社　分 -->
-            <td><%= am.before_beginning_time.min if am.before_beginning_time != nil %></td>
-            <!-- 第五項：変更前　退社　時 -->
-            <td><%= am.before_leaving_time.hour if am.before_leaving_time != nil %></td>
-            <!-- 第六項：変更前　退社　分 -->
-            <td><%= am.before_leaving_time.min if am.before_leaving_time != nil %></td>
-            <!-- 第七項：変更後　出社　時 -->
-            <td><%= am.beginning_time.hour if am.beginning_time != nil %></td>
-            <!-- 第八項：変更後　出社　分 -->
-            <td><%= am.beginning_time.min if am.beginning_time != nil %></td>
-            <!-- 第九項：変更後　退社　時 -->
-            <td><%= am.leaving_time.hour if am.leaving_time != nil %></td>
-            <!-- 第十項：変更後　退社　分 -->
-            <td><%= am.leaving_time.min if am.leaving_time != nil %></td>
-            <!-- 第十一項：備考 -->
-            <td><%= am.note if am.note != nil %></td>
-            <!-- 第十二項：指示者確認 配列オブジェクト.select -->
-            <td>
-              <% if not am.attendance_application_status.blank? %>
-                <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.to_a, :include_blank => true %>
-              <% end %>
-            </td>
-            <!-- 第十三項：変更 -->
-            <td><%= oa.check_box :attendance_change %></td>
-            <!-- 第十四項：勤怠を確認 -->
-            <td><%= link_to "確認", "/users/#{am.user.id}", class: "btn btn-primary" %></td>
-          </tr>
+<div class="modal fade" id="modal-sample2" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <%= form_for(@overtime_user, url: authorizer_attendance_update_path, method: :post) do |ou| %>
+        <% @attendance_me.each do |am| %>
+          <%= ou.hidden_field :application_id, :value => am.user.id %>
+          <%= ou.hidden_field :authorizer_id, :value => @user.id %>
+          <%= ou.hidden_field :current_day, :value => @current_day %>
+          <%= ou.hidden_field :attendance_application_status, :value => am.attendance_application_status %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 align="center" class="modal-title" id="modal-label"><%= "#{am.user.name}からの勤怠変更申請" %></h3>
+            <div class="modal-body">
+              <table class="txt1 table table-bordered table-striped table-condensed">
+                <thead>
+                <tr>
+                  <th rowspan="3">日付</th>
+                  <th rowspan="3">曜日</th>
+                  <th colspan="4">変更前</th>
+                  <th colspan="4">変更後</th>
+                  <th rowspan="3">備考</th>
+                  <th rowspan="3">指示者確認</th>
+                  <th rowspan="3">変更</th>
+                  <th rowspan="3">勤怠を確認</th>
+                </tr>
+                <tr>
+                  <th colspan="2">出社</th>
+                  <th colspan="2">退社</th>
+                  <th colspan="2">出社</th>
+                  <th colspan="2">退社</th>
+                </tr>
+                <tr>
+                  <th>時</th>
+                  <th>分</th>
+                  <th>時</th>
+                  <th>分</th>
+                  <th>時</th>
+                  <th>分</th>
+                  <th>時</th>
+                  <th>分</th>
+                </tr>
+                </thead>
+          
+                <tbody>
+                  <!-- 一括更新するには配列を指定 -->
+                  <%= fields_for "one_attendance[]", am do |oa| %>
+                    <tr>
+                      <!-- 第一項：日付 -->
+                      <td><%= am.attendance_day.month %>/<%= am.attendance_day.day %></td>
+                      <!-- 第二項：曜日 -->
+                      <td><%= @week[am.attendance_day.wday] %></td>
+                      <!-- 第三項：変更前　出社　時 -->
+                      <td><%= am.before_beginning_time.hour if am.before_beginning_time != nil %></td>
+                      <!-- 第四項：変更前　出社　分 -->
+                      <td><%= am.before_beginning_time.min if am.before_beginning_time != nil %></td>
+                      <!-- 第五項：変更前　退社　時 -->
+                      <td><%= am.before_leaving_time.hour if am.before_leaving_time != nil %></td>
+                      <!-- 第六項：変更前　退社　分 -->
+                      <td><%= am.before_leaving_time.min if am.before_leaving_time != nil %></td>
+                      <!-- 第七項：変更後　出社　時 -->
+                      <td><%= am.beginning_time.hour if am.beginning_time != nil %></td>
+                      <!-- 第八項：変更後　出社　分 -->
+                      <td><%= am.beginning_time.min if am.beginning_time != nil %></td>
+                      <!-- 第九項：変更後　退社　時 -->
+                      <td><%= am.leaving_time.hour if am.leaving_time != nil %></td>
+                      <!-- 第十項：変更後　退社　分 -->
+                      <td><%= am.leaving_time.min if am.leaving_time != nil %></td>
+                      <!-- 第十一項：備考 -->
+                      <td><%= am.note if am.note != nil %></td>
+                      <!-- 第十二項：指示者確認 配列オブジェクト.select -->
+                      <td>
+                        <% if not am.attendance_application_status.blank? %>
+                          <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.to_a %>
+                        <% end %>
+                      </td>
+                      <!-- 第十三項：変更 -->
+                      <td><%= oa.check_box :attendance_change %></td>
+                      <!-- 第十四項：勤怠を確認 -->
+                      <td><%= link_to "確認", "/users/#{am.user.id}", class: "btn btn-primary" %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         <% end %>
-      </tbody>
-    </table>
-    <% end %>
-    <%= ou.submit "変更を送信する", class: "btn btn-primary" %>
-  <% end %>
+        <div class="modal-footer">
+          <%= ou.submit "変更を送信する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <script>
 // 1日分の残業申請フォーム　モーダル表示
