@@ -89,6 +89,14 @@ class AttendancesController < ApplicationController
           @attendance.work_applying!
         end
         @attendance.update_attributes(bt)
+        
+        if not bt[:beginning_time].blank? && bt[:leaving_time]
+          @before_beginning_time = @attendance.saved_changes[:beginning_time]
+          @before_leaving_time = @attendance.saved_changes[:leaving_time]
+          if not @before_beginning_time.blank? && @before_leaving_time.blank?
+            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0], before_leaving_time: @before_leaving_time[0])
+          end
+        end
         # binding.pry
       end
         flash[:success] = "勤怠編集情報を更新しました。"

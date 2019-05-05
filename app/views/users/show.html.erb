@@ -380,6 +380,7 @@
       </thead>
 
       <tbody>
+        <!-- 一括更新するには配列を指定 -->
         <%= fields_for "one_attendance[]", am do |oa| %>
           <tr>
             <!-- 第一項：日付 -->
@@ -387,13 +388,13 @@
             <!-- 第二項：曜日 -->
             <td><%= @week[am.attendance_day.wday] %></td>
             <!-- 第三項：変更前　出社　時 -->
-            <td></td>
+            <td><%= am.before_beginning_time.hour %></td>
             <!-- 第四項：変更前　出社　分 -->
-            <td></td>
+            <td><%= am.before_beginning_time.min %></td>
             <!-- 第五項：変更前　退社　時 -->
-            <td></td>
+            <td><%= am.before_leaving_time.hour %></td>
             <!-- 第六項：変更前　退社　分 -->
-            <td></td>
+            <td><%= am.before_leaving_time.min %></td>
             <!-- 第七項：変更後　出社　時 -->
             <td><%= am.beginning_time.hour if am.beginning_time != nil %></td>
             <!-- 第八項：変更後　出社　分 -->
