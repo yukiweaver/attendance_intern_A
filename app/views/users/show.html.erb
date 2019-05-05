@@ -346,9 +346,13 @@
 
 <!-- 勤怠変更の承認フォーム　モーダルで表示 -->
   <%= form_for(@overtime_user, url: authorizer_attendance_update_path, method: :post) do |ou| %>
-  <h3 align="center"><%= "#{@user.name}からの勤怠変更申請" %></h3>
   <% @attendance_me.each do |am| %>
+    <%= ou.hidden_field :application_id, :value => am.user.id %>
+    <%= ou.hidden_field :authorizer_id, :value => @user.id %>
+    <%= ou.hidden_field :current_day, :value => @current_day %>
+    <%= ou.hidden_field :attendance_application_status, :value => am.attendance_application_status %>
   <%# binding.pry %>
+    <h3 align="center"><%= "#{am.user.name}からの勤怠変更申請" %></h3>
     <table class="txt1 table table-bordered table-striped table-condensed">
       <thead>
       <tr>
@@ -388,13 +392,13 @@
             <!-- 第二項：曜日 -->
             <td><%= @week[am.attendance_day.wday] %></td>
             <!-- 第三項：変更前　出社　時 -->
-            <td><%= am.before_beginning_time.hour %></td>
+            <td><%= am.before_beginning_time.hour if am.before_beginning_time != nil %></td>
             <!-- 第四項：変更前　出社　分 -->
-            <td><%= am.before_beginning_time.min %></td>
+            <td><%= am.before_beginning_time.min if am.before_beginning_time != nil %></td>
             <!-- 第五項：変更前　退社　時 -->
-            <td><%= am.before_leaving_time.hour %></td>
+            <td><%= am.before_leaving_time.hour if am.before_leaving_time != nil %></td>
             <!-- 第六項：変更前　退社　分 -->
-            <td><%= am.before_leaving_time.min %></td>
+            <td><%= am.before_leaving_time.min if am.before_leaving_time != nil %></td>
             <!-- 第七項：変更後　出社　時 -->
             <td><%= am.beginning_time.hour if am.beginning_time != nil %></td>
             <!-- 第八項：変更後　出社　分 -->
@@ -414,7 +418,7 @@
             <!-- 第十三項：変更 -->
             <td><%= oa.check_box :attendance_change %></td>
             <!-- 第十四項：勤怠を確認 -->
-            <td><%= link_to "確認", "#", class: "btn btn-primary" %></td>
+            <td><%= link_to "確認", "/users/#{am.user.id}", class: "btn btn-primary" %></td>
           </tr>
         <% end %>
       </tbody>

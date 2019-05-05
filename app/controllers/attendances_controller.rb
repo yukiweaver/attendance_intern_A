@@ -187,6 +187,19 @@ class AttendancesController < ApplicationController
   
   # 勤怠変更の承認
   def authorizer_attendance_update
+    if !params[:attendance][:attendance_application_status].blank?
+      authorizer_attendance_params.each do |id, item|
+        if item[:attendance_change] == "1"
+          @attendance = Attendance.find(id)
+          @attendance.update_attributes(item)
+        end
+      end
+      # binding.pry
+      flash[:success] = "勤怠変更申請を更新しました。"
+    else
+      flash[:danger] = "変更が反映されませんでした。"
+    end
+    redirect_to "/users/#{current_user.id}"
   end
   
   private
@@ -213,5 +226,10 @@ class AttendancesController < ApplicationController
     # 一日分の残業申請の承認
     def authorizer_overtime_params
       params.permit(overtime: [:application_status, :change])[:overtime]
+    end
+    
+    # 勤怠変更の承認
+    def authorizer_attendance_params
+      params.permit(one_attendance: [:attendance_application_status, :attendance_change])[:one_attendance]
     end
 end
