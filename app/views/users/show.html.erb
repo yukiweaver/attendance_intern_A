@@ -37,11 +37,7 @@
   <% if current_user.superior? && overtime_test(@user, current_user) %>
     <p>
       【所属長承認申請のお知らせ】
-      <% if @application_superior1 != nil && current_user.id == 2 %>
-        <%= link_to "#{@application_superior1_count}件の通知があります", "#" %>
-      <% elsif @application_superior2 != nil && current_user.id == 3 %>
-        <%= link_to "#{@application_superior2_count}件の通知があります", "#" %>
-      <% end %>
+      <a href=""><%= "#{@one_month_attendance_me_count}件の通知があります" %></a>
     </p>
     <p>
       【勤怠変更申請のお知らせ】
@@ -197,12 +193,14 @@
       <td></td>
       <td>
         <% if overtime_test(@user, current_user) %>
-          <% if @request_user == nil %>
+          <% if @request_user.try(:month_nothing?) %>
             勤怠申請：なし
-          <% elsif @request_user.authorizer_user_test == 2 %>
+          <% elsif @request_user.try(:month_applying?) %>
             勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中
-          <% elsif @request_user.authorizer_user_test == 3 %>
-            勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中
+          <% elsif @request_user.try(:month_approval?) %>
+            勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>から承認
+          <% elsif @request_user.try(:month_denial?) %>
+            勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>から否認
           <% end %>
           <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
             <%= f.hidden_field :year, :value => @current_day.year %>
@@ -210,11 +208,7 @@
             <%#= f.hidden_field :month_attendance, :value => @date %>
             <%= f.hidden_field :application_user_id, :value => @user.id %>
             <%= f.hidden_field :application_date, :value => @current_day %>
-            <%# if current_user.superior? %>
-              <%#= f.select :authorizer_user_test, [@superior], :include_blank => true %>
-            <%# else %>
             <%= f.collection_select :authorizer_user_test, @superiors, :id, :name, :include_blank => true %>
-            <%# end %>
             <%= f.submit "申請", class: "btn btn-primary" %>
           <% end %>
         <% end %>

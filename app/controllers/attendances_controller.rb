@@ -156,13 +156,15 @@ class AttendancesController < ApplicationController
                                                        application_date: params[:one_month_attendance][:application_date])
     if @one_month_attendance.nil?
       @one_month_attendance = OneMonthAttendance.new(one_month_attendance_params)
+      @one_month_attendance.month_applying!
       if @one_month_attendance.save
         flash[:success] = "勤怠申請が完了しました。"
       else
         flash[:danger] = "勤怠申請に失敗しました。"
       end
     else
-      flash[:warning] = "すでに申請しています。"
+      @one_month_attendance.update_attributes(one_month_attendance_params)
+      flash[:success] = "勤怠申請が完了しました。"
     end
     redirect_to @user
   end

@@ -112,23 +112,16 @@ class UsersController < ApplicationController
       @superiors = User.where(superior: true).where.not(id: current_user.id)
       # binding.pry
       
-      # 勤怠編集の指示者を取得
-      @attendance_superior1 = Attendance.where(attendance_test: 2)
-      @attendance_superior2 = Attendance.where(attendance_test: 3)
-      @superior1_count = @attendance_superior1.count
-      @superior2_count = @attendance_superior2.count
-      
-      # 一日分の残業申請フォームの指示者取得
-      @overtime_superior1 = Attendance.where(instructor_test: 2)
-      @overtime_superior2 = Attendance.where(instructor_test: 3)
-      @overtime_superior1_count = @overtime_superior1.count
-      @overtime_superior2_count = @overtime_superior2.count
-      
       @application_user = OneMonthAttendance.new(application_user_id: @user.id)
       # @application_user.save
 
       # 月の勤怠　本日の日付、申請者でレコード取得
       @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
+      
+      # 自分に申請された月の勤怠申請取得とカウント
+      @one_month_attendance_me = OneMonthAttendance.where(authorizer_user_test: current_user.id, one_month_application_status: "month_applying")
+      @one_month_attendance_me_count = @one_month_attendance_me.count
+      # binding.pry
       
       @overtime_user = @user.attendances.new
 
