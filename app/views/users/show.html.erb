@@ -193,9 +193,9 @@
       <td></td>
       <td>
         <% if overtime_test(@user, current_user) %>
-          <% if @request_user.try(:month_nothing?) %>
+          <%# if @request_user.try(:month_nothing?) %>
             勤怠申請：なし
-          <% elsif @request_user.try(:month_applying?) %>
+          <% if @request_user.try(:month_applying?) %>
             勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中
           <% elsif @request_user.try(:month_approval?) %>
             勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>から承認
@@ -434,6 +434,30 @@
     </div>
   </div>
 </div>
+
+<!-- 月の勤怠承認フォーム　モーダルで表示 -->
+<%= form_for(@application_user, url: month_attendance_authorizer_update_path, method: :post) do |au| %>
+  <% @one_month_attendance_me.each do |oma| %>
+    <table class="txt1 table table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>月</th>
+          <th>指示者確認</th>
+          <th>変更</th>
+          <th>勤怠を確認</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
 
 <script>
 // 1日分の残業申請フォーム　モーダル表示

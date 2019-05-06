@@ -205,6 +205,9 @@ class AttendancesController < ApplicationController
     redirect_to "/users/#{current_user.id}"
   end
   
+  def month_attendance_authorizer_update
+  end
+  
   private
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
