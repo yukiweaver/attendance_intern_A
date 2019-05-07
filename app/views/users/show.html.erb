@@ -413,7 +413,7 @@
                       <!-- 第十二項：指示者確認 配列オブジェクト.select -->
                       <td>
                         <% if not am.attendance_application_status.blank? %>
-                          <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.to_a %>
+                          <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.to_a, :include_blank => true %>
                         <% end %>
                       </td>
                       <!-- 第十三項：変更 -->
@@ -438,6 +438,7 @@
 <!-- 月の勤怠承認フォーム　モーダルで表示 -->
 <%= form_for(@application_user, url: month_attendance_authorizer_update_path, method: :post) do |au| %>
   <% @one_month_attendance_me.each do |oma| %>
+    <h3 align="center"><%= User.find(oma.application_user_id).name %>から１ヶ月分の勤怠申請</h3>
     <table class="txt1 table table-bordered table-striped table-condensed">
       <thead>
         <tr>
@@ -447,16 +448,27 @@
           <th>勤怠を確認</th>
         </tr>
       </thead>
+      <%= fields_for "one_month_attendance[]", oma do |oa| %>
       <tbody>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <!-- 第一項：月 -->
+          <td><%= oma.application_date.month if oma.application_date != nil %>月</td>
+          <!-- 第二項：指示者確認 -->
+          <td>
+            <% if not oma.one_month_application_status.blank? %>
+              <%= oa.select :one_month_application_status, OneMonthAttendance.one_month_application_statuses.keys.to_a, :include_blank => true %>
+            <% end %>
+          </td>
+          <!-- 第三項：変更 -->
+          <td><%= oa.check_box :one_month_change %></td>
+          <!-- 第四項：勤怠を確認 -->
+          <td><%= link_to "確認", "/users/#{oma.application_user_id}", class: "btn btn-primary" %></td>
         </tr>
       </tbody>
+      <% end %>
     </table>
   <% end %>
+  <%= au.submit "変更を送信する", class: "btn btn-primary" %>
 <% end %>
 
 <script>

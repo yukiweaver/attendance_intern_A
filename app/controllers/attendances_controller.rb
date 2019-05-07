@@ -206,6 +206,14 @@ class AttendancesController < ApplicationController
   end
   
   def month_attendance_authorizer_update
+    authorizer_one_month_attendance_params.each do |id, item|
+      if item[:one_month_change] == "1"
+        @attendance = OneMonthAttendance.find(id)
+        @attendance.update_attributes(item)
+      end
+      flash[:success] = "勤怠変更申請を更新しました。"
+    end
+    redirect_to "/users/#{current_user.id}"
   end
   
   private
@@ -237,5 +245,10 @@ class AttendancesController < ApplicationController
     # 勤怠変更の承認
     def authorizer_attendance_params
       params.permit(one_attendance: [:attendance_application_status, :attendance_change])[:one_attendance]
+    end
+    
+    # 一月分の勤怠承認
+    def authorizer_one_month_attendance_params
+      params.permit(one_month_attendance: [:one_month_application_status, :one_month_change])[:one_month_attendance]
     end
 end
