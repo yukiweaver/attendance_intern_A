@@ -105,7 +105,7 @@
         <td><%= date.beginning_time.min if date.beginning_time != nil %></td>
         <!-- 第六項：出社ボタン -->
         <td>
-          <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today %>
+          <% if date.beginning_time.nil? && date.leaving_time.nil? && date.attendance_day == Date.today && overtime_test(@user, current_user) %>
             <%= button_to "出社", beginning_time_path, class: "btn btn-primary" %>
           <% end %>
         </td>
@@ -115,7 +115,7 @@
         <td><%= date.leaving_time.min if date.leaving_time != nil %></td>
         <!-- 第九項：退社ボタン -->
         <td>
-          <% if date.leaving_time.nil? && date.beginning_time != nil && date.attendance_day == Date.today %>
+          <% if date.leaving_time.nil? && date.beginning_time != nil && date.attendance_day == Date.today && overtime_test(@user, current_user) %>
             <%= button_to "退社", leaving_time_path, class: "btn btn-primary" %>
           <% end %>
         </td>
@@ -193,7 +193,7 @@
       <td></td>
       <td>
         <% if overtime_test(@user, current_user) %>
-          <% if @request_user.try(:month_nothing?) %>
+          <% if @request_user.blank? %>
             勤怠申請：なし
           <% elsif @request_user.try(:month_applying?) %>
             勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>に申請中

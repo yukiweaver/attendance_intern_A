@@ -163,6 +163,7 @@ class AttendancesController < ApplicationController
         flash[:danger] = "勤怠申請に失敗しました。"
       end
     else
+      @one_month_attendance.month_applying!
       @one_month_attendance.update_attributes(one_month_attendance_params)
       flash[:success] = "勤怠申請が完了しました。"
     end
@@ -207,12 +208,18 @@ class AttendancesController < ApplicationController
   
   # 月の勤怠承認
   def month_attendance_authorizer_update
+    i = 0
     authorizer_one_month_attendance_params.each do |id, item|
+      # binding.pry
+      # @one_attendance = OneMonthAttendance.where(one_month_change: item[:one_month_change]==true)
+      # @one_attendance_count = @one_attendance.count
       if item[:one_month_change] == "1"
         @attendance = OneMonthAttendance.find(id)
         @attendance.update_attributes(item)
       end
-      # binding.pry
+      binding.pry
+      i += 1
+      @total_count = i
       flash[:success] = "勤怠変更申請を更新しました。"
     end
     redirect_to "/users/#{current_user.id}"
