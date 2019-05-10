@@ -20,12 +20,12 @@ Rails.application.routes.draw do
   get    '/attendance_edit/:id', to: 'attendances#attendance_edit', as: 'attendance_edit'  #勤怠B：勤怠編集画面へ遷移
   post   '/attendance_update/:id', to: 'attendances#attendance_update', as: 'attendance_update'  #勤怠B：勤怠編集の更新
   get    '/attendance_index', to: 'attendances#attendance_index', as: 'attendance_index'  #勤怠A：出勤社員一覧へ遷移
-  # get    '/attendance_overtime/:id', to: 'attendances#overtime', as: 'attendance_overtime' #勤怠A：1日分の残業申請遷移
   post   '/attendance_overtime_update/:id', to: 'attendances#overtime_update', as: 'attendance_overtime_update'  #勤怠A：1日分の残業申請
   post   '/attendance_month_update/:id', to: 'attendances#month_update', as: 'attendance_month_update'  # 勤怠A：一月分の勤怠申請
   post   '/attendance_overtime_authorizer_update/:id', to: 'attendances#authorizer_overtime_update', as: 'authorizer_overtime_update'  # 一日分の残業承認
   post   '/attendance_authorizer_update/:id', to: 'attendances#authorizer_attendance_update', as: 'authorizer_attendance_update'  # 勤怠変更承認
   post   '/month_attendance_authorizer_update/:id', to: 'attendances#month_attendance_authorizer_update', as: 'month_attendance_authorizer_update' # 月の勤怠承認
+  get    '/approval_histories/index', to: 'attendances#approval_histories', as: 'approval_histories'  # 勤怠ログ遷移
   
   # csv読み込みのため、routes追加
   resources :users do

@@ -52,7 +52,7 @@
   <% if overtime_test(@user, current_user) %>
     <%= link_to "勤怠を編集", attendance_edit_path(params:{current_day: @current_day}), class: "btn btn-primary" %>
     <%= link_to "CSV出力", user_path(format: :csv, params:{current_day: @current_day}), class: "btn btn-primary" %><br>
-    <%= link_to "勤怠修正ログ（承認済み）", "#", class: "btn btn-primary" %>
+    <%= link_to "勤怠修正ログ（承認済み）", approval_histories_path, class: "btn btn-primary" %>
   <% end %>
   
   <!-- 勤怠表示画面　下のメインのテーブル -->

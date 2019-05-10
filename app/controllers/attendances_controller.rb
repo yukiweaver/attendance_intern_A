@@ -209,20 +209,22 @@ class AttendancesController < ApplicationController
   # 月の勤怠承認
   def month_attendance_authorizer_update
     i = 0
+    x = 0
     authorizer_one_month_attendance_params.each do |id, item|
-      # binding.pry
-      # @one_attendance = OneMonthAttendance.where(one_month_change: item[:one_month_change]==true)
-      # @one_attendance_count = @one_attendance.count
       if item[:one_month_change] == "1"
+        x += 1
         @attendance = OneMonthAttendance.find(id)
         @attendance.update_attributes(item)
       end
-      binding.pry
       i += 1
-      @total_count = i
-      flash[:success] = "勤怠変更申請を更新しました。"
     end
+    @total_count = i
+    @total_count2 = x
+    flash[:success] = "勤怠変更申請を#{@total_count}件中#{@total_count2}件更新しました。"
     redirect_to "/users/#{current_user.id}"
+  end
+  
+  def approval_histories
   end
   
   private
