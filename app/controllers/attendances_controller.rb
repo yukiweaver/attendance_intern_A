@@ -85,8 +85,9 @@ class AttendancesController < ApplicationController
     if attendances_invalid?  # AttendancesHelper
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
-        if !bt[:attendance_test].blank?
-          # ここ修正必要あり
+        if bt[:attendance_test].blank?
+          next
+        elsif !bt[:attendance_test].blank?
           @attendance.work_applying!
         end
         @attendance.update_attributes(bt)

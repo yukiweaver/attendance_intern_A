@@ -50,9 +50,17 @@
       <!-- 第一項：日付 -->
       <td><%= approval.attendance_day.month %>/<%= approval.attendance_day.day %></td>
       <!-- 第二項：変更前出社時間 -->
-      <td><%= approval.before_beginning_time.hour %>:<%= approval.before_beginning_time.min %> </td>
+      <td>
+        <% if approval.before_beginning_time %>
+          <%= approval.before_beginning_time.hour %>:<%= approval.before_beginning_time.min %>
+        <% end %>
+      </td>
       <!-- 第三項：変更前退社時間 -->
-      <td><%= approval.before_leaving_time.hour %>:<%= approval.before_leaving_time.min %></td>
+      <td>
+        <% if approval.before_leaving_time != nil %>
+          <%= approval.before_leaving_time.hour %>:<%= approval.before_leaving_time.min %>
+        <% end %>
+      </td>
       <!-- 第四項：変更後出社時間 -->
       <td><%= approval.beginning_time.hour %>:<%= approval.beginning_time.min %></td>
       <!-- 第五項：変更後退社時間 -->
