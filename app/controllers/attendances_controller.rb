@@ -91,11 +91,11 @@ class AttendancesController < ApplicationController
         end
         @attendance.update_attributes(bt)
         
-        if not bt[:beginning_time].blank? && bt[:leaving_time]
+        if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
           @before_beginning_time = @attendance.saved_changes[:beginning_time]
           @before_leaving_time = @attendance.saved_changes[:leaving_time]
           if not @before_beginning_time.blank? && @before_leaving_time.blank?
-            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0], before_leaving_time: @before_leaving_time[0])
+            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0].try, before_leaving_time: @before_leaving_time[0].try)
           end
         end
         # binding.pry
@@ -225,6 +225,8 @@ class AttendancesController < ApplicationController
   end
   
   def approval_histories
+    # 勤怠承認　自分以外が承認した勤怠データ取得
+    @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
   end
   
   private

@@ -1,15 +1,16 @@
 <% provide(:title,  "勤怠ログ") %>
-<h1>勤怠ログ</h1>
+<h1>勤怠承認ログ</h1>
 
 <button type="button" class="btn btn-default" id="reset">リセット</button>
 
 <div class="dropdown" id="year">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">年<b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><a href="">2017</a></li>
-      <li><a href="">2018</a></li>
-      <li><a href="">2019</a></li>
+      <li id="2017"><a href="">2017</a></li>
+      <li id="2018"><a href="">2018</a></li>
+      <li id="2019"><a href="">2019</a></li>
     </ul>
+    <span><input type="text" placeholder="2019" readonly="true" style="background-color: #EEE"></span>
 </div>
 <div class="dropdown" id="month">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">月<b class="caret"></b></a>
@@ -27,6 +28,7 @@
       <li id="11"><a href="">11</a></li>
       <li id="12"><a href="">12</a></li>
     </ul>
+    <span><input type="text" placeholder="5" readonly="true" style="background-color: #EEE"></span>
 </div>
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -42,14 +44,24 @@
   </thead>
   
   <tbody>
+    <% @approval.each do |approval| %>
+    <%# binding.pry %>
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <!-- 第一項：日付 -->
+      <td><%= approval.attendance_day.month %>/<%= approval.attendance_day.day %></td>
+      <!-- 第二項：変更前出社時間 -->
+      <td><%= approval.before_beginning_time.hour %>:<%= approval.before_beginning_time.min %> </td>
+      <!-- 第三項：変更前退社時間 -->
+      <td><%= approval.before_leaving_time.hour %>:<%= approval.before_leaving_time.min %></td>
+      <!-- 第四項：変更後出社時間 -->
+      <td><%= approval.beginning_time.hour %>:<%= approval.beginning_time.min %></td>
+      <!-- 第五項：変更後退社時間 -->
+      <td><%= approval.leaving_time.hour %>:<%= approval.leaving_time.min %></td>
+      <!-- 第六項：指示者確認 -->
+      <td><%= User.find(approval.attendance_test).name %></td>
+      <!-- 第七項：承認日 -->
       <td></td>
     </tr>
+    <% end %>
   </tbody>
 </table>
