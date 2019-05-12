@@ -4,13 +4,13 @@
 <button type="button" class="btn btn-default" id="reset">リセット</button>
 
 <div class="dropdown" id="year">
-  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">年<b class="caret"></b></a>
-    <ul class="dropdown-menu">
+  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">年<b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
       <li id="2017"><a href="">2017</a></li>
       <li id="2018"><a href="">2018</a></li>
       <li id="2019"><a href="">2019</a></li>
     </ul>
-    <span><input type="text" placeholder="2019" readonly="true" style="background-color: #EEE"></span>
+    <span><input type="text" placeholder="2019" readonly="true" style="background-color: #EEE; width: 20%;"></span>
 </div>
 <div class="dropdown" id="month">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">月<b class="caret"></b></a>
@@ -28,7 +28,7 @@
       <li id="11"><a href="">11</a></li>
       <li id="12"><a href="">12</a></li>
     </ul>
-    <span><input type="text" placeholder="5" readonly="true" style="background-color: #EEE"></span>
+    <span><input type="text" placeholder="5" readonly="true" style="background-color: #EEE; width: 20%;"></span>
 </div>
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -73,3 +73,12 @@
     <% end %>
   </tbody>
 </table>
+
+<script>
+  $(function(){
+    $("#year li").click(function(){
+      year = $(this).attr("id")
+      $("#year input").val(year);
+    });
+  });
+</script>
