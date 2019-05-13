@@ -6,29 +6,29 @@
 <div class="dropdown" id="year">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">年<b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
-      <li id="2017"><a href="">2017</a></li>
-      <li id="2018"><a href="">2018</a></li>
-      <li id="2019"><a href="">2019</a></li>
+      <li id="2017">2017</li>
+      <li id="2018">2018</li>
+      <li id="2019">2019</li>
     </ul>
-    <span><input type="text" placeholder="2019" readonly="true" style="background-color: #EEE; width: 20%;"></span>
+    <input type="text" placeholder="2019" readonly="true" style="background-color: #EEE; width: 20%;">
 </div>
 <div class="dropdown" id="month">
-  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown">月<b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li id="1"><a href="">1</a></li>
-      <li id="2"><a href="">2</a></li>
-      <li id="3"><a href="">3</a></li>
-      <li id="4"><a href="">4</a></li>
-      <li id="5"><a href="">5</a></li>
-      <li id="6"><a href="">6</a></li>
-      <li id="7"><a href="">7</a></li>
-      <li id="8"><a href="">8</a></li>
-      <li id="9"><a href="">9</a></li>
-      <li id="10"><a href="">10</a></li>
-      <li id="11"><a href="">11</a></li>
-      <li id="12"><a href="">12</a></li>
+  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">月<b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
+      <li id="1">1</li>
+      <li id="2">2</li>
+      <li id="3">3</li>
+      <li id="4">4</li>
+      <li id="5">5</li>
+      <li id="6">6</li>
+      <li id="7">7</li>
+      <li id="8">8</li>
+      <li id="9">9</li>
+      <li id="10">10</li>
+      <li id="11">11</li>
+      <li id="12">12</li>
     </ul>
-    <span><input type="text" placeholder="5" readonly="true" style="background-color: #EEE; width: 20%;"></span>
+    <input type="text" placeholder="5" readonly="true" style="background-color: #EEE; width: 20%;">
 </div>
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -77,8 +77,14 @@
 <script>
   $(function(){
     $("#year li").click(function(){
-      year = $(this).attr("id")
+      var year = $(this).attr("id");
       $("#year input").val(year);
     });
+    
+    $("#month li").click(function(){
+      var month = $(this).attr("id");
+      $("#month input").val(month);
+    });
   });
+
 </script>
