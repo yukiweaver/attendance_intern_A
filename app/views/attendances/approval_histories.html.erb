@@ -1,32 +1,32 @@
 <% provide(:title,  "勤怠ログ") %>
 <h1>勤怠承認ログ</h1>
 
-<button type="button" class="btn btn-default" id="reset">リセット</button>
+<button type="reset" class="btn btn-default clearForm" id="reset">リセット</button>
 
 <div class="dropdown" id="year">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">年<b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
-      <li id="2017">2017</li>
-      <li id="2018">2018</li>
-      <li id="2019">2019</li>
+      <li id="2017"><a>2017</a></li>
+      <li id="2018"><a>2018</a></li>
+      <li id="2019"><a>2019</a></li>
     </ul>
     <input type="text" placeholder="2019" readonly="true" style="background-color: #EEE; width: 20%;">
 </div>
 <div class="dropdown" id="month">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">月<b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
-      <li id="1">1</li>
-      <li id="2">2</li>
-      <li id="3">3</li>
-      <li id="4">4</li>
-      <li id="5">5</li>
-      <li id="6">6</li>
-      <li id="7">7</li>
-      <li id="8">8</li>
-      <li id="9">9</li>
-      <li id="10">10</li>
-      <li id="11">11</li>
-      <li id="12">12</li>
+      <li id="1"><a>1</a></li>
+      <li id="2"><a>2</a></li>
+      <li id="3"><a>3</a></li>
+      <li id="4"><a>4</a></li>
+      <li id="5"><a>5</a></li>
+      <li id="6"><a>6</a></li>
+      <li id="7"><a>7</a></li>
+      <li id="8"><a>8</a></li>
+      <li id="9"><a>9</a></li>
+      <li id="10"><a>10</a></li>
+      <li id="11"><a>11</a></li>
+      <li id="12"><a>12</a></li>
     </ul>
     <input type="text" placeholder="5" readonly="true" style="background-color: #EEE; width: 20%;">
 </div>
@@ -86,5 +86,15 @@
       $("#month input").val(month);
     });
   });
+  
+  // $(function(){
+  //   $("#reset").click(function () {
+		
+		// year = moment().format('YYYY');
+		// $("#year input").val(year);
+		
+		// month = moment().format('MM');
+		// $("#month input").val(month);
+  // });
 
 </script>
