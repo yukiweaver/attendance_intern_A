@@ -22,6 +22,8 @@ group :development, :test do
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
   gem 'pry-rails'
+  gem 'factory_bot_rails', '~> 4.11'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -31,12 +33,17 @@ group :development do
   gem 'spring-watcher-listen', '2.0.1'
 end
 
+# group :test do
+#   gem 'rails-controller-testing', '1.0.2'
+#   gem 'minitest',                 '5.10.3'
+#   gem 'minitest-reporters',       '1.1.14'
+#   gem 'guard',                    '2.13.0'
+#   gem 'guard-minitest',           '2.4.4'
 group :test do
-  gem 'rails-controller-testing', '1.0.2'
-  gem 'minitest',                 '5.10.3'
-  gem 'minitest-reporters',       '1.1.14'
-  gem 'guard',                    '2.13.0'
-  gem 'guard-minitest',           '2.4.4'
+  gem 'capybara', '>= 2.15'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
+  gem 'rspec-rails', '~> 3.7'
 end
 
 group :production do
