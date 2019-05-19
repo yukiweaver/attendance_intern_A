@@ -228,6 +228,8 @@ class AttendancesController < ApplicationController
   def approval_histories
     # 勤怠承認　自分以外が承認した勤怠データ取得
     @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
+    @approval_histories = Attendance.where("attendance_approval_date LIKE ?", "%#{params[:month]}%")
+    # binding.pry
   end
   
   private

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   post   '/attendance_overtime_authorizer_update/:id', to: 'attendances#authorizer_overtime_update', as: 'authorizer_overtime_update'  # 一日分の残業承認
   post   '/attendance_authorizer_update/:id', to: 'attendances#authorizer_attendance_update', as: 'authorizer_attendance_update'  # 勤怠変更承認
   post   '/month_attendance_authorizer_update/:id', to: 'attendances#month_attendance_authorizer_update', as: 'month_attendance_authorizer_update' # 月の勤怠承認
-  get    '/approval_histories/index', to: 'attendances#approval_histories', as: 'approval_histories'  # 勤怠ログ遷移
+  get    '/attendance/approval_histories', to: 'attendances#approval_histories', as: 'approval_histories'  # 勤怠ログ遷移
   
   # csv読み込みのため、routes追加
   resources :users do

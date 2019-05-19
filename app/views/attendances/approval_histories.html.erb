@@ -19,8 +19,8 @@
       <li id="2"><a href="#">2</a></li>
       <li id="3"><a href="#">3</a></li>
       <li id="4"><a href="#">4</a></li>
-      <li id="5"><a href="#">5</a></li>
-      <li id="6"><a href="#">6</a></li>
+      <li id="5"><a>5</a></li>
+      <li id="6"><a>6</a></li>
       <li id="7"><a>7</a></li>
       <li id="8"><a>8</a></li>
       <li id="9"><a>9</a></li>
@@ -76,8 +76,8 @@
 <script>src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"</script>
 <script>
   $(function(){
-    year = moment().format('YYYY')
-		month = moment().format('MM')
+  //   year = moment().format('YYYY')
+		// month = moment().format('MM')
 		
     $("#month li").click(function(){
       var month = $(this).attr("id");
@@ -85,8 +85,8 @@
       
       $.ajax({
         type:'GET', // リクエストのタイプはGET
-        url: '/approval_histories/index', // URLを指定
-        data: {year: year, month: month}, // コントローラへフォームの値を送信
+        url: '/attendance/approval_histories', // URLを指定
+        data: {month: month}, // コントローラへフォームの値を送信
         dataType: 'json' // データの型はjson
       })
       
