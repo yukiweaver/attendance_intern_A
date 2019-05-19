@@ -346,7 +346,7 @@
         <% @attendance_me.each do |am| %>
           <%= ou.hidden_field :application_id, :value => am.user.id %>
           <%= ou.hidden_field :authorizer_id, :value => @user.id %>
-          <%= ou.hidden_field :current_day, :value => @current_day %>
+          <%#= ou.hidden_field :current_day, :value => @current_day %>
           <%= ou.hidden_field :attendance_application_status, :value => am.attendance_application_status %>
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">
@@ -387,6 +387,7 @@
                 <tbody>
                   <!-- 一括更新するには配列を指定 -->
                   <%= fields_for "one_attendance[]", am do |oa| %>
+                  <%= oa.hidden_field :attendance_approval_date, :value => @current_day %>
                     <tr>
                       <!-- 第一項：日付 -->
                       <td><%= am.attendance_day.month %>/<%= am.attendance_day.day %></td>

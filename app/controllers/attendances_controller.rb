@@ -96,7 +96,7 @@ class AttendancesController < ApplicationController
           @before_beginning_time = @attendance.saved_changes[:beginning_time]
           @before_leaving_time = @attendance.saved_changes[:leaving_time]
           if not @before_beginning_time.blank? && @before_leaving_time.blank?
-            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0].try, before_leaving_time: @before_leaving_time[0].try)
+            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0], before_leaving_time: @before_leaving_time[0])
           end
         end
         # binding.pry
@@ -220,8 +220,8 @@ class AttendancesController < ApplicationController
       i += 1
     end
     @total_count = i
-    @total_count2 = x
-    flash[:success] = "勤怠変更申請を#{@total_count}件中#{@total_count2}件更新しました。"
+    @select_count = x
+    flash[:success] = "勤怠変更申請を#{@total_count}件中#{@select_count}件更新しました。"
     redirect_to "/users/#{current_user.id}"
   end
   
@@ -258,7 +258,7 @@ class AttendancesController < ApplicationController
     
     # 勤怠変更の承認
     def authorizer_attendance_params
-      params.permit(one_attendance: [:attendance_application_status, :attendance_change])[:one_attendance]
+      params.permit(one_attendance: [:attendance_application_status, :attendance_change, :attendance_approval_date])[:one_attendance]
     end
     
     # 一月分の勤怠承認

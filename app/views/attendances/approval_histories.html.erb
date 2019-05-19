@@ -15,12 +15,12 @@
 <div class="dropdown" id="month">
   <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">月<b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
-      <li id="1"><a>1</a></li>
-      <li id="2"><a>2</a></li>
-      <li id="3"><a>3</a></li>
-      <li id="4"><a>4</a></li>
-      <li id="5"><a>5</a></li>
-      <li id="6"><a>6</a></li>
+      <li id="1"><a href="#">1</a></li>
+      <li id="2"><a href="#">2</a></li>
+      <li id="3"><a href="#">3</a></li>
+      <li id="4"><a href="#">4</a></li>
+      <li id="5"><a href="#">5</a></li>
+      <li id="6"><a href="#">6</a></li>
       <li id="7"><a>7</a></li>
       <li id="8"><a>8</a></li>
       <li id="9"><a>9</a></li>
@@ -68,33 +68,67 @@
       <!-- 第六項：指示者確認 -->
       <td><%= User.find(approval.attendance_test).name %></td>
       <!-- 第七項：承認日 -->
-      <td></td>
+      <td><%= approval.attendance_approval_date.month %>/<%= approval.attendance_approval_date.day %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
-
+<script>src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"</script>
 <script>
   $(function(){
-    $("#year li").click(function(){
-      var year = $(this).attr("id");
-      $("#year input").val(year);
-    });
-    
+    year = moment().format('YYYY')
+		month = moment().format('MM')
+		
     $("#month li").click(function(){
       var month = $(this).attr("id");
       $("#month input").val(month);
+      
+      $.ajax({
+        type:'GET', // リクエストのタイプはGET
+        url: '/approval_histories/index', // URLを指定
+        data: {year: year, month: month}, // コントローラへフォームの値を送信
+        dataType: 'json' // データの型はjson
+      })
+      
+      .done(function(data){
+        // 通信に成功した場合の処理
+        $('tbody').find('tr').remove();
+        $('tbody').find('td').remove();
+        
+        (data).each(function(i, approval_history){
+          approval_history.before_beginning_time == null ?
+          before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
+          approval_history.before_leaving_time == null ?
+          before_leaving_time = '' : before_leaving_time = moment(approval_history.before_leaving_time).format('HH:mm');
+          approval_history.beginning_time == null ?
+          beginning_time = '' : beginning_time = moment(approval_history.beginning_time).format('HH:mm');
+          approval_history.leaving_time == null ?
+          leaving_time = '' : leaving_time = moment(approval_history.leaving_time).format('HH:mm');
+          
+          $('tbody').append(
+            $("<tr>")
+            .append("<td>" + approval_history.attendance_day + "</td>")
+            .append("<td>" + before_beginning_time + "</td>")
+            .append("<td>" + before_leaving_time + "</td>")
+            .append("<td>" + beginning_time + "</td>")
+            .append("<td>" + leaving_time + "</td>")
+            .append("<td>" + approval_history.attendance_test.name + "</td>")
+            // ここに承認日が入る
+            .append("</tr>")
+          )
+        })
+      })
     });
   });
-  
-  // $(function(){
-  //   $("#reset").click(function () {
-		
-		// year = moment().format('YYYY');
-		// $("#year input").val(year);
-		
-		// month = moment().format('MM');
-		// $("#month input").val(month);
-  // });
 
 </script>
+
+
+<!--$("#year li").click(function(){-->
+<!--      var year = $(this).attr("id");-->
+<!--      $("#year input").val(year);-->
+
+
+
+
+
