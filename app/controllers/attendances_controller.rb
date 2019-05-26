@@ -225,11 +225,19 @@ class AttendancesController < ApplicationController
     redirect_to "/users/#{current_user.id}"
   end
   
+  # 勤怠承認ログ
   def approval_histories
-    # 勤怠承認　自分以外が承認した勤怠データ取得
+    @current_day = Date.today
+    # 勤怠承認　日付が今月で、自分以外が承認した勤怠データ取得
     @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
-    @approval_histories = Attendance.where("attendance_approval_date LIKE ?", "%#{params[:month]}%")
+                          .where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{@current_day.year}%", "%#{@current_day.month}%")
+    @approval_histories = Attendance.where("attendance_day LIKE ?", "%#{params[:month]}%")
     # binding.pry
+    respond_to do |format|
+      format.json { render json: @approval_histories }
+      format.html
+      # format.html
+    end
   end
   
   private

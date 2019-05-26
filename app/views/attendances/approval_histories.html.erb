@@ -3,32 +3,47 @@
 
 <button type="reset" class="btn btn-default clearForm" id="reset">リセット</button>
 
-<div class="dropdown" id="year">
-  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">年<b class="caret"></b></a>
-    <ul class="dropdown-menu" role="menu">
-      <li id="2017"><a>2017</a></li>
-      <li id="2018"><a>2018</a></li>
-      <li id="2019"><a>2019</a></li>
-    </ul>
-    <input type="text" placeholder="2019" readonly="true" style="background-color: #EEE; width: 20%;">
+<div class="input-group" id="year">
+	<span class="input-group-btn">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			年
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li id="2017" class="drop-list"><a>2017</a></li>
+			<li id="2018" class="drop-list"><a>2018</a></li>
+			<li id="2019" class="drop-list"><a>2019</a></li>
+		</ul>
+	</span>
+	<div class="col-xs-2 px-0">
+		<input type="text" class="form-control" placeholder=2019 readonly>
+	</div>
 </div>
-<div class="dropdown" id="month">
-  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false">月<b class="caret"></b></a>
-    <ul class="dropdown-menu" role="menu">
-      <li id="1"><a href="#">1</a></li>
-      <li id="2"><a href="#">2</a></li>
-      <li id="3"><a href="#">3</a></li>
-      <li id="4"><a href="#">4</a></li>
-      <li id="5"><a>5</a></li>
-      <li id="6"><a>6</a></li>
-      <li id="7"><a>7</a></li>
-      <li id="8"><a>8</a></li>
-      <li id="9"><a>9</a></li>
-      <li id="10"><a>10</a></li>
-      <li id="11"><a>11</a></li>
-      <li id="12"><a>12</a></li>
-    </ul>
-    <input type="text" placeholder="5" readonly="true" style="background-color: #EEE; width: 20%;">
+
+<div class="input-group" id="month">
+	<span class="input-group-btn">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			月
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+				<li id=1><a>1</a></li>
+				<li id=2><a>2</a></li>
+				<li id=3><a>3</a></li>
+				<li id=4><a>4</a></li>
+				<li id=5><a>5</a></li>
+				<li id=6><a>6</a></li>
+				<li id=7><a>7</a></li>
+				<li id=8><a>8</a></li>
+				<li id=9><a>9</a></li>
+				<li id=10><a>10</a></li>
+				<li id=11><a>11</a></li>
+				<li id=12><a>12</a></li>
+		</ul>
+	</span>
+	<div class="col-xs-2 px-0">
+	  <input type="text" class="form-control" placeholder=05 readonly remote="true">
+	</div>
 </div>
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -73,15 +88,16 @@
     <% end %>
   </tbody>
 </table>
-<script>src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 <script>
   $(function(){
-  //   year = moment().format('YYYY')
-		// month = moment().format('MM')
+    year = moment().format('YYYY');
+		month = moment().format('MM');
 		
     $("#month li").click(function(){
       var month = $(this).attr("id");
       $("#month input").val(month);
+      // alert(year);
       
       $.ajax({
         type:'GET', // リクエストのタイプはGET
@@ -95,7 +111,7 @@
         $('tbody').find('tr').remove();
         $('tbody').find('td').remove();
         
-        (data).each(function(i, approval_history){
+        $(data).each(function(i, approval_history){
           approval_history.before_beginning_time == null ?
           before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
           approval_history.before_leaving_time == null ?
@@ -112,8 +128,8 @@
             .append("<td>" + before_leaving_time + "</td>")
             .append("<td>" + beginning_time + "</td>")
             .append("<td>" + leaving_time + "</td>")
-            .append("<td>" + approval_history.attendance_test.name + "</td>")
-            // ここに承認日が入る
+            .append("<td>" + approval_history.attendance_test + "</td>")
+            .append("<td>" + moment(approval_history.attendance_approval_date).format("YYYY-MM-DD") + "</td>")
             .append("</tr>")
           )
         })
@@ -128,6 +144,44 @@
 <!--      var year = $(this).attr("id");-->
 <!--      $("#year input").val(year);-->
 
+<!--switch(month){-->
+<!--        case '1':-->
+<!--          month = 'Jan'-->
+<!--          break;-->
+<!--        case '2':-->
+<!--          month = 'Feb'-->
+<!--          break;-->
+<!--        case '3':-->
+<!--          month = 'Mar'-->
+<!--          break;-->
+<!--        case '4':-->
+<!--          month = 'Apr'-->
+<!--          break;-->
+<!--        case '5':-->
+<!--          month = 'May'-->
+<!--          break;-->
+<!--        case '6':-->
+<!--          month = 'Jun'-->
+<!--          break;-->
+<!--        case '7':-->
+<!--          month = 'Jul'-->
+<!--          break;-->
+<!--        case '8':-->
+<!--          month = 'Aug'-->
+<!--          break;-->
+<!--        case '9':-->
+<!--          month = 'Sep'-->
+<!--          break;-->
+<!--        case '10':-->
+<!--          month = 'Oct'-->
+<!--          break;-->
+<!--        case '11':-->
+<!--          month = 'Nov'-->
+<!--          break;-->
+<!--        case '12':-->
+<!--          month = 'Dec'-->
+<!--          break;-->
+<!--      }-->
 
 
 
