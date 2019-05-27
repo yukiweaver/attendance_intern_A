@@ -231,14 +231,21 @@ class AttendancesController < ApplicationController
     # 勤怠承認　日付が今月で、自分以外が承認した勤怠データ取得
     @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
                           .where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{@current_day.year}%", "%#{@current_day.month}%")
-    @approval_histories = Attendance.where("attendance_day LIKE ?", "%#{params[:month]}%")
-    # binding.pry
-    respond_to do |format|
-      format.json { render json: @approval_histories }
-      format.html
-      # format.html
-    end
+    @approval_histories = Attendance.where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{params[:month]}%", "%#{params[:year]}%")
+                                    .where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
   end
+  
+  # def approval_histories
+  #   first_day = Date.current.beginning_of_month
+  #   last_day = first_day.end_of_month
+  #   @approval = current_user.attendances.where('attendance_day >= ? and
+  #   attendance_day <= ? and log_display = ?',first_day, last_day, true).order('attendance_day')
+  #   # ボタン操作後の値
+  #   js_first_day = Date.parse("#{params[:year]}/#{params[:month]}/01")
+  #   js_last_day = js_first_day.end_of_month
+  #   @approval_histories = current_user.attendances.where('attendance_day >= ? and
+  #   attendance_day <= ? and log_display = ?',js_first_day, js_last_day, true).order('attendance_day')
+  # end
   
   private
   

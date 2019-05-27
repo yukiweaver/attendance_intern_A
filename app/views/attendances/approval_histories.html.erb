@@ -42,7 +42,7 @@
 		</ul>
 	</span>
 	<div class="col-xs-2 px-0">
-	  <input type="text" class="form-control" placeholder=05 readonly remote="true">
+	  <input type="text" class="form-control" placeholder=05 readonly>
 	</div>
 </div>
 <table class="table table-bordered table-striped table-condensed">
@@ -90,19 +90,63 @@
 </table>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 <script>
+$(document).on('turbolinks:load', function() {
+
   $(function(){
     year = moment().format('YYYY');
 		month = moment().format('MM');
 		
+    $("#year li").click(function(){
+      year = $(this).attr("id");
+      $("#year input").val(year);
+      // alert(year);
+      
+      $.ajax({
+        type:'GET', // リクエストのタイプはGET
+        url: '/attendance/approval_histories', // URLを指定
+        data: {month: month, year: year}, // コントローラへフォームの値を送信
+        dataType: 'json' // データの型はjson
+      })
+      
+      .done(function(data){
+        // 通信に成功した場合の処理
+        $('tbody').find('tr').remove();
+        $('tbody').find('td').remove();
+        
+        $(data).each(function(i, approval_history){
+          approval_history.before_beginning_time == null ?
+          before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
+          approval_history.before_leaving_time == null ?
+          before_leaving_time = '' : before_leaving_time = moment(approval_history.before_leaving_time).format('HH:mm');
+          approval_history.beginning_time == null ?
+          beginning_time = '' : beginning_time = moment(approval_history.beginning_time).format('HH:mm');
+          approval_history.leaving_time == null ?
+          leaving_time = '' : leaving_time = moment(approval_history.leaving_time).format('HH:mm');
+          
+          $('tbody').append(
+            $("<tr>")
+            .append("<td>" + approval_history.attendance_day + "</td>")
+            .append("<td>" + before_beginning_time + "</td>")
+            .append("<td>" + before_leaving_time + "</td>")
+            .append("<td>" + beginning_time + "</td>")
+            .append("<td>" + leaving_time + "</td>")
+            .append("<td>" + approval_history.attendance_test + "</td>")
+            .append("<td>" + moment(approval_history.attendance_approval_date).format("YYYY-MM-DD") + "</td>")
+            .append("</tr>")
+          )
+        })
+      })
+    });
+    
     $("#month li").click(function(){
-      var month = $(this).attr("id");
+      month = $(this).attr("id");
       $("#month input").val(month);
       // alert(year);
       
       $.ajax({
         type:'GET', // リクエストのタイプはGET
         url: '/attendance/approval_histories', // URLを指定
-        data: {month: month}, // コントローラへフォームの値を送信
+        data: {month: month, year: year}, // コントローラへフォームの値を送信
         dataType: 'json' // データの型はjson
       })
       
@@ -136,6 +180,7 @@
       })
     });
   });
+});
 
 </script>
 
