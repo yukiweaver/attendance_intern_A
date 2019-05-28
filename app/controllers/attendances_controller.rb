@@ -227,12 +227,15 @@ class AttendancesController < ApplicationController
   
   # 勤怠承認ログ
   def approval_histories
-    @current_day = Date.today
+    current_day = Date.today
     # 勤怠承認　日付が今月で、自分以外が承認した勤怠データ取得
     @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
-                          .where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{@current_day.year}%", "%#{@current_day.month}%")
-    @approval_histories = Attendance.where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{params[:month]}%", "%#{params[:year]}%")
-                                    .where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
+                          .where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{current_day.year}%", "%#{current_day.month}%")
+    log_first_day = Date.parse("#{params[:year]}/#{params[:month]}/01")
+    log_last_day = log_first_day.end_of_month
+    @approval_histories = current_user.attendances.where(attendance_application_status: "work_approval")
+                          .where.not(attendance_test: current_user.id)
+                          .where("attendance_day >= ? and attendance_day <= ?",log_first_day, log_last_day).order('attendance_day')
   end
   
   # def approval_histories
@@ -253,14 +256,10 @@ class AttendancesController < ApplicationController
     def attendance_params
       params.permit(attendances: [:beginning_time, :leaving_time, :note, :next_day, :attendance_test])[:attendances]
     end
-    # def attendance_params
-    #   params.require(:attendance).permit(:beginning_time, :leaving_time)
-    # end
     
     # 勤怠A：一日分の残業申請
     def overtime_params
       params.require(:attendance).permit(:scheduled_end_time, :leaving_next_day, :business_outline, :instructor_test)
-      # params.permit(attendances: [:scheduled_end_time, :next_day, :business_outline, :instructor_test])[:attendances]
     end
     
     # 月の勤怠申請
