@@ -5,7 +5,42 @@
     | <%= link_to "削除", user, method: :delete, 
           data: { confirm: "本当に削除しますか？" }, class: "btn btn-primary", :style=>"color:white" %></br></br>
     <div class="user-edit">
-    | <%= link_to "編集", users_path(params: {id: user.id}), class: "btn btn-lg btn-primary", :style=>"color:white" %>
+    | <button type="button" data-toggle="collapse" data-target="#<%= user.id %>" class="btn btn-primary">編集</button>
+    </div>
+    
+    <div class="collapse" id="<%= user.id %>">
+      <%= form_for(user, url: "/users/#{user.id}", method: :patch) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>  <%# リスト 13.44 %>
+  
+        <%= f.label :名前 %>
+        <%= f.text_field :name, class: 'form-control' %>
+  
+        <%= f.label :メールアドレス %>
+        <%= f.email_field :email, class: 'form-control' %>
+        
+        <%= f.label :所属 %>
+        <%= f.text_field :belong, class: 'form-control' %>
+  
+        <%= f.label :社員番号 %>
+        <%= f.number_field :number, class: 'form-control' %>
+        
+        <%= f.label :カードID %>
+        <%= f.number_field :card_number, class: 'form-control' %>
+        
+        <%= f.label :パスワード %>
+        <%= f.password_field :password, class: 'form-control' %>
+        
+        <%= f.label :基本勤務時間 %>
+        <%= f.time_field :basic_work_time, class: 'form-control' %>
+        
+        <%= f.label :指定勤務開始時間 %>
+        <%= f.time_field :designate_work_time, class: 'form-control' %>
+        
+        <%= f.label :指定勤務終了時間 %>
+        <%= f.time_field :designate_end_time, class: 'form-control' %>
+  
+        <%= f.submit "更新", class: "btn btn-primary" %>
+      <% end %>
     </div>
   <% end %>
 </li>
