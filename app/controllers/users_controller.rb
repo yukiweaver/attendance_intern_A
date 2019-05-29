@@ -38,9 +38,15 @@ class UsersController < ApplicationController
       File.extname(params[:file].original_filename) != '.csv'
       flash[:danger] = "CSVファイルのみ選択可能です。"
       redirect_to action: 'index', notice: "CSVファイルのみ選択可能です。"
+    # elsif
+    #   users = User.all
+    #   users.each do |user|
+    #     email = user.email
+    #   end
     else
       User.import(params[:file])
       #if params[:file].save
+      # binding.pry
       flash[:success] = "ユーザー一覧ページを更新しました。"
       redirect_to users_url
       #end

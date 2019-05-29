@@ -54,14 +54,14 @@
 <table class="table table-bordered table-striped table-condensed">
   <tr>
     <td>
-      <button type="button" class="btn btn-primary" id="ac1" autofocus="true">拠点情報の追加</button>
+      <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#accordion1">拠点情報の追加</button>
     </td>
   </tr>
 </table>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <div class="accordion1" >
+    <div class="collapse" id="accordion1" >
       <%= form_for(@base, url: base_points_path, method: :post) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
   

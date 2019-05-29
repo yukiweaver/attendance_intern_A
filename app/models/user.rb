@@ -133,7 +133,7 @@ class User < ApplicationRecord
     # csvファイル 更新を許可するカラムを定義
     def self.updatable_attributes
       ["name", "email", "belong", "number", "card_number", "basic_work_time", "designate_work_time",
-      "designate_end_time", "admin", "password"]
+      "designate_end_time", "admin", "superior", "password"]
     end
 
     # リスト 11.3:メールアドレスをすべて小文字にする
