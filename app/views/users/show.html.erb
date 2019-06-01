@@ -37,15 +37,21 @@
   <% if current_user.superior? && overtime_test(@user, current_user) %>
     <p>
       【所属長承認申請のお知らせ】
-      <a href="" data-toggle="modal" data-target="#modal-sample3"><%= "#{@one_month_attendance_me_count}件の通知があります" %></a>
+      <% if @one_month_attendance_me_count > 0 %>
+        <a href="" data-toggle="modal" data-target="#modal-sample3"><%= "#{@one_month_attendance_me_count}件の通知があります" %></a>
+      <% end %>
     </p>
     <p>
       【勤怠変更申請のお知らせ】
-      <a href="" data-toggle="modal" data-target="#modal-sample2"><%= "#{@attendance_me_count}件の通知があります" %></a>
+      <% if @attendance_me_count > 0 %>
+        <a href="" data-toggle="modal" data-target="#modal-sample2"><%= "#{@attendance_me_count}件の通知があります" %></a>
+      <% end %>
     </p>
-    <p class="overtime-modal-open">
+    <p>
       【残業申請のお知らせ】
-      <a href="" data-toggle="modal" data-target="#modal-sample"><%= "#{@overtime_me_count}件の通知があります" %></a>
+      <% if @overtime_me_count > 0 %>
+        <a href="" data-toggle="modal" data-target="#modal-sample"><%= "#{@overtime_me_count}件の通知があります" %></a>
+      <% end %>
     </p>
   <% end %>
   <!-- 勤怠表示画面　勤怠編集ボタン -->

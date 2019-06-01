@@ -3,6 +3,8 @@ class AttendancesController < ApplicationController
   require "time"
   include AttendancesHelper
   
+  before_action :not_admin_user, only: :attendance_edit  #管理者は勤怠編集ページへ遷移不可
+  
   # 勤怠B：勤怠編集ページ
   def attendance_edit
     @user = User.find(params[:id])
@@ -85,19 +87,31 @@ class AttendancesController < ApplicationController
     if attendances_invalid?  # AttendancesHelper
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
-        if bt[:attendance_test].blank?
-          next
-        elsif !bt[:attendance_test].blank?
+        # @attendance.update_attributes(bt)
+        # binding.pry
+        if not bt[:attendance_test].blank?
           @attendance.work_applying!
-        end
-        @attendance.update_attributes(bt)
-        
-        if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
-          @before_beginning_time = @attendance.saved_changes[:beginning_time]
-          @before_leaving_time = @attendance.saved_changes[:leaving_time]
-          if not @before_beginning_time.blank? && @before_leaving_time.blank?
-            @attendance.update_attributes(before_beginning_time: @before_beginning_time[0], before_leaving_time: @before_leaving_time[0])
+          @attendance.update_attributes(bt)
+          
+          if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
+            # @before_beginning_time = @attendance.saved_changes
+            @before_time = @attendance.saved_changes
+            # binding.pry
+            
+            if not @before_time[:beginning_time].blank?
+              @attendance.update_attributes(before_beginning_time: @before_time[:beginning_time][0])
+            else
+              @attendance.update_attributes(before_beginning_time: bt[:beginning_time])
+            end
+            
+            if not @before_time[:leaving_time].blank?
+              @attendance.update_attributes(before_leaving_time: @before_time[:leaving_time][0])
+            else
+              @attendance.update_attributes(before_leaving_time: bt[:leaving_time])
+            end
           end
+        else
+          @attendance.update_attributes(beginning_time: bt[:beginning_time], leaving_time: bt[:leaving_time], note: bt[:note], next_day: bt[:next_day])
         end
         # binding.pry
       end
@@ -251,6 +265,11 @@ class AttendancesController < ApplicationController
   # end
   
   private
+  
+    # 勤怠A：管理者は遷移不可
+    def not_admin_user
+      redirect_to(root_url) if current_user.admin?
+    end
   
     # 勤怠B：Strong Parameters fields_forに伴い、user時のコードに比べ、工夫が必要
     def attendance_params
