@@ -120,18 +120,18 @@ class UsersController < ApplicationController
       @request_user = OneMonthAttendance.find_by(application_user_id: @user.id, application_date: @current_day)
       
       # 自分に申請された月の勤怠申請取得とカウント
-      @one_month_attendance_me = OneMonthAttendance.where(authorizer_user_test: current_user.id, one_month_application_status: "month_applying")
+      @one_month_attendance_me = OneMonthAttendance.where(authorizer_user_test: current_user.id, one_month_application_status: "month_applying").order(:application_date)
       @one_month_attendance_me_count = @one_month_attendance_me.count
       # binding.pry
       
       @overtime_user = @user.attendances.new
 
       # 自分に申請された残業申請取得とカウント
-      @overtime_me = Attendance.where(instructor_test: current_user.id, application_status: "applying")
+      @overtime_me = Attendance.where(instructor_test: current_user.id, application_status: "applying").order(:attendance_day)
       @overtime_me_count = @overtime_me.count
       
       # 自分に申請された勤怠変更申請を取得とカウント
-      @attendance_me = Attendance.where(attendance_test: current_user.id, attendance_application_status: "work_applying")
+      @attendance_me = Attendance.where(attendance_test: current_user.id, attendance_application_status: "work_applying").order(:attendance_day)
       @attendance_me_count = @attendance_me.count
       # binding.pry
       

@@ -16,7 +16,7 @@
 		</ul>
 	</span>
 	<div class="col-xs-2 px-0">
-		<input type="text" class="form-control" placeholder=2019 readonly>
+		<input type="text" class="form-control" placeholder="<%= Date.today.year %>" readonly>
 	</div>
 </div>
 
@@ -42,7 +42,7 @@
 		</ul>
 	</span>
 	<div class="col-xs-2 px-0">
-	  <input type="text" class="form-control" placeholder=05 readonly>
+	  <input type="text" class="form-control" placeholder="<%= Date.today.month %>" readonly>
 	</div>
 </div>
 <table class="table table-bordered table-striped table-condensed">
@@ -63,17 +63,17 @@
     <%# binding.pry %>
     <tr>
       <!-- 第一項：日付 -->
-      <td><%= approval.attendance_day.month %>/<%= approval.attendance_day.day %></td>
+      <td><%= approval.attendance_day %></td>
       <!-- 第二項：変更前出社時間 -->
       <td>
-        <% if approval.before_beginning_time %>
-          <%= approval.before_beginning_time.hour %>:<%= approval.before_beginning_time.min %>
+        <% if approval.first_beginning_time != nil %>
+          <%= approval.first_beginning_time.hour %>:<%= approval.first_beginning_time.min %>
         <% end %>
       </td>
       <!-- 第三項：変更前退社時間 -->
       <td>
-        <% if approval.before_leaving_time != nil %>
-          <%= approval.before_leaving_time.hour %>:<%= approval.before_leaving_time.min %>
+        <% if approval.first_leaving_time != nil %>
+          <%= approval.first_leaving_time.hour %>:<%= approval.first_leaving_time.min %>
         <% end %>
       </td>
       <!-- 第四項：変更後出社時間 -->
@@ -83,7 +83,7 @@
       <!-- 第六項：指示者確認 -->
       <td><%= User.find(approval.attendance_test).name %></td>
       <!-- 第七項：承認日 -->
-      <td><%= approval.attendance_approval_date.month %>/<%= approval.attendance_approval_date.day %></td>
+      <td><%= approval.attendance_approval_date %></td>
     </tr>
     <% end %>
   </tbody>
@@ -114,10 +114,10 @@ $(document).on('turbolinks:load', function() {
         $('tbody').find('td').remove();
         
         $(data).each(function(i, approval_history){
-          approval_history.before_beginning_time == null ?
-          before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
-          approval_history.before_leaving_time == null ?
-          before_leaving_time = '' : before_leaving_time = moment(approval_history.before_leaving_time).format('HH:mm');
+          approval_history.first_beginning_time == null ?
+          first_beginning_time = '' : first_beginning_time = moment(approval_history.first_beginning_time).format('HH:mm');
+          approval_history.first_leaving_time == null ?
+          first_leaving_time = '' : first_leaving_time = moment(approval_history.first_leaving_time).format('HH:mm');
           approval_history.beginning_time == null ?
           beginning_time = '' : beginning_time = moment(approval_history.beginning_time).format('HH:mm');
           approval_history.leaving_time == null ?
@@ -126,11 +126,11 @@ $(document).on('turbolinks:load', function() {
           $('tbody').append(
             $("<tr>")
             .append("<td>" + approval_history.attendance_day + "</td>")
-            .append("<td>" + before_beginning_time + "</td>")
-            .append("<td>" + before_leaving_time + "</td>")
+            .append("<td>" + first_beginning_time + "</td>")
+            .append("<td>" + first_leaving_time + "</td>")
             .append("<td>" + beginning_time + "</td>")
             .append("<td>" + leaving_time + "</td>")
-            .append("<td>" + approval_history.attendance_test + "</td>")
+            .append("<td>" + approval_history.authorizer_user + "</td>")
             .append("<td>" + moment(approval_history.attendance_approval_date).format("YYYY-MM-DD") + "</td>")
             .append("</tr>")
           )
@@ -156,10 +156,10 @@ $(document).on('turbolinks:load', function() {
         $('tbody').find('td').remove();
         
         $(data).each(function(i, approval_history){
-          approval_history.before_beginning_time == null ?
-          before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
-          approval_history.before_leaving_time == null ?
-          before_leaving_time = '' : before_leaving_time = moment(approval_history.before_leaving_time).format('HH:mm');
+          approval_history.first_beginning_time == null ?
+          first_beginning_time = '' : first_beginning_time = moment(approval_history.first_beginning_time).format('HH:mm');
+          approval_history.first_leaving_time == null ?
+          first_leaving_time = '' : first_leaving_time = moment(approval_history.first_leaving_time).format('HH:mm');
           approval_history.beginning_time == null ?
           beginning_time = '' : beginning_time = moment(approval_history.beginning_time).format('HH:mm');
           approval_history.leaving_time == null ?
@@ -168,11 +168,11 @@ $(document).on('turbolinks:load', function() {
           $('tbody').append(
             $("<tr>")
             .append("<td>" + approval_history.attendance_day + "</td>")
-            .append("<td>" + before_beginning_time + "</td>")
-            .append("<td>" + before_leaving_time + "</td>")
+            .append("<td>" + first_beginning_time + "</td>")
+            .append("<td>" + first_leaving_time + "</td>")
             .append("<td>" + beginning_time + "</td>")
             .append("<td>" + leaving_time + "</td>")
-            .append("<td>" + approval_history.attendance_test + "</td>")
+            .append("<td>" + approval_history.authorizer_user + "</td>")
             .append("<td>" + moment(approval_history.attendance_approval_date).format("YYYY-MM-DD") + "</td>")
             .append("</tr>")
           )
@@ -200,10 +200,10 @@ $(document).on('turbolinks:load', function() {
         $('tbody').find('td').remove();
         
         $(data).each(function(i, approval_history){
-          approval_history.before_beginning_time == null ?
-          before_beginning_time = '' : before_beginning_time = moment(approval_history.before_beginning_time).format('HH:mm');
-          approval_history.before_leaving_time == null ?
-          before_leaving_time = '' : before_leaving_time = moment(approval_history.before_leaving_time).format('HH:mm');
+          approval_history.first_beginning_time == null ?
+          first_beginning_time = '' : first_beginning_time = moment(approval_history.first_beginning_time).format('HH:mm');
+          approval_history.first_leaving_time == null ?
+          first_leaving_time = '' : first_leaving_time = moment(approval_history.first_leaving_time).format('HH:mm');
           approval_history.beginning_time == null ?
           beginning_time = '' : beginning_time = moment(approval_history.beginning_time).format('HH:mm');
           approval_history.leaving_time == null ?
@@ -212,11 +212,11 @@ $(document).on('turbolinks:load', function() {
           $('tbody').append(
             $("<tr>")
             .append("<td>" + approval_history.attendance_day + "</td>")
-            .append("<td>" + before_beginning_time + "</td>")
-            .append("<td>" + before_leaving_time + "</td>")
+            .append("<td>" + first_beginning_time + "</td>")
+            .append("<td>" + first_leaving_time + "</td>")
             .append("<td>" + beginning_time + "</td>")
             .append("<td>" + leaving_time + "</td>")
-            .append("<td>" + approval_history.attendance_test + "</td>")
+            .append("<td>" + approval_history.authorizer_user + "</td>")
             .append("<td>" + moment(approval_history.attendance_approval_date).format("YYYY-MM-DD") + "</td>")
             .append("</tr>")
           )

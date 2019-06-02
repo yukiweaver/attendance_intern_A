@@ -34,6 +34,9 @@
       </tr>
     </thead>
   </table>
+  <% if !overtime_test(@user, current_user) %>
+    <%= link_to "戻る", user_path(id: current_user.id), class: "btn-lg btn-primary" %>
+  <% end %>
   <% if current_user.superior? && overtime_test(@user, current_user) %>
     <p>
       【所属長承認申請のお知らせ】
@@ -209,9 +212,6 @@
             勤怠申請：<%= User.find(@request_user.authorizer_user_test).name %>から否認
           <% end %>
           <%= form_for(@application_user, url: attendance_month_update_path, method: :post) do |f| %>
-            <%= f.hidden_field :year, :value => @current_day.year %>
-            <%= f.hidden_field :month, :value => @current_day.month %>
-            <%#= f.hidden_field :month_attendance, :value => @date %>
             <%= f.hidden_field :application_user_id, :value => @user.id %>
             <%= f.hidden_field :application_date, :value => @current_day %>
             <%= f.collection_select :authorizer_user_test, @superiors, :id, :name, :include_blank => true %>
@@ -272,6 +272,7 @@
       <div class="modal-content">
       <%= form_for(@overtime_user, url: authorizer_overtime_update_path, method: :post) do |df| %>
         <% @overtime_me.each do |d| %>
+        <%# binding.pry %>
           <%= df.hidden_field :application_id, :value => d.user.id %>
           <%= df.hidden_field :attendance_id, :value => d.id %>
           <%= df.hidden_field :change_test, :value => d.change %>
@@ -328,7 +329,7 @@
                     <!-- 変更 -->
                     <td><%= ot.check_box :change %></td>
                     <!-- 勤怠を確認 -->
-                    <td><%= link_to "確認", "/users/#{d.user.id}", class: "btn btn-primary" %></td>
+                    <td><%= link_to "確認", "/users/#{d.user.id}?current_day=#{d.attendance_day}", class: "btn btn-primary" %></td>
                   </tr>
                   <% end %>
                 </tbody>
@@ -426,7 +427,7 @@
                       <!-- 第十三項：変更 -->
                       <td><%= oa.check_box :attendance_change %></td>
                       <!-- 第十四項：勤怠を確認 -->
-                      <td><%= link_to "確認", "/users/#{am.user.id}", class: "btn btn-primary" %></td>
+                      <td><%= link_to "確認", "/users/#{am.user.id}?current_day=#{am.attendance_day}", class: "btn btn-primary" %></td>
                     </tr>
                   <% end %>
                 </tbody>
@@ -448,6 +449,7 @@
     <div class="modal-content">
       <%= form_for(@application_user, url: month_attendance_authorizer_update_path, method: :post) do |au| %>
         <% @one_month_attendance_me.each do |oma| %>
+          <% au.hidden_field :id, :value => oma.application_user_id %>
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
@@ -476,7 +478,7 @@
                 <!-- 第三項：変更 -->
                 <td><%= oa.check_box :one_month_change %></td>
                 <!-- 第四項：勤怠を確認 -->
-                <td><%= link_to "確認", "/users/#{oma.application_user_id}", class: "btn btn-primary" %></td>
+                <td><%= link_to "確認", "/users/#{oma.application_user_id}?current_day=#{oma.application_date}", class: "btn btn-primary" %></td>
               </tr>
             </tbody>
             <% end %>

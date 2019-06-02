@@ -87,14 +87,17 @@ class AttendancesController < ApplicationController
     if attendances_invalid?  # AttendancesHelper
       attendance_params.each do |at, bt|
         @attendance = @user.attendances.find(at)
-        # @attendance.update_attributes(bt)
+        is_display_log = @attendance.is_display_log
         # binding.pry
+        
         if not bt[:attendance_test].blank?
+          if is_display_log == false
+            @attendance.update_attributes(first_beginning_time: @attendance.beginning_time, first_leaving_time: @attendance.leaving_time, is_display_log: true)
+          end
           @attendance.work_applying!
           @attendance.update_attributes(bt)
           
           if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
-            # @before_beginning_time = @attendance.saved_changes
             @before_time = @attendance.saved_changes
             # binding.pry
             
@@ -119,8 +122,8 @@ class AttendancesController < ApplicationController
         # リダイレクト先でhidden_fieldの値を受け取る
         redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
     else
-        flash[:danger] = "不正な時間入力がありました、再入力してください。"
-        redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
+      flash[:danger] = "不正な時間入力がありました、再入力してください。"
+      redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
     end
   end
   
@@ -147,13 +150,13 @@ class AttendancesController < ApplicationController
     # binding.pry
     if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:instructor_test].blank?
       flash[:warning] = "必須箇所が空欄です。"
-      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))
+      redirect_to (user_url(current_day: params[:attendance][:current_day]))
     else
       # カラムapplication_statusを申請中の「nothing」→「applying」に変更
       @attendance.applying!
       @attendance.update_attributes(overtime_params)
       flash[:success] = "残業申請が完了しました。"
-      redirect_to (user_url(params[:attendance][:user_id], current_day: params[:current_day]))and return
+      redirect_to (user_url(current_day: params[:attendance][:current_day]))and return
     end
   end
   # @user.update_attribute = { :username = 'A' }
@@ -182,7 +185,7 @@ class AttendancesController < ApplicationController
       @one_month_attendance.update_attributes(one_month_attendance_params)
       flash[:success] = "勤怠申請が完了しました。"
     end
-    redirect_to @user
+    redirect_to user_url(current_day: params[:one_month_attendance][:application_date])
   end
   
   # 一日分の残業申請の承認
@@ -190,14 +193,20 @@ class AttendancesController < ApplicationController
     # 申請者のユーザー取得　↓複数申請者がいた場合、期待したユーザーが取得できない
     # @user = User.find(params[:attendance][:application_id])
     if !params[:attendance][:change_test].blank?
+      i = 0
+      x = 0
       authorizer_overtime_params.each do |id, item|
         # binding.pry
         if item[:change] == "1"
+          x += 1
           @attendance = Attendance.find(id)
           @attendance.update_attributes(item)
         end
+        i += 1
       end
-      flash[:success] = "残業申請を更新しました。"
+      @total_count = i
+      @select_count = x
+      flash[:success] = "勤怠変更申請を#{@total_count}件中#{@select_count}件更新しました。"
     else
       flash[:danger] = "変更が反映されませんでした。"
     end
@@ -207,14 +216,19 @@ class AttendancesController < ApplicationController
   # 勤怠変更の承認
   def authorizer_attendance_update
     if !params[:attendance][:attendance_application_status].blank?
+      i = 0
+      x = 0
       authorizer_attendance_params.each do |id, item|
         if item[:attendance_change] == "1"
+          x += 1
           @attendance = Attendance.find(id)
           @attendance.update_attributes(item)
         end
+        i += 1
       end
-      # binding.pry
-      flash[:success] = "勤怠変更申請を更新しました。"
+      @total_count = i
+      @select_count = x
+      flash[:success] = "勤怠変更申請を#{@total_count}件中#{@select_count}件更新しました。"
     else
       flash[:danger] = "変更が反映されませんでした。"
     end
@@ -242,9 +256,11 @@ class AttendancesController < ApplicationController
   # 勤怠承認ログ
   def approval_histories
     current_day = Date.today
+    first_day = current_day.beginning_of_month
+    last_day = current_day.end_of_month
     # 勤怠承認　日付が今月で、自分以外が承認した勤怠データ取得
     @approval = Attendance.where(attendance_application_status: "work_approval").where.not(attendance_test: current_user.id)
-                          .where("attendance_day LIKE ? AND attendance_day LIKE ?", "%#{current_day.year}%", "%#{current_day.month}%")
+                          .where("attendance_day >= ? AND attendance_day <= ?", first_day, last_day).order(:attendance_day)
     log_first_day = Date.parse("#{params[:year]}/#{params[:month]}/01")
     log_last_day = log_first_day.end_of_month
     @approval_histories = current_user.attendances.where(attendance_application_status: "work_approval")
