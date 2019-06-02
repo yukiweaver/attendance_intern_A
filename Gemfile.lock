@@ -80,6 +80,8 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     dry-inflector (0.1.2)
+    enum_help (0.0.17)
+      activesupport (>= 3.0.0)
     erubi (1.7.1)
     excon (0.62.0)
     execjs (2.7.0)
@@ -431,6 +433,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave (= 1.2.2)
   coffee-rails (= 4.2.2)
+  enum_help
   factory_bot_rails (~> 4.11)
   faker (= 1.7.3)
   fog (= 1.42)

@@ -61,7 +61,7 @@
   <% if overtime_test(@user, current_user) %>
     <%= link_to "勤怠を編集", attendance_edit_path(params:{current_day: @current_day}), class: "btn btn-primary" %>
     <%= link_to "CSV出力", user_path(format: :csv, params:{current_day: @current_day}), class: "btn btn-primary" %><br>
-    <%= link_to "勤怠修正ログ（承認済み）", approval_histories_path, class: "btn btn-primary" %>
+    <%= link_to "勤怠修正ログ（承認済み）", approval_histories_path, data: {"turbolinks" => true}, class: "btn btn-primary" %>
   <% end %>
   
   <!-- 勤怠表示画面　下のメインのテーブル -->
@@ -325,7 +325,7 @@
                     <!-- 業務処理内容 -->
                     <td><%= d.business_outline if d.business_outline != nil %></td>
                     <!-- 指示者確認 -->
-                    <td><%= ot.select :application_status, Attendance.application_statuses.keys.to_a, :include_blank => true if d.application_status != nil %></td>
+                    <td><%= ot.select :application_status, Attendance.application_statuses.keys.map {|k| [I18n.t("enums.attendance.application_status.#{k}"), k]}, :include_blank => true if d.application_status%></td>
                     <!-- 変更 -->
                     <td><%= ot.check_box :change %></td>
                     <!-- 勤怠を確認 -->
@@ -421,7 +421,7 @@
                       <!-- 第十二項：指示者確認 配列オブジェクト.select -->
                       <td>
                         <% if not am.attendance_application_status.blank? %>
-                          <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.to_a, :include_blank => true %>
+                          <%= oa.select :attendance_application_status, Attendance.attendance_application_statuses.keys.map {|k| [I18n.t("enums.attendance.attendance_application_status.#{k}"), k]}, :include_blank => true %>
                         <% end %>
                       </td>
                       <!-- 第十三項：変更 -->
@@ -472,7 +472,7 @@
                 <!-- 第二項：指示者確認 -->
                 <td>
                   <% if not oma.one_month_application_status.blank? %>
-                    <%= oa.select :one_month_application_status, OneMonthAttendance.one_month_application_statuses.keys.to_a, :include_blank => true %>
+                    <%= oa.select :one_month_application_status, OneMonthAttendance.one_month_application_statuses.keys.map {|k| [I18n.t("enums.one_month_attendance.one_month_application_status.#{k}"), k]}, :include_blank => true %>
                   <% end %>
                 </td>
                 <!-- 第三項：変更 -->

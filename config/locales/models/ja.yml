@@ -1,18 +1,35 @@
 
 ja:
- activerecord:
-   attributes:
-       micropost:
-         content: 投稿内容
-       user:
-         name: 名前
-         email: メールアドレス
-         belong: 所属
-         password: パスワード
-         password_confirmation: パスワード確認
-         designate_work_time: 指定勤務時間
-         basic_work_time: 基本勤務時間
-       base:
-         base_number: 拠点番号
-         base_name: 拠点名
-         base_type: 勤怠種類
+  activerecord:
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        belong: 所属
+        password: パスワード
+        password_confirmation: パスワード確認
+        designate_work_time: 指定勤務時間
+        basic_work_time: 基本勤務時間
+      base:
+        base_number: 拠点番号
+        base_name: 拠点名
+        base_type: 勤怠種類
+  enums:
+    attendance:
+      application_status:
+        nothing: なし
+        applying: 申請中
+        approval: 承認
+        denial: 否認
+      attendance_application_status:
+        work_nothing: なし
+        work_applying: 申請中
+        work_approval: 承認
+        work_denial: 否認
+    one_month_attendance:
+      one_month_application_status:
+        month_nothing: なし
+        month_applying: 申請中
+        month_approval: 承認
+        month_denial: 否認
+      
