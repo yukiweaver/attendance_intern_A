@@ -159,8 +159,6 @@ class AttendancesController < ApplicationController
       redirect_to (user_url(current_day: params[:attendance][:current_day]))and return
     end
   end
-  # @user.update_attribute = { :username = 'A' }
-  # {"scheduled_end_time"=>"11:11", "next_day"=>"1", "business_outline"=>"", "instructor_test"=>"上長B"
   
   # 一月分の勤怠申請
   def month_update
