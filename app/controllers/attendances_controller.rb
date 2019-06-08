@@ -84,47 +84,53 @@ class AttendancesController < ApplicationController
   # 勤怠A：勤怠編集更新
   def attendance_update
     @user = User.find(params[:id])
-    if attendances_invalid?  # AttendancesHelper
-      attendance_params.each do |at, bt|
-        @attendance = @user.attendances.find(at)
-        is_display_log = @attendance.is_display_log
-        # binding.pry
-        
-        if not bt[:attendance_test].blank?
+    # if attendances_invalid?  # AttendancesHelper
+    attendance = true
+    attendance_params.each do |at, bt|
+      @attendance = @user.attendances.find(at)
+      is_display_log = @attendance.is_display_log
+      
+      if not bt[:attendance_test].blank?
+        if (bt[:beginning_time].blank? || bt[:leaving_time].blank?) || (bt[:next_day] == "0" && bt[:beginning_time].to_s > bt[:leaving_time].to_s)
+          attendance = false
+        else
+          # binding.pry
           if is_display_log == false
             @attendance.update_attributes(first_beginning_time: @attendance.beginning_time, first_leaving_time: @attendance.leaving_time, is_display_log: true)
           end
-          @attendance.work_applying!
-          @attendance.update_attributes(bt)
-          
-          if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
-            @before_time = @attendance.saved_changes
+            @attendance.work_applying!
+            @attendance.update_attributes(bt)
             # binding.pry
-            
-            if not @before_time[:beginning_time].blank?
-              @attendance.update_attributes(before_beginning_time: @before_time[:beginning_time][0])
-            else
-              @attendance.update_attributes(before_beginning_time: bt[:beginning_time])
+          
+            if not bt[:beginning_time].blank? && bt[:leaving_time].blank?
+              @before_time = @attendance.saved_changes
+              # binding.pry
+              
+              if not @before_time[:beginning_time].blank?
+                @attendance.update_attributes(before_beginning_time: @before_time[:beginning_time][0])
+              else
+                @attendance.update_attributes(before_beginning_time: bt[:beginning_time])
+              end
+              
+              if not @before_time[:leaving_time].blank?
+                @attendance.update_attributes(before_leaving_time: @before_time[:leaving_time][0])
+              else
+                @attendance.update_attributes(before_leaving_time: bt[:leaving_time])
+              end
             end
-            
-            if not @before_time[:leaving_time].blank?
-              @attendance.update_attributes(before_leaving_time: @before_time[:leaving_time][0])
-            else
-              @attendance.update_attributes(before_leaving_time: bt[:leaving_time])
-            end
-          end
-        else
-          @attendance.update_attributes(beginning_time: bt[:beginning_time], leaving_time: bt[:leaving_time], note: bt[:note], next_day: bt[:next_day])
         end
-        # binding.pry
+      else
+        @attendance.update_attributes(beginning_time: bt[:beginning_time], leaving_time: bt[:leaving_time], note: bt[:note], next_day: bt[:next_day])
       end
-        flash[:success] = "勤怠編集情報を更新しました。"
-        # リダイレクト先でhidden_fieldの値を受け取る
-        redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
-    else
-      flash[:danger] = "不正な時間入力がありました、再入力してください。"
-      redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))
+      # binding.pry
     end
+    if attendance == true
+      flash[:success] = "勤怠編集情報を更新しました。"
+    else
+      flash[:warning] = "不正な値入力がありました。"
+    end
+    # リダイレクト先でhidden_fieldの値を受け取る
+    redirect_to (user_url(params[:user][:id],current_day: params[:current_day]))and return
   end
   
   # 勤怠A：出勤者一覧
